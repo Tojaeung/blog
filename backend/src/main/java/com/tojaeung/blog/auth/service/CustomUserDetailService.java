@@ -1,21 +1,21 @@
 package com.tojaeung.blog.auth.service;
 
-import com.tojaeung.blog.auth.repository.UserReposiroty;
+import com.tojaeung.blog.auth.repository.AdminRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-@RequiredArgsConstructor
 @Service
+@RequiredArgsConstructor
 public class CustomUserDetailService implements UserDetailsService {
 
-    private final UserReposiroty userRepository;
+    private final AdminRepository adminReposiroty;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userRepository.findByUsername(username)
+    public UserDetails loadUserByUsername(String admin) throws UsernameNotFoundException {
+        return adminReposiroty.findByUsername(admin)
                 .orElseThrow(() -> new UsernameNotFoundException("사용자를 찾을 수 없습니다."));
     }
 }

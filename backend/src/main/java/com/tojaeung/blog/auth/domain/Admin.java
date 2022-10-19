@@ -8,19 +8,18 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Collection;
 
 @Builder
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-public class User implements UserDetails {
+public class Admin implements UserDetails {
     @Id
-    @Column(name = "user_id")
-    private String id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column
+    private Long id;
     @Column
     private String username;
     @Column
@@ -67,7 +66,7 @@ public class User implements UserDetails {
      * @param passwordEncoder 암호화 할 인코더 클래스
      * @return 변경된 유저 Entity
      */
-    public User hashPassword(PasswordEncoder passwordEncoder) {
+    public Admin hashPassword(PasswordEncoder passwordEncoder) {
         this.password = passwordEncoder.encode(this.password);
         return this;
     }
