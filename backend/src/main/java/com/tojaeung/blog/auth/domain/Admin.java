@@ -61,17 +61,6 @@ public class Admin implements UserDetails {
     }
 
     /**
-     * 비밀번호를 암호화
-     *
-     * @param passwordEncoder 암호화 할 인코더 클래스
-     * @return 변경된 유저 Entity
-     */
-    public Admin hashPassword(PasswordEncoder passwordEncoder) {
-        this.password = passwordEncoder.encode(this.password);
-        return this;
-    }
-
-    /**
      * 비밀번호 확인
      *
      * @param plainPassword   암호화 이전의 비밀번호

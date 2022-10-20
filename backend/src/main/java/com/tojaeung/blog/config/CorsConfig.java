@@ -12,7 +12,7 @@ public class CorsConfig {
     public CorsFilter corsFilter() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowCredentials(false);  // 쿠리를 요청으로 보내는 유무
+        config.setAllowCredentials(true);  // 쿠리를 요청으로 보내는 유무
         config.addAllowedOrigin("*");   // 요청받을 주소
         config.addAllowedHeader("*");   // 요청받을 헤더
         config.addAllowedMethod("*");   // 요청받을 메서드
