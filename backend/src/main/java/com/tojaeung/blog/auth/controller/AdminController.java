@@ -29,9 +29,4 @@ public class AdminController {
     public String test() {
         return "성공";
     }
-
-    @GetMapping("/test2")
-    public String test2() {
-        return "성공2";
-    }
 }
