@@ -5,12 +5,14 @@ import com.tojaeung.blog.auth.dto.LoginDto;
 import com.tojaeung.blog.auth.dto.LoginResponseDto;
 import com.tojaeung.blog.auth.service.AdminService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
+@Slf4j
 public class AdminController {
     private final AdminService adminService;
 
@@ -27,6 +29,7 @@ public class AdminController {
 
     @GetMapping("/test")
     public String test() {
+        log.info("응답성공");
         return "성공";
     }
 }
