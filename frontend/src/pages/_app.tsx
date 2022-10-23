@@ -4,17 +4,21 @@ import { GlobalStyles } from 'styles/globalStyle';
 import { lightTheme } from 'styles/theme';
 import { Provider } from 'react-redux';
 import wrapper from 'apps/store';
+import { GetServerSideProps } from 'next';
+import { refresh } from 'features/auth/authThunk';
+import { useAppDispatch } from 'hooks/useRtkCustomHook';
+import { useEffect } from 'react';
 
 function MyApp({ Component, ...rest }: AppProps) {
   const { store, props } = wrapper.useWrappedStore(rest);
 
   return (
-    <ThemeProvider theme={lightTheme}>
-      <GlobalStyles />
-      <Provider store={store}>
+    <Provider store={store}>
+      <ThemeProvider theme={lightTheme}>
+        <GlobalStyles />
         <Component {...props.pageProps} />;
-      </Provider>
-    </ThemeProvider>
+      </ThemeProvider>
+    </Provider>
   );
 }
 

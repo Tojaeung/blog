@@ -1,12 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { RootState } from '../../apps/store';
+import { login, refresh } from './authThunk';
 
 export interface AuthState {
-  accessToken: string;
+  token: string;
+  username: string;
 }
 
 const initialState: AuthState = {
-  accessToken: '',
+  token: '',
+  username: '',
 };
 
 const authSlice = createSlice({
@@ -14,22 +17,28 @@ const authSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    // 로그인
-    // builder
-    //   .addCase(signIn.fulfilled, (state, { payload }) => {
-    //     state.ok = payload.ok;
-    //     state.message = payload.message;
-    //     state.user = payload.user;
-    //   })
-    //   .addCase(signIn.rejected, (state, { payload }) => {
-    //     state.ok = payload?.ok!;
-    //     state.message = payload?.message!;
-    //   });
+    builder
+      .addCase(login.fulfilled, (state, { payload }) => {
+        state.token = payload.token;
+        state.username = payload.username;
+      })
+      .addCase(login.rejected, (state) => {
+        state.token = '';
+        state.username = '';
+      });
+
+    builder
+      .addCase(refresh.fulfilled, (state, { payload }) => {
+        state.token = payload.token;
+        state.username = payload.username;
+      })
+      .addCase(refresh.rejected, (state) => {
+        state.token = '';
+        state.username = '';
+      });
   },
 });
 
-// export const selectUserOk = (state: RootState) => state.user.ok;
-// export const selectUserMessage = (state: RootState) => state.user.message;
-// export const selectUserUser = (state: RootState) => state.user.user;
+export const selectAuthUsername = (state: RootState) => state.auth.username;
 
 export default authSlice;
