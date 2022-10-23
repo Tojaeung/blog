@@ -32,8 +32,8 @@ public class SecurityConfig {
 
                 .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()
-                .antMatchers("/api/login").permitAll()
-                .antMatchers("/api/test").authenticated()
+                .antMatchers("/api/**").permitAll()
+                .antMatchers("/admin/**").authenticated()
                 .and()
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
 

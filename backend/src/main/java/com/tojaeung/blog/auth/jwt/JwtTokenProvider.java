@@ -9,9 +9,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 
 import javax.annotation.PostConstruct;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Base64;
 import java.util.Date;
@@ -59,15 +59,18 @@ public class JwtTokenProvider {
         return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
     }
 
-    // Request의 Header에서 token 값을 가져옵니다. "Authorization" : "Bearer TOKEN값'
+    // 쿠키에 token값을 받아서 리턴
     public String resolveToken(HttpServletRequest request) {
-        String bearerToken = request.getHeader("Authorization");
+        Cookie[] cookies = request.getCookies();
+        if (cookies == null) return null;
 
-        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
-            return bearerToken.substring(7);
+        String token = null;
+        for (int i = 0; i < cookies.length; i++) {
+            if (cookies[i].getName().equals("token")) {
+                token = cookies[i].getValue();
+            }
         }
-
-        return null;
+        return token;
     }
 
     // 토큰의 유효성 + 만료일자 확인
