@@ -9,9 +9,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 import javax.annotation.PostConstruct;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Base64;
 import java.util.Date;
@@ -24,9 +24,7 @@ public class JwtTokenProvider {
 
     @Value("${jwt-secret-key}")
     private String secretKey;
-    @Value("${token-valid-token}")
-    private long tokenValidTime;
-
+    private long accessTokenValidTime = 1000 * 60 * 60 * 24 * 3;
     private final UserDetailsService userDetailsService;
 
     @PostConstruct
@@ -34,15 +32,26 @@ public class JwtTokenProvider {
         secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
     }
 
-    // JWT 토큰 생성 
-    public String createToken(String username, List<String> roles) {
+    public String createAccessToken(String username, List<String> roles) {
         Claims claims = Jwts.claims().setSubject(username); // JWT payload 에 저장되는 정보단위, 보통 여기서 user를 식별하는 값을 넣는다.
         claims.put("roles", roles); // 정보는 key / value 쌍으로 저장된다.
         Date now = new Date();
         return Jwts.builder()
                 .setClaims(claims) // 정보 저장
                 .setIssuedAt(now) // 토큰 발행 시간 정보
-                .setExpiration(new Date(now.getTime() + tokenValidTime)) // set Expire Time
+                .setExpiration(new Date(now.getTime() + accessTokenValidTime)) // set Expire Time
+                .signWith(SignatureAlgorithm.HS256, secretKey)  // 사용할 암호화 알고리즘과
+                // signature 에 들어갈 secret값 세팅
+                .compact();
+    }
+
+    public String createRefreshToken(String username) {
+        Claims claims = Jwts.claims().setSubject(username); // JWT payload 에 저장되는 정보단위, 보통 여기서 user를 식별하는 값을 넣는다.
+        Date now = new Date();
+        return Jwts.builder()
+                .setClaims(claims) // 정보 저장
+                .setIssuedAt(now) // 토큰 발행 시간 정보
+                .setExpiration(new Date(now.getTime() + accessTokenValidTime)) // set Expire Time
                 .signWith(SignatureAlgorithm.HS256, secretKey)  // 사용할 암호화 알고리즘과
                 // signature 에 들어갈 secret값 세팅
                 .compact();
@@ -61,16 +70,13 @@ public class JwtTokenProvider {
 
     // 쿠키에 token값을 받아서 리턴
     public String resolveToken(HttpServletRequest request) {
-        Cookie[] cookies = request.getCookies();
-        if (cookies == null) return null;
+        String bearerToken = request.getHeader("Authorization");
 
-        String token = null;
-        for (int i = 0; i < cookies.length; i++) {
-            if (cookies[i].getName().equals("token")) {
-                token = cookies[i].getValue();
-            }
+        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
+            return bearerToken.substring(7);
         }
-        return token;
+
+        return null;
     }
 
     // 토큰의 유효성 + 만료일자 확인

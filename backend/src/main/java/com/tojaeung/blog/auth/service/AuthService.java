@@ -23,7 +23,7 @@ public class AuthService {
         // 비밀번호가 맞는지
         if (findAdmin.checkPassword(admin.getPassword(), passwordEncoder)) {
             return LoginResponseDto.builder()
-                    .token(jwtTokenProvider.createToken(findAdmin.getUsername(), findAdmin.getRoles()))
+                    .accessToken(jwtTokenProvider.createAccessToken(findAdmin.getUsername(), findAdmin.getRoles()))
                     .username(findAdmin.getUsername())
                     .build();
         } else throw new IllegalArgumentException("관리자 계정 비밀번호가 아닙니다.");

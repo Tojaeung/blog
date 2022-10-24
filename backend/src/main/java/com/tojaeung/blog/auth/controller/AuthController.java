@@ -5,30 +5,33 @@ import com.tojaeung.blog.auth.dto.LoginDto;
 import com.tojaeung.blog.auth.dto.LoginResponseDto;
 import com.tojaeung.blog.auth.dto.RefreshResponseDto;
 import com.tojaeung.blog.auth.jwt.JwtTokenProvider;
+import com.tojaeung.blog.auth.repository.AuthRepository;
 import com.tojaeung.blog.auth.service.AuthService;
+import com.tojaeung.blog.auth.utils.CookieUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @RestController
-// @RequestMapping("/api")
+@RequestMapping("/api")
 @RequiredArgsConstructor
 @Slf4j
 public class AuthController {
     private final AuthService authService;
+    private final AuthRepository authRepository;
     private final JwtTokenProvider jwtTokenProvider;
+    private final CookieUtil cookieUtil;
 
     // 로그인
-    @PostMapping("/api/login")
-    public ResponseEntity<LoginResponseDto> login(@RequestBody LoginDto loginDto, HttpServletResponse response) {
+    @PostMapping("/login")
+    public ResponseEntity<LoginResponseDto> login(@RequestBody LoginDto loginDto) {
         Admin admin = Admin.builder()
                 .username(loginDto.getUsername())
                 .password(loginDto.getPassword())
@@ -36,62 +39,43 @@ public class AuthController {
 
         LoginResponseDto loginResponseDto = authService.login(admin);
 
-        Cookie cookie = new Cookie("token", loginResponseDto.getToken());
-        cookie.setMaxAge(1000 * 60 * 60 * 24 * 7);
-        // cookie.setHttpOnly(true);
-        cookie.setPath("/");
+        ResponseCookie refreshToken = cookieUtil.createRefreshCookie(loginResponseDto.getUsername());
 
-        response.addCookie(cookie);
-
-        return ResponseEntity.ok(loginResponseDto);
+        return ResponseEntity.ok()
+                .header(HttpHeaders.SET_COOKIE, refreshToken.toString())
+                .body(loginResponseDto);
     }
-
 
     // 로그인유지를 위한 리프레쉬 로그인
-    @GetMapping("/api/refresh")
-    public ResponseEntity<RefreshResponseDto> refresh(HttpServletRequest request) {
-        // 쿠키의 토큰값을 가져온다.
-        String token = jwtTokenProvider.resolveToken(request);
-        System.out.println(token);
-
-        // 유효한 토큰이 존재
-        if (token != null && jwtTokenProvider.validateToken(token)) {
-            String username = jwtTokenProvider.getUsername(token);
-            System.out.println(username);
-            RefreshResponseDto refreshResponseDto = RefreshResponseDto.builder()
-                    .token(token)
-                    .username(username)
-                    .build();
-
-            return ResponseEntity.ok(refreshResponseDto);
-        } else {
-            RefreshResponseDto refreshResponseDto = RefreshResponseDto.builder()
-                    .token("")
-                    .username("")
-                    .build();
-            return ResponseEntity.ok(refreshResponseDto);
-        }
-    }
-
-    @GetMapping("admin/test")
-    public ResponseEntity<RefreshResponseDto> test(HttpServletRequest request) {
-        // 쿠키의 토큰값을 가져온다.
-        String token = jwtTokenProvider.resolveToken(request);
+    @GetMapping("/refresh")
+    public ResponseEntity<RefreshResponseDto> refresh(HttpServletRequest request, HttpServletResponse response) {
+        Cookie[] cookies = request.getCookies();
+        String token = cookies[0].getName();
 
         // 유효한 토큰이 존재
         if (token != null && jwtTokenProvider.validateToken(token)) {
             String username = jwtTokenProvider.getUsername(token);
 
+            Admin findAdmin = authRepository.findByUsername(username)
+                    .orElseThrow(() -> new IllegalArgumentException("관리자 계정ID가 아닙니다."));
+
+            // 엑세스토큰 유저정보 응답
             RefreshResponseDto refreshResponseDto = RefreshResponseDto.builder()
-                    .token(token)
-                    .username(username)
+                    .accessToken(jwtTokenProvider.createAccessToken(findAdmin.getUsername(), findAdmin.getRoles()))
+                    .username(findAdmin.getUsername())
                     .build();
 
-            return ResponseEntity.ok(refreshResponseDto);
-        } else {
+            ResponseCookie removeCookie = cookieUtil.removeCookie("refreshToken");
+            // response.setHeader("Set-Cookie", removeCookie.toString());
 
+            ResponseCookie refreshToken = cookieUtil.createRefreshCookie(username);
+
+            return ResponseEntity.ok()
+                    .header(HttpHeaders.SET_COOKIE, removeCookie.toString())
+                    .body(refreshResponseDto);
+        } else {
             RefreshResponseDto refreshResponseDto = RefreshResponseDto.builder()
-                    .token("")
+                    .accessToken("")
                     .username("")
                     .build();
             return ResponseEntity.ok(refreshResponseDto);

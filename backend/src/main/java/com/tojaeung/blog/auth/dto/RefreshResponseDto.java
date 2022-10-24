@@ -7,6 +7,6 @@ import lombok.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 public class RefreshResponseDto {
-    private String token;
+    private String accessToken;
     private String username;
 }
