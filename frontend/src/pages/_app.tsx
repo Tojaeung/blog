@@ -1,4 +1,4 @@
-import type { AppProps } from 'next/app';
+import type { AppContext, AppProps } from 'next/app';
 import { ThemeProvider } from 'styled-components';
 import { GlobalStyles } from 'styles/globalStyle';
 import { lightTheme } from 'styles/theme';
@@ -8,6 +8,9 @@ import { GetServerSideProps } from 'next';
 import { refresh } from 'features/auth/authThunk';
 import { useAppDispatch } from 'hooks/useRtkCustomHook';
 import { useEffect } from 'react';
+import cookies from 'next-cookies';
+import axios from 'axios';
+import { Cookies } from 'react-cookie';
 
 function MyApp({ Component, ...rest }: AppProps) {
   const { store, props } = wrapper.useWrappedStore(rest);

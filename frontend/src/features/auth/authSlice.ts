@@ -1,14 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { RootState } from '../../apps/store';
 import { login, refresh } from './authThunk';
-
-export interface AuthState {
-  token: string;
-  username: string;
-}
+import { AuthState } from './type';
 
 const initialState: AuthState = {
-  token: '',
+  accessToken: '',
   username: '',
 };
 
@@ -19,26 +15,27 @@ const authSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(login.fulfilled, (state, { payload }) => {
-        state.token = payload.token;
+        state.accessToken = payload.accessToken;
         state.username = payload.username;
       })
       .addCase(login.rejected, (state) => {
-        state.token = '';
+        state.accessToken = '';
         state.username = '';
       });
 
     builder
       .addCase(refresh.fulfilled, (state, { payload }) => {
-        state.token = payload.token;
+        state.accessToken = payload.accessToken;
         state.username = payload.username;
       })
       .addCase(refresh.rejected, (state) => {
-        state.token = '';
+        state.accessToken = '';
         state.username = '';
       });
   },
 });
 
 export const selectAuthUsername = (state: RootState) => state.auth.username;
+export const selectAuthAccessToken = (state: RootState) => state.auth.accessToken;
 
 export default authSlice;

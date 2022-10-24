@@ -3,14 +3,10 @@ import { HYDRATE, createWrapper } from 'next-redux-wrapper';
 import { combineReducers } from 'redux';
 
 import authSlice, { AuthState } from 'features/auth/authSlice';
-import userSlice, { UserState } from 'features/user/userSlice';
-import todosSlice, { TodoState } from 'features/todos/todosSlice';
 
 // ### 리듀서 State 타입 정의
 interface ReducerStates {
   auth: AuthState;
-  user: UserState;
-  todos: TodoState;
 }
 
 // ### 루트 리듀서 생성
@@ -27,8 +23,6 @@ const rootReducer = (state: ReducerStates, action: AnyAction): CombinedState<Red
     default: {
       const combinedReducer = combineReducers({
         auth: authSlice.reducer,
-        user: userSlice.reducer,
-        todos: todosSlice.reducer,
       });
       return combinedReducer(state, action);
     }
