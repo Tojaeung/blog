@@ -2,8 +2,11 @@ package com.tojaeung.blog.auth.service;
 
 import com.tojaeung.blog.auth.domain.Admin;
 import com.tojaeung.blog.auth.dto.LoginResponseDto;
+import com.tojaeung.blog.auth.dto.RefreshResponseDto;
 import com.tojaeung.blog.auth.jwt.JwtTokenProvider;
 import com.tojaeung.blog.auth.repository.AuthRepository;
+import com.tojaeung.blog.exception.CustomException;
+import com.tojaeung.blog.exception.ExceptionCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -18,7 +21,7 @@ public class AuthService {
     public LoginResponseDto login(Admin admin) {
         // 아이디가 존재 하는지
         Admin findAdmin = authRepository.findByUsername(admin.getUsername())
-                .orElseThrow(() -> new IllegalArgumentException("관리자 계정ID가 아닙니다."));
+                .orElseThrow(() -> new CustomException(ExceptionCode.INVALID_ADMIN_USERNAME));
 
         // 비밀번호가 맞는지
         if (findAdmin.checkPassword(admin.getPassword(), passwordEncoder)) {
@@ -26,6 +29,29 @@ public class AuthService {
                     .accessToken(jwtTokenProvider.createAccessToken(findAdmin.getUsername(), findAdmin.getRoles()))
                     .username(findAdmin.getUsername())
                     .build();
-        } else throw new IllegalArgumentException("관리자 계정 비밀번호가 아닙니다.");
+        } else throw new CustomException(ExceptionCode.INVALID_ADMIN_PASSWORD);
+    }
+
+    public RefreshResponseDto refresh(String token) {
+        if (token != null && jwtTokenProvider.validateToken(token)) {
+            String username = jwtTokenProvider.getUsername(token);
+
+            Admin findAdmin = authRepository.findByUsername(username)
+                    .orElseThrow(() -> new CustomException(ExceptionCode.INVALID_RT_COOKIE));
+
+            // 엑세스토큰 유저정보 응답
+            RefreshResponseDto refreshResponseDto = RefreshResponseDto.builder()
+                    .accessToken(jwtTokenProvider.createAccessToken(findAdmin.getUsername(), findAdmin.getRoles()))
+                    .username(findAdmin.getUsername())
+                    .build();
+
+            return refreshResponseDto;
+        } else {
+            RefreshResponseDto refreshResponseDto = RefreshResponseDto.builder()
+                    .accessToken("")
+                    .username("")
+                    .build();
+            return refreshResponseDto;
+        }
     }
 }
