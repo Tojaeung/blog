@@ -23,6 +23,7 @@ bin/
 **/application-prod.properties
 **/data.sql
 **/log
+**/schema.sql
 
 .idea
 *.iws
