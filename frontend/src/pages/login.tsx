@@ -6,7 +6,7 @@ import wrapper from 'apps/store';
 import { login, refresh } from 'features/auth/authThunk';
 import { useAppDispatch } from 'hooks/useRtkCustomHook';
 
-const Admin: NextPage = () => {
+const Login: NextPage = () => {
   const dispatch = useAppDispatch();
 
   const [username, setUsername] = useState('');
@@ -80,4 +80,4 @@ const LoginButton = styled.button`
   padding: 5px;
 `;
 
-export default Admin;
+export default Login;
