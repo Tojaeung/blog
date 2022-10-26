@@ -1,16 +1,11 @@
-import type { AppContext, AppProps } from 'next/app';
+import type { AppProps } from 'next/app';
 import { ThemeProvider } from 'styled-components';
 import { GlobalStyles } from 'styles/globalStyle';
 import { lightTheme } from 'styles/theme';
 import { Provider } from 'react-redux';
 import wrapper from 'apps/store';
-import { GetServerSideProps } from 'next';
-import { refresh } from 'features/auth/authThunk';
-import { useAppDispatch } from 'hooks/useRtkCustomHook';
-import { useEffect } from 'react';
-import cookies from 'next-cookies';
-import axios from 'axios';
-import { Cookies } from 'react-cookie';
+import Header from 'layouts/Header';
+import Footer from 'layouts/Footer';
 
 function MyApp({ Component, ...rest }: AppProps) {
   const { store, props } = wrapper.useWrappedStore(rest);
@@ -19,7 +14,9 @@ function MyApp({ Component, ...rest }: AppProps) {
     <Provider store={store}>
       <ThemeProvider theme={lightTheme}>
         <GlobalStyles />
+        <Header />
         <Component {...props.pageProps} />;
+        <Footer />
       </ThemeProvider>
     </Provider>
   );

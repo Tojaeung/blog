@@ -2,7 +2,8 @@ import { configureStore, Reducer, AnyAction, ThunkAction, Action, CombinedState 
 import { HYDRATE, createWrapper } from 'next-redux-wrapper';
 import { combineReducers } from 'redux';
 
-import authSlice, { AuthState } from 'features/auth/authSlice';
+import authSlice from 'features/auth/authSlice';
+import { AuthState } from 'features/auth/type';
 
 // ### 리듀서 State 타입 정의
 interface ReducerStates {
