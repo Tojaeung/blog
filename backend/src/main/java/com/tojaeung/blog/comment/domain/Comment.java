@@ -1,11 +1,9 @@
-package com.tojaeung.blog.post.domain;
+package com.tojaeung.blog.comment.domain;
 
-import com.tojaeung.blog.category.domain.Category;
-import com.tojaeung.blog.comment.domain.Comment;
+import com.tojaeung.blog.post.domain.Post;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -17,27 +15,28 @@ import java.util.List;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-@EntityListeners(AuditingEntityListener.class)
-public class Post {
+public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "post_id")
+    @Column(name = "comment_id")
     private Long id;
+
     @Column
-    private String title;
+    private String author;
+
     @Column
     private String desc;
-    @Column
-    private String views;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "category_id")
-    private Category category;
+    @JoinColumn(name = "post_id")
+    private Post post;
 
-    @OneToMany(mappedBy = "comment"
-            , fetch = FetchType.LAZY
-            , orphanRemoval = true)
-    List<Comment> comments = new ArrayList<>();
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "parent_id")
+    private Comment parent;
+
+    @OneToMany(mappedBy = "parent", orphanRemoval = true)
+    private List<Comment> children = new ArrayList<>();
 
     @CreatedDate
     @Column(name = "created_at", nullable = false, updatable = false)

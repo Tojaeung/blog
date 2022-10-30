@@ -22,7 +22,6 @@ public class Category {
 
     @OneToMany(mappedBy = "post"
             , fetch = FetchType.LAZY
-            , cascade = CascadeType.REMOVE
             , orphanRemoval = true)
     List<Post> posts = new ArrayList<>();
 }
