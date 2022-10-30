@@ -5,7 +5,7 @@ import com.tojaeung.blog.category.repository.CategoryRepository;
 import com.tojaeung.blog.exception.CustomException;
 import com.tojaeung.blog.exception.ExceptionCode;
 import com.tojaeung.blog.post.domain.Post;
-import com.tojaeung.blog.post.dto.PostDto;
+import com.tojaeung.blog.post.dto.NewPostDto;
 import com.tojaeung.blog.post.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,7 +17,7 @@ public class PostService {
     private final CategoryRepository categoryRepository;
 
     // 포스팅 생성
-    public Post create(String name, PostDto postDto) {
+    public Post create(String name, NewPostDto postDto) {
         Category category = categoryRepository.findByName(name)
                 .orElseThrow(() -> new CustomException(ExceptionCode.NOT_FOUND_CATEGORY));
 

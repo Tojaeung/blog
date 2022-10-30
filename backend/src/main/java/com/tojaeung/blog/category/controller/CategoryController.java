@@ -1,7 +1,7 @@
 package com.tojaeung.blog.category.controller;
 
 import com.tojaeung.blog.category.domain.Category;
-import com.tojaeung.blog.category.dto.CategoryDto;
+import com.tojaeung.blog.category.dto.NewCategoryDto;
 import com.tojaeung.blog.category.service.CategoryService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -19,9 +20,9 @@ public class CategoryController {
 
     // 카테고리 새로 생성
     @PostMapping("admin/category")
-    public ResponseEntity<Category> create(@RequestBody CategoryDto categoryDto) {
+    public ResponseEntity<Category> create(@Valid @RequestBody NewCategoryDto newCategoryDto) {
         Category category = Category.builder()
-                .name(categoryDto.getName())
+                .name(newCategoryDto.getName())
                 .build();
 
         Category newCategory = categoryService.create(category);

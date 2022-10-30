@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequiredArgsConstructor
 @Slf4j
@@ -17,7 +19,7 @@ public class CommentController {
 
     // 댓글 새로 생성
     @PostMapping("api/post/{postId}/comment")
-    public ResponseEntity<Comment> create(@PathVariable Long postId, @RequestBody NewCommentDto newCommentDto) {
+    public ResponseEntity<Comment> create(@PathVariable Long postId, @Valid @RequestBody NewCommentDto newCommentDto) {
         Comment newComment = commentService.create(postId, newCommentDto);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(newComment);

@@ -1,13 +1,15 @@
 package com.tojaeung.blog.post.controller;
 
 import com.tojaeung.blog.post.domain.Post;
-import com.tojaeung.blog.post.dto.PostDto;
+import com.tojaeung.blog.post.dto.NewPostDto;
 import com.tojaeung.blog.post.service.PostService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @RestController
 @RequiredArgsConstructor
@@ -17,8 +19,8 @@ public class PostController {
 
     // 포스팅 새로 생성
     @PostMapping("admin/category/{name}/post")
-    public ResponseEntity<Post> create(@PathVariable String name, @RequestBody PostDto postDto) {
-        Post post = postService.create(name, postDto);
+    public ResponseEntity<Post> create(@PathVariable String name, @Valid @RequestBody NewPostDto newPostDto) {
+        Post post = postService.create(name, newPostDto);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(post);
     }
