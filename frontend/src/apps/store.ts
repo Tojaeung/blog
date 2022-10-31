@@ -3,11 +3,14 @@ import { HYDRATE, createWrapper } from 'next-redux-wrapper';
 import { combineReducers } from 'redux';
 
 import authSlice from 'features/auth/authSlice';
+import categorySlice from 'features/category/categorySlice';
 import { AuthState } from 'features/auth/type';
+import { CategoryState } from 'features/category/type';
 
 // ### 리듀서 State 타입 정의
 interface ReducerStates {
   auth: AuthState;
+  category: CategoryState;
 }
 
 // ### 루트 리듀서 생성
@@ -24,6 +27,7 @@ const rootReducer = (state: ReducerStates, action: AnyAction): CombinedState<Red
     default: {
       const combinedReducer = combineReducers({
         auth: authSlice.reducer,
+        category: categorySlice.reducer,
       });
       return combinedReducer(state, action);
     }
