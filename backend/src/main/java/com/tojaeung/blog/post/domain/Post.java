@@ -29,12 +29,14 @@ public class Post {
     private String desc;
     @Column
     private String views;
+    @Column
+    private String thumbnail;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
     private Category category;
 
-    @OneToMany(mappedBy = "comment"
+    @OneToMany(mappedBy = "post"
             , fetch = FetchType.LAZY
             , orphanRemoval = true)
     List<Comment> comments = new ArrayList<>();

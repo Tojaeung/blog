@@ -20,7 +20,7 @@ public class Category {
     @Column
     private String name;
 
-    @OneToMany(mappedBy = "post"
+    @OneToMany(mappedBy = "category"
             , fetch = FetchType.LAZY
             , orphanRemoval = true)
     List<Post> posts = new ArrayList<>();

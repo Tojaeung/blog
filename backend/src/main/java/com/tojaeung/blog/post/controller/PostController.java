@@ -1,10 +1,10 @@
 package com.tojaeung.blog.post.controller;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import com.tojaeung.blog.post.domain.Post;
 import com.tojaeung.blog.post.dto.NewPostDto;
 import com.tojaeung.blog.post.service.PostService;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
