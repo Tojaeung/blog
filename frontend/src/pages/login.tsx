@@ -1,7 +1,6 @@
 import type { GetServerSideProps, NextPage } from 'next';
 import { useState } from 'react';
 import axios from 'axios';
-import styled from 'styled-components';
 import wrapper from 'apps/store';
 import { login, refresh } from 'features/auth/authThunk';
 import { useAppDispatch } from 'hooks/useRtkCustomHook';
@@ -44,6 +43,9 @@ export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps
   return { props: { message: 'Message from SSR' } };
 });
 
+import styled from 'styled-components';
+import { CommonButtonStyle, CommonInputStyle, CommonTitleStyle } from 'styles/globalStyle';
+
 const Container = styled.div`
   width: 500px;
   padding: 20px;
@@ -54,10 +56,7 @@ const Container = styled.div`
   align-items: center;
   gap: 20px;
 `;
-const Title = styled.h1`
-  font-size: 25px;
-  font-weight: bold;
-`;
+const Title = styled(CommonTitleStyle)``;
 
 const LoginBox = styled.div`
   display: flex;
@@ -65,19 +64,8 @@ const LoginBox = styled.div`
   align-items: center;
   gap: 10px;
 `;
-const IdInput = styled.input`
-  outline: none;
-  border-radius: 5px;
-  padding: 5px;
-`;
-const PwInput = styled.input`
-  outline: none;
-  border-radius: 5px;
-  padding: 5px;
-`;
-const LoginButton = styled.button`
-  width: 100%;
-  padding: 5px;
-`;
+const IdInput = styled(CommonInputStyle)``;
+const PwInput = styled(CommonInputStyle)``;
+const LoginButton = styled(CommonButtonStyle)``;
 
 export default Login;

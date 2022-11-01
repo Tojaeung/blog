@@ -4,8 +4,6 @@ import { useState, useRef, useEffect, ChangeEvent } from 'react';
 import axios from 'axios';
 import wrapper from 'apps/store';
 import { refresh } from 'features/auth/authThunk';
-import { getCategorys } from 'features/category/categoryThunk';
-import { Container, EditorBox, TitleInput, ThumbnailInput, SubmitButton } from './style';
 import CategorySelector from 'components/CategorySelector';
 import { createPost } from 'features/post/postThunk';
 
@@ -86,17 +84,27 @@ export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps
     // };
   }
 
-  // 카테고리 정보 없다면 가져오기
-  const { categorys } = store.getState().category;
-  if (categorys.length === 0) {
-    try {
-      await store.dispatch(getCategorys());
-    } catch (e) {
-      alert('카테고리 가져오기 오류');
-    }
-  }
-
   return { props: { message: 'Message from SSR' } };
 });
+
+import styled from 'styled-components';
+import { CommonButtonStyle, CommonInputStyle } from 'styles/globalStyle';
+
+const Container = styled.div`
+  width: 800px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin: 0 auto;
+`;
+const TitleInput = styled(CommonInputStyle)``;
+const ThumbnailInput = styled.input``;
+
+const EditorBox = styled.div`
+  width: 800px;
+  height: 400px;
+`;
+
+const SubmitButton = styled(CommonButtonStyle)``;
 
 export default Post;

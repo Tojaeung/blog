@@ -1,92 +1,17 @@
 import { GetServerSideProps, NextPage } from 'next';
-import React, { useState, MouseEvent } from 'react';
+import { useRouter } from 'next/router';
+import React from 'react';
 import axios from 'axios';
 import wrapper from 'apps/store';
 import { refresh } from 'features/auth/authThunk';
-import { createCategory, deleteCategory, getCategorys, updateCategory } from 'features/category/categoryThunk';
-import { selectCategorys } from 'features/category/categorySlice';
-import { useAppDispatch, useAppSelector } from 'hooks/useRtkCustomHook';
-import {
-  Container,
-  CategoryBox,
-  CategoryList,
-  Name,
-  Count,
-  InfoBox,
-  UpdateBox,
-  CreateButton,
-  UpdateButton,
-  DeleteButton,
-  Title,
-  CreateBox,
-  CreateInput,
-  UpdateInput,
-} from './style';
-import { CategoryType } from 'features/category/type';
-
-const categorys: CategoryType[] = [
-  { id: 1, name: '스프링', postCnt: 5 },
-  { id: 2, name: '데이터', postCnt: 2 },
-  { id: 3, name: '나다', postCnt: 2 },
-  { id: 4, name: '알고리즘', postCnt: 5 },
-];
 
 const Admin: NextPage = () => {
-  // const categorys = useAppSelector(selectCategorys);
-  const dispatch = useAppDispatch();
-
-  const [newCategory, setNewCategory] = useState('');
-  const [updatedCategory, setUpdatedCategory] = useState('');
-
-  const handleCreate = async () => {
-    try {
-      await dispatch(createCategory({ name: newCategory }));
-    } catch (e) {}
-  };
-
-  const handleDelete = async (categoryId: number) => {
-    await dispatch(deleteCategory({ categoryId }));
-    try {
-    } catch (e) {}
-  };
-
-  const handleUpdate = async (categoryId: number) => {
-    try {
-      await dispatch(updateCategory({ categoryId, updatedName: updatedCategory }));
-    } catch (e) {}
-  };
+  const router = useRouter();
 
   return (
     <Container>
-      <Title>카테고리 편집</Title>
-      <CreateBox>
-        <CreateInput
-          placeholder="새 카테고리 입력"
-          onChange={(e) => {
-            setNewCategory(e.target.value);
-          }}
-        />
-        <CreateButton onClick={handleCreate}>카테고리 생성</CreateButton>
-      </CreateBox>
-
-      <CategoryBox>
-        {categorys.map((category) => {
-          return (
-            <CategoryList key={category.id}>
-              <InfoBox>
-                <Name>{category.name}</Name>
-                <Count>{category.postCnt}개</Count>
-                <DeleteButton onClick={(e) => handleDelete(category.id)}>삭제</DeleteButton>
-              </InfoBox>
-
-              <UpdateBox>
-                <UpdateInput placeholder="카테고리 이름 변경" onChange={(e) => setUpdatedCategory(e.target.value)} />
-                <UpdateButton onClick={(e) => handleUpdate(category.id)}>업데이트</UpdateButton>
-              </UpdateBox>
-            </CategoryList>
-          );
-        })}
-      </CategoryBox>
+      <GoCategory onClick={(e) => router.push('/admin/category')}>카테고리 수정 하러가기</GoCategory>
+      <GoPost onClick={(e) => router.push('/admin/post')}>포스팅 하러가기</GoPost>
     </Container>
   );
 };
@@ -120,18 +45,19 @@ export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps
     //   },
     // };
   }
-
-  // 카테고리 정보 없다면 가져오기
-  const { categorys } = store.getState().category;
-  if (categorys.length === 0) {
-    try {
-      await store.dispatch(getCategorys());
-    } catch (e) {
-      alert('카테고리 가져오기 오류');
-    }
-  }
-
   return { props: { message: 'Message from SSR' } };
 });
+
+import styled from 'styled-components';
+import { CommonButtonStyle } from 'styles/globalStyle';
+
+const Container = styled.div`
+  width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  gap: 20px;
+`;
+const GoCategory = styled(CommonButtonStyle)``;
+const GoPost = styled(CommonButtonStyle)``;
 
 export default Admin;
