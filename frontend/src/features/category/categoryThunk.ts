@@ -12,11 +12,12 @@ import {
   updateCategoryReturnType,
 } from './type';
 import { selectAuthAccessToken } from 'features/auth/authSlice';
+import { ErrorType } from 'interfaces/error';
 
 export const createCategory = createAsyncThunk<
   createCategoryReturnType,
   createCategoryParamType,
-  { state: RootState; rejectValue: { msg: string } }
+  { state: RootState; rejectValue: ErrorType }
 >('category/create', async (data, thunkApi) => {
   try {
     const accessToken = useAppSelector(selectAuthAccessToken);
@@ -35,7 +36,7 @@ export const createCategory = createAsyncThunk<
 export const getCategorys = createAsyncThunk<
   getCategorysReturnType,
   void,
-  { state: RootState; rejectValue: { msg: string } }
+  { state: RootState; rejectValue: ErrorType }
 >('category/get', async (data, thunkApi) => {
   try {
     const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/category`, {
@@ -50,7 +51,7 @@ export const getCategorys = createAsyncThunk<
 export const updateCategory = createAsyncThunk<
   updateCategoryReturnType,
   updateCategoryParamType,
-  { state: RootState; rejectValue: { msg: string } }
+  { state: RootState; rejectValue: ErrorType }
 >('category/update', async (data, thunkApi) => {
   const accessToken = useAppSelector(selectAuthAccessToken);
   try {
@@ -70,7 +71,7 @@ export const updateCategory = createAsyncThunk<
 export const deleteCategory = createAsyncThunk<
   deleteCategoryReturnType,
   deleteCategoryParamType,
-  { state: RootState; rejectValue: { msg: string } }
+  { state: RootState; rejectValue: ErrorType }
 >('category/delete', async (data, thunkApi) => {
   const accessToken = useAppSelector(selectAuthAccessToken);
   try {

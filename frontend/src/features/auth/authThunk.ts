@@ -4,21 +4,21 @@ import axios from 'axios';
 import { useAppSelector } from 'hooks/useRtkCustomHook';
 import { selectAuthAccessToken, selectAuthUsername } from './authSlice';
 import { LoginParamType, LoginReturnType, RefreshParamType, RefreshReturnType } from './type';
+import { ErrorType } from 'interfaces/error';
 
-export const login = createAsyncThunk<
-  LoginReturnType,
-  LoginParamType,
-  { state: RootState; rejectValue: { msg: string } }
->('auth/login', async (data, thunkApi) => {
-  try {
-    const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/login`, data, { withCredentials: true });
-    return res.data;
-  } catch (err: any) {
-    return thunkApi.rejectWithValue(err.response.data);
-  }
-});
+export const login = createAsyncThunk<LoginReturnType, LoginParamType, { state: RootState; rejectValue: ErrorType }>(
+  'auth/login',
+  async (data, thunkApi) => {
+    try {
+      const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/login`, data, { withCredentials: true });
+      return res.data;
+    } catch (err: any) {
+      return thunkApi.rejectWithValue(err.response.data);
+    }
+  },
+);
 
-export const refresh = createAsyncThunk<RefreshReturnType, void, { state: RootState; rejectValue: { msg: string } }>(
+export const refresh = createAsyncThunk<RefreshReturnType, void, { state: RootState; rejectValue: ErrorType }>(
   'auth/refresh',
   async (data, thunkApi) => {
     try {
@@ -32,7 +32,7 @@ export const refresh = createAsyncThunk<RefreshReturnType, void, { state: RootSt
   },
 );
 
-export const test = createAsyncThunk<String, void, { state: RootState; rejectValue: { msg: string } }>(
+export const test = createAsyncThunk<String, void, { state: RootState; rejectValue: ErrorType }>(
   'auth/test',
   async (data, thunkApi) => {
     const accessToken = useAppSelector(selectAuthAccessToken);

@@ -15,11 +15,12 @@ import {
   deletePostReturnType,
   deletePostParamType,
 } from './type';
+import { ErrorType } from 'interfaces/error';
 
 export const createPost = createAsyncThunk<
   createPostReturnType,
   createPostParamType,
-  { state: RootState; rejectValue: { msg: string } }
+  { state: RootState; rejectValue: ErrorType }
 >('post/create', async (data, thunkApi) => {
   try {
     const accessToken = useAppSelector(selectAuthAccessToken);
@@ -39,7 +40,7 @@ export const createPost = createAsyncThunk<
 export const getPosts = createAsyncThunk<
   getPostsReturnType,
   getPostsParamType,
-  { state: RootState; rejectValue: { msg: string } }
+  { state: RootState; rejectValue: ErrorType }
 >('post/getAll', async (data, thunkApi) => {
   try {
     const { category } = data;
@@ -55,7 +56,7 @@ export const getPosts = createAsyncThunk<
 export const getPost = createAsyncThunk<
   getPostReturnType,
   getPostParamType,
-  { state: RootState; rejectValue: { msg: string } }
+  { state: RootState; rejectValue: ErrorType }
 >('post/getOne', async (data, thunkApi) => {
   try {
     const { postId } = data;
@@ -71,7 +72,7 @@ export const getPost = createAsyncThunk<
 export const updatePost = createAsyncThunk<
   updatePostReturnType,
   updatePostParamType,
-  { state: RootState; rejectValue: { msg: string } }
+  { state: RootState; rejectValue: ErrorType }
 >('post/update', async (data, thunkApi) => {
   const accessToken = useAppSelector(selectAuthAccessToken);
   try {
@@ -91,7 +92,7 @@ export const updatePost = createAsyncThunk<
 export const deletePost = createAsyncThunk<
   deletePostReturnType,
   deletePostParamType,
-  { state: RootState; rejectValue: { msg: string } }
+  { state: RootState; rejectValue: ErrorType }
 >('post/delete', async (data, thunkApi) => {
   const accessToken = useAppSelector(selectAuthAccessToken);
   try {
