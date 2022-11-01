@@ -1,14 +1,14 @@
 import styled from 'styled-components';
+import { CommonButtonStyle, CommonInputStyle } from 'styles/globalStyle';
 
 export const Container = styled.div`
   width: 800px;
   display: flex;
   flex-direction: column;
   gap: 20px;
-
   margin: 0 auto;
 `;
-export const TitleInput = styled.input``;
+export const TitleInput = styled(CommonInputStyle)``;
 export const ThumbnailInput = styled.input``;
 
 export const EditorBox = styled.div`
@@ -16,4 +16,4 @@ export const EditorBox = styled.div`
   height: 400px;
 `;
 
-export const SubmitButton = styled.button``;
+export const SubmitButton = styled(CommonButtonStyle)``;

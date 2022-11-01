@@ -19,9 +19,15 @@ const Header = () => {
       </SearchBox>
 
       <MenuBox>
-        <MenuList>About Me</MenuList>
-        <MenuList>Blog</MenuList>
-        <MenuList>Contact</MenuList>
+        <Link href="/about">
+          <MenuList>About Me</MenuList>
+        </Link>
+        <Link href="/blog">
+          <MenuList>Blog</MenuList>
+        </Link>
+        <Link href="/contact">
+          <MenuList>Contact</MenuList>
+        </Link>
       </MenuBox>
     </Container>
   );
