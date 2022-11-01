@@ -3,7 +3,7 @@ interface CategoryType {
   name: string;
 }
 
-interface PostType {
+export type PostType = {
   id: number;
   title: string;
   content: string;
@@ -12,11 +12,15 @@ interface PostType {
   category: CategoryType;
   createdAt: Date;
   lastModifiedAt: Date;
-}
+};
+
+export type PostState = {
+  posts: PostType[];
+};
 
 //////// thunk //////////////
 export type createPostReturnType = {
-  newPost: PostType;
+  post: PostType;
 };
 
 export type createPostParamType = {
@@ -24,17 +28,29 @@ export type createPostParamType = {
   formData: FormData;
 };
 
+export type getPostsReturnType = {
+  posts: PostType[];
+};
+
+export type getPostsParamType = {
+  category: string;
+};
+
 export type getPostReturnType = {
-  categorys: CategoryType[];
+  post: PostType;
+};
+
+export type getPostParamType = {
+  postId: number;
 };
 
 export type updatePostReturnType = {
-  updatedCategory: CategoryType;
+  updatedPost: PostType;
 };
 
 export type updatePostParamType = {
-  categoryId: number;
-  updatedName: string;
+  postId: number;
+  formData: FormData;
 };
 
 export type deletePostReturnType = {

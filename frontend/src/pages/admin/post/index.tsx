@@ -1,13 +1,13 @@
 import { GetServerSideProps, NextPage } from 'next';
 import dynamic from 'next/dynamic';
-import { useState, useRef, useEffect, ChangeEvent, MouseEvent } from 'react';
+import { useState, useRef, useEffect, ChangeEvent } from 'react';
 import axios from 'axios';
 import wrapper from 'apps/store';
 import { refresh } from 'features/auth/authThunk';
 import { getCategorys } from 'features/category/categoryThunk';
 import { Container, EditorBox, TitleInput, ThumbnailInput, SubmitButton } from './style';
 import CategorySelector from 'components/CategorySelector';
-import { createPost } from 'features/post/categoryThunk';
+import { createPost } from 'features/post/postThunk';
 
 const Editor = dynamic(() => import('components/Editor'), { ssr: false }); // client 사이드에서만 동작되기 때문에 ssr false로 설정
 
