@@ -28,6 +28,10 @@ export type createPostParamType = {
   formData: FormData;
 };
 
+export type getPostsTop5ReturnType = {
+  posts: PostType[];
+};
+
 export type getPostsReturnType = {
   posts: PostType[];
 };

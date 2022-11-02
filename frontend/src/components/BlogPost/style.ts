@@ -1,37 +1,25 @@
 import styled from 'styled-components';
-import { CommonTextStyle, CommonTitleStyle } from 'styles/globalStyle';
+import { CommonTextStyle } from 'styles/globalStyle';
 
 export const PostBox = styled.ul`
-  width: 85%;
+  width: 100%;
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
   gap: 20px;
 `;
 
 export const PostList = styled.li`
-  width: 100%;
-  height: 200px;
+  width: 32.22%;
+  height: 500px;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border: 1px solid;
+  flex-direction: column;
+  gap: 10px;
   border-radius: 10px;
+  border: 1px solid;
   cursor: pointer;
   padding: 20px;
 `;
 
-export const ImageBox = styled.div`
-  width: 20%;
-`;
-
-export const TextBox = styled.div`
-  width: 80%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  justify-content: space-between;
-`;
 export const Title = styled(CommonTextStyle)`
   font-size: 23px;
   font-weight: bold;

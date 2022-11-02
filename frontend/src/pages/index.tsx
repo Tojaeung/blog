@@ -2,8 +2,10 @@ import type { GetServerSideProps, NextPage } from 'next';
 import axios from 'axios';
 import wrapper from 'apps/store';
 import { refresh } from 'features/auth/authThunk';
-import { getPosts } from 'features/post/postThunk';
+import { getPostsTop5 } from 'features/post/postThunk';
 import { getCategorys } from 'features/category/categoryThunk';
+import { selectPosts } from 'features/post/postSlice';
+import { useAppSelector } from 'hooks/useRtkCustomHook';
 import Intro from 'components/Intro';
 import HomePost from 'components/HomePost';
 import HomeCategory from 'components/HomeCategory';
@@ -15,6 +17,7 @@ const Home: NextPage = () => {
     <Container>
       <Intro />
 
+      <Title>가장 인기있는 포스팅 Top5</Title>
       <Box>
         <HomePost />
         <HomeCategory />
@@ -48,15 +51,14 @@ export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps
   } catch (e) {}
 
   try {
-    await store.dispatch(getPosts());
+    await store.dispatch(getPostsTop5());
   } catch (e) {}
 
   return { props: {} };
 });
 
 import styled from 'styled-components';
-import { useAppSelector } from 'hooks/useRtkCustomHook';
-import { selectPosts } from 'features/post/postSlice';
+import { CommonTitleStyle } from 'styles/globalStyle';
 
 const Container = styled.div`
   width: 1200px;
@@ -73,5 +75,7 @@ const Box = styled.div`
   align-items: center;
   gap: 30px;
 `;
+
+const Title = styled(CommonTitleStyle)``;
 
 export default Home;

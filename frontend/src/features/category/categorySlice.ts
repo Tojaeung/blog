@@ -48,5 +48,13 @@ const categorySlice = createSlice({
 });
 
 export const selectCategorys = (state: RootState) => state.category.categorys;
+export const selectAllPostsCnt = (state: RootState): number => {
+  let allPostsCnt = 0;
+  state.category.categorys.map((category) => {
+    allPostsCnt += category.postCnt;
+  });
+
+  return allPostsCnt;
+};
 
 export default categorySlice;

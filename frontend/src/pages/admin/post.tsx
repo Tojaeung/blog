@@ -4,8 +4,8 @@ import { useState, useRef, useEffect, ChangeEvent } from 'react';
 import axios from 'axios';
 import wrapper from 'apps/store';
 import { refresh } from 'features/auth/authThunk';
-import CategorySelector from 'components/CategorySelector';
 import { createPost } from 'features/post/postThunk';
+import { categorys } from 'constants/practice';
 
 const Editor = dynamic(() => import('components/Editor'), { ssr: false }); // client 사이드에서만 동작되기 때문에 ssr false로 설정
 
@@ -42,7 +42,13 @@ const Post: NextPage = () => {
 
   return (
     <Container>
-      <CategorySelector category={category} setCategory={setCategory} />
+      <Selector onChange={(e) => setCategory(e.target.value)} value={category}>
+        {categorys.map((category) => (
+          <Option value={category.name} key={category.id}>
+            {category.name} {category.postCnt}개
+          </Option>
+        ))}
+      </Selector>
       <TitleInput placeholder="포스팅 제목" onChange={(e) => setTitle(e.target.value)} />
       <EditorBox>
         <Editor htmlStr={content} setHtmlStr={setContent} />
@@ -88,7 +94,7 @@ export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps
 });
 
 import styled from 'styled-components';
-import { CommonButtonStyle, CommonInputStyle } from 'styles/globalStyle';
+import { CommonButtonStyle, CommonInputStyle, CommonSelectStyle, CommonOptionStyle } from 'styles/globalStyle';
 
 const Container = styled.div`
   width: 800px;
@@ -97,6 +103,9 @@ const Container = styled.div`
   gap: 20px;
   margin: 0 auto;
 `;
+export const Selector = styled(CommonSelectStyle)``;
+export const Option = styled(CommonOptionStyle)``;
+
 const TitleInput = styled(CommonInputStyle)``;
 const ThumbnailInput = styled.input``;
 

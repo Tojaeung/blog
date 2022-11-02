@@ -1,17 +1,15 @@
 import styled from 'styled-components';
-import { CommonButtonStyle } from 'styles/globalStyle';
 
-export const Container = styled.div`
-  width: 1200px;
-  margin: 10px auto;
+export const CategoryBadge = styled.ul`
+  width: 100%;
   display: flex;
+  align-items: center;
   gap: 20px;
+  flex-wrap: wrap;
 `;
-export const CategoryBadge = styled.div`
+export const Category = styled.li`
+  font-size: 14px;
   background-color: yellow;
   padding: 10px;
-  border-radius: 10px;
-`;
-export const Category = styled.span`
-  font-size: 14px;
+  border-radius: 5px;
 `;

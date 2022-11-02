@@ -1,29 +1,24 @@
 import Link from 'next/link';
-import React, { useEffect } from 'react';
-import { getCategorys } from 'features/category/categoryThunk';
+import React from 'react';
 import { selectCategorys } from 'features/category/categorySlice';
-import { CategoryType } from 'features/category/type';
-import { useAppDispatch, useAppSelector } from 'hooks/useRtkCustomHook';
+import { useAppSelector } from 'hooks/useRtkCustomHook';
 
-import { Category, CategoryBadge, Container } from './style';
+import { Category, CategoryBadge } from './style';
 import { categorys } from 'constants/practice';
 
 function BlogCategory() {
-  const dispatch = useAppDispatch();
   // const categorys = useAppSelector(selectCategorys);
 
   return (
-    <Container>
+    <CategoryBadge>
       {categorys.map((category) => (
         <Link href={`도메인주소/category/${category.name}`} key={category.id}>
-          <CategoryBadge>
-            <Category>
-              {category.name} ({category.postCnt})
-            </Category>
-          </CategoryBadge>
+          <Category>
+            {category.name} ({category.postCnt})
+          </Category>
         </Link>
       ))}
-    </Container>
+    </CategoryBadge>
   );
 }
 
