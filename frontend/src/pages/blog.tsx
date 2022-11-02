@@ -61,7 +61,7 @@ import styled from 'styled-components';
 import { CommonTitleStyle } from 'styles/globalStyle';
 
 const Container = styled.div`
-  width: 1200px;
+  width: 100%;
   margin: 0 auto;
   display: flex;
   flex-direction: column;

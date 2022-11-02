@@ -97,7 +97,7 @@ import styled from 'styled-components';
 import { CommonButtonStyle, CommonInputStyle, CommonSelectStyle, CommonOptionStyle } from 'styles/globalStyle';
 
 const Container = styled.div`
-  width: 800px;
+  width: 100%;
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -110,7 +110,7 @@ const TitleInput = styled(CommonInputStyle)``;
 const ThumbnailInput = styled.input``;
 
 const EditorBox = styled.div`
-  width: 800px;
+  width: 100%;
   height: 400px;
 `;
 

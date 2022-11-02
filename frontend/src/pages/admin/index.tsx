@@ -52,7 +52,7 @@ import styled from 'styled-components';
 import { CommonButtonStyle } from 'styles/globalStyle';
 
 const Container = styled.div`
-  width: 1200px;
+  width: 100%;
   margin: 0 auto;
   display: flex;
   gap: 20px;
