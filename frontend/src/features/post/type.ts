@@ -10,8 +10,8 @@ export type PostType = {
   views: number;
   thumbnail: string;
   category: CategoryType;
-  createdAt: Date;
-  lastModifiedAt: Date;
+  createdAt: string;
+  lastModifiedAt: string;
 };
 
 export type PostState = {
@@ -33,6 +33,14 @@ export type getPostsReturnType = {
 };
 
 export type getPostsParamType = {
+  category: string;
+};
+
+export type getPostsInCategoryReturnType = {
+  posts: PostType[];
+};
+
+export type getPostsInCategoryParamType = {
   category: string;
 };
 

@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { RootState } from 'apps/store';
-import { createPost, deletePost, getPosts, updatePost } from './postThunk';
+import { createPost, deletePost, getPosts, getPostsInCategory, updatePost } from './postThunk';
 import { PostState } from './type';
 
 const initialState: PostState = {
@@ -25,6 +25,14 @@ const postSlice = createSlice({
         state.posts = payload.posts;
       })
       .addCase(getPosts.rejected, (state) => {
+        state.posts = [];
+      });
+
+    builder
+      .addCase(getPostsInCategory.fulfilled, (state, { payload }) => {
+        state.posts = payload.posts;
+      })
+      .addCase(getPostsInCategory.rejected, (state) => {
         state.posts = [];
       });
 

@@ -8,6 +8,8 @@ import {
   createPostParamType,
   getPostsReturnType,
   getPostsParamType,
+  getPostsInCategoryParamType,
+  getPostsInCategoryReturnType,
   getPostParamType,
   getPostReturnType,
   updatePostParamType,
@@ -37,11 +39,25 @@ export const createPost = createAsyncThunk<
   }
 });
 
-export const getPosts = createAsyncThunk<
-  getPostsReturnType,
-  getPostsParamType,
+export const getPosts = createAsyncThunk<getPostsReturnType, void, { state: RootState; rejectValue: ErrorType }>(
+  'post/getAll',
+  async (data, thunkApi) => {
+    try {
+      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/post`, {
+        withCredentials: true,
+      });
+      return res.data;
+    } catch (err: any) {
+      return thunkApi.rejectWithValue(err.response.data);
+    }
+  },
+);
+
+export const getPostsInCategory = createAsyncThunk<
+  getPostsInCategoryReturnType,
+  getPostsInCategoryParamType,
   { state: RootState; rejectValue: ErrorType }
->('post/getAll', async (data, thunkApi) => {
+>('post/getPostsInCategory', async (data, thunkApi) => {
   try {
     const { category } = data;
     const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/category/${category}`, {

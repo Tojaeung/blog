@@ -3,13 +3,7 @@ import { selectCategorys } from 'features/category/categorySlice';
 import { CategoryType } from 'features/category/type';
 import { useAppSelector } from 'hooks/useRtkCustomHook';
 import { Selector, Option } from './style';
-
-const categorys: CategoryType[] = [
-  { id: 1, name: '스프링', postCnt: 5 },
-  { id: 2, name: '데이터', postCnt: 2 },
-  { id: 3, name: '나다', postCnt: 2 },
-  { id: 4, name: '알고리즘', postCnt: 5 },
-];
+import { categorys } from 'constants/practice';
 
 interface IProps {
   category: string;

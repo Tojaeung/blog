@@ -7,13 +7,7 @@ import { createCategory, deleteCategory, getCategorys, updateCategory } from 'fe
 import { CategoryType } from 'features/category/type';
 import { selectCategorys } from 'features/category/categorySlice';
 import { useAppDispatch, useAppSelector } from 'hooks/useRtkCustomHook';
-
-const categorys: CategoryType[] = [
-  { id: 1, name: '스프링', postCnt: 5 },
-  { id: 2, name: '데이터', postCnt: 2 },
-  { id: 3, name: '나다', postCnt: 2 },
-  { id: 4, name: '알고리즘', postCnt: 5 },
-];
+import { categorys } from 'constants/practice';
 
 const Category: NextPage = () => {
   // const categorys = useAppSelector(selectCategorys);
