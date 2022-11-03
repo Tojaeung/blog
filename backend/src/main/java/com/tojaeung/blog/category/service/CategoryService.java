@@ -48,7 +48,7 @@ public class CategoryService {
             throw new CustomException(ExceptionCode.NOT_FOUND_CATEGORY);
         } else {
             Category updatedCategory = categoryRepository.save(category);
-            
+
             return new CategoryResponseDto(updatedCategory);
         }
     }

@@ -31,6 +31,11 @@ public class Admin implements UserDetails {
     @Builder.Default
     private List<String> roles = new ArrayList<>(); // null값 방지
 
+    public Admin(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return this.roles.stream()

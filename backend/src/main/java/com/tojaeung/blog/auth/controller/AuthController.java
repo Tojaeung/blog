@@ -28,11 +28,7 @@ public class AuthController {
     // 로그인
     @PostMapping("/login")
     public ResponseEntity<LoginResponseDto> login(@Valid @RequestBody LoginDto loginDto) {
-        Admin admin = Admin.builder()
-                .username(loginDto.getUsername())
-                .password(loginDto.getPassword())
-                .build();
-
+        Admin admin = new Admin(loginDto.getUsername(), loginDto.getPassword());
         LoginResponseDto loginResponseDto = authService.login(admin);
 
         ResponseCookie refreshToken = cookieUtil.createRefreshCookie(loginResponseDto.getUsername());

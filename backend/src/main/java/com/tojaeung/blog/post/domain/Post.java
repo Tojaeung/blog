@@ -1,15 +1,16 @@
 package com.tojaeung.blog.post.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.tojaeung.blog.category.domain.Category;
 import com.tojaeung.blog.comment.domain.Comment;
+import com.tojaeung.blog.post.dto.UpdateDto;
 import lombok.*;
-import org.hibernate.annotations.ColumnDefault;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +29,7 @@ public class Post {
     private String title;
     @Column
     private String content;
-    @ColumnDefault("0")
+    @Column
     private int views;
     @Column
     private String thumbnail;
@@ -37,6 +38,7 @@ public class Post {
     @JoinColumn(name = "category_id")
     private Category category;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "post"
             , fetch = FetchType.LAZY
             , orphanRemoval = true)
@@ -44,8 +46,16 @@ public class Post {
 
     @CreatedDate
     @Column(name = "created_at", nullable = false, updatable = false)
-    private LocalDateTime createdAt;
+    private LocalDate createdAt;
     @LastModifiedDate
     @Column(name = "last_modified_at", nullable = false)
-    private LocalDateTime lastModifiedAt;
+    private LocalDate lastModifiedAt;
+
+    // 변경감지를 위한 엔티티 업데이트
+    public void update(UpdateDto.Req updateReqDto) {
+        this.title = updateReqDto.getTitle();
+        this.content = updateReqDto.getContent();
+        this.thumbnail = updateReqDto.getThumbnail();
+    }
+
 }

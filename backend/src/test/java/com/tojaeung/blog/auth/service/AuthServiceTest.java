@@ -35,10 +35,7 @@ class AuthServiceTest {
     @Test
     @DisplayName("존재하지 않는 관리자 ID로 로그인 하는경우")
     void unExistingAdminId_then_login() {
-        Admin admin = Admin.builder()
-                .username("이상한ID")
-                .password("1234")
-                .build();
+        Admin admin = new Admin("이상한ID", "1234");
 
         BDDMockito.given(authRepository.findByUsername(admin.getUsername())).willReturn(Optional.empty());
 
@@ -51,10 +48,7 @@ class AuthServiceTest {
     @Test
     @DisplayName("올바르지 않는 비밀번호로 로그인 하는경우")
     void invalidAdminPassword_then_login() {
-        Admin admin = Admin.builder()
-                .username("이상한ID")
-                .password("1234")
-                .build();
+        Admin admin = new Admin("이상한ID", "1234");
 
         BDDMockito.given(authRepository.findByUsername(admin.getUsername())).willReturn(Optional.of(admin));
         BDDMockito.given(admin.checkPassword(admin.getPassword(), passwordEncoder)).willReturn(false);
@@ -68,10 +62,7 @@ class AuthServiceTest {
     @Test
     @DisplayName("로그인에 성공하는 경우")
     void login_then_success() {
-        Admin admin = Admin.builder()
-                .username("올바른ID")
-                .password("올바른Password")
-                .build();
+        Admin admin = new Admin("올바른ID", "올바른Password");
 
         BDDMockito.given(authRepository.findByUsername(admin.getUsername())).willReturn(Optional.of(admin));
         BDDMockito.given(admin.checkPassword(admin.getPassword(), passwordEncoder)).willReturn(true);

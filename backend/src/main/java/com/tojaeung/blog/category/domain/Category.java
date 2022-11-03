@@ -1,5 +1,6 @@
 package com.tojaeung.blog.category.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.tojaeung.blog.post.domain.Post;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -20,6 +21,7 @@ public class Category {
     @Column
     private String name;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "category"
             , fetch = FetchType.LAZY
             , orphanRemoval = true)
