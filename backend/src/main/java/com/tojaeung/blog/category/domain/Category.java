@@ -1,17 +1,17 @@
 package com.tojaeung.blog.category.domain;
 
 import com.tojaeung.blog.post.domain.Post;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Builder
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -24,4 +24,13 @@ public class Category {
             , fetch = FetchType.LAZY
             , orphanRemoval = true)
     List<Post> posts = new ArrayList<>();
+
+    public Category(String name) {
+        this.name = name;
+    }
+
+    public Category(Long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
 }

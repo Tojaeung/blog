@@ -28,7 +28,7 @@ public class CommentService {
         if (parentComment.isPresent()) {
             Comment newComment = Comment.builder()
                     .author(newCommentDto.getAuthor())
-                    .desc(newCommentDto.getDesc())
+                    .content(newCommentDto.getContent())
                     .post(findPost)
                     .parent(parentComment.get())
                     .build();
@@ -36,7 +36,7 @@ public class CommentService {
         } else {
             Comment newComment = Comment.builder()
                     .author(newCommentDto.getAuthor())
-                    .desc(newCommentDto.getDesc())
+                    .content(newCommentDto.getContent())
                     .post(findPost)
                     .parent(null)
                     .build();

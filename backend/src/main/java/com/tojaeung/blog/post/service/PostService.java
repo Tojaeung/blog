@@ -1,6 +1,5 @@
 package com.tojaeung.blog.post.service;
 
-import lombok.RequiredArgsConstructor;
 import com.tojaeung.blog.category.domain.Category;
 import com.tojaeung.blog.category.repository.CategoryRepository;
 import com.tojaeung.blog.exception.CustomException;
@@ -8,6 +7,7 @@ import com.tojaeung.blog.exception.ExceptionCode;
 import com.tojaeung.blog.post.domain.Post;
 import com.tojaeung.blog.post.dto.NewPostDto;
 import com.tojaeung.blog.post.repository.PostRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -23,7 +23,7 @@ public class PostService {
 
         Post newPost = Post.builder()
                 .title(postDto.getTitle())
-                .desc(postDto.getDesc())
+                .content(postDto.getContent())
                 .category(category)
                 .build();
 

@@ -9,5 +9,7 @@ public class NewPostDto {
     @NotBlank(message = "포스팅 제목을 입력해주세요.")
     private String title;
     @NotBlank(message = "포스팅 제목을 입력해주세요.")
-    private String desc;
+    private String content;
+
+    private String thumbnail;
 }

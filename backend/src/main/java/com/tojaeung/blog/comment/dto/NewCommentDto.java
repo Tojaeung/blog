@@ -12,7 +12,7 @@ public class NewCommentDto {
     private String author;
     @NotBlank(message = "댓글을 입력해주세요.")
     @Max(value = 1000, message = "댓글은 최대 1000글자 입니다.")
-    private String desc;
+    private String content;
 
     private Long parentId;
 

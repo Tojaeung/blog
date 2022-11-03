@@ -25,7 +25,7 @@ public class Comment {
     private String author;
 
     @Column
-    private String desc;
+    private String content;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id")

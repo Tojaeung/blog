@@ -3,6 +3,7 @@ package com.tojaeung.blog.post.domain;
 import com.tojaeung.blog.category.domain.Category;
 import com.tojaeung.blog.comment.domain.Comment;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -26,9 +27,9 @@ public class Post {
     @Column
     private String title;
     @Column
-    private String desc;
-    @Column
-    private String views;
+    private String content;
+    @ColumnDefault("0")
+    private int views;
     @Column
     private String thumbnail;
 
