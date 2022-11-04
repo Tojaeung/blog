@@ -55,7 +55,7 @@ const postSlice = createSlice({
 
     builder
       .addCase(deletePost.fulfilled, (state, { payload }) => {
-        const index = state.posts.findIndex((post) => post.id === payload.deletedId);
+        const index = state.posts.findIndex((post) => post.id === payload);
         state.posts.splice(index, 1);
       })
       .addCase(deletePost.rejected, (state) => {

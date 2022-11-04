@@ -14,7 +14,6 @@ import {
   getPostReturnType,
   updatePostParamType,
   updatePostReturnType,
-  deletePostReturnType,
   deletePostParamType,
 } from './type';
 import { ErrorType } from 'interfaces/error';
@@ -26,8 +25,8 @@ export const createPost = createAsyncThunk<
 >('post/create', async (data, thunkApi) => {
   try {
     const accessToken = useAppSelector(selectAuthAccessToken);
-    const { category, formData } = data;
-    const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/admin/category/${category}/post`, formData, {
+    const { categoryId, formData } = data;
+    const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/admin/category/${categoryId}/post`, formData, {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
@@ -73,8 +72,8 @@ export const getPostsInCategory = createAsyncThunk<
   { state: RootState; rejectValue: ErrorType }
 >('post/getPostsInCategory', async (data, thunkApi) => {
   try {
-    const { category } = data;
-    const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/category/${category}`, {
+    const { categoryId } = data;
+    const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/category/${categoryId}`, {
       withCredentials: true,
     });
     return res.data;
@@ -119,22 +118,21 @@ export const updatePost = createAsyncThunk<
   }
 });
 
-export const deletePost = createAsyncThunk<
-  deletePostReturnType,
-  deletePostParamType,
-  { state: RootState; rejectValue: ErrorType }
->('post/delete', async (data, thunkApi) => {
-  const accessToken = useAppSelector(selectAuthAccessToken);
-  try {
-    const { postId } = data;
-    const res = await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/admin/post/${postId}`, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-      withCredentials: true,
-    });
-    return res.data;
-  } catch (err: any) {
-    return thunkApi.rejectWithValue(err.response.data);
-  }
-});
+export const deletePost = createAsyncThunk<number, deletePostParamType, { state: RootState; rejectValue: ErrorType }>(
+  'post/delete',
+  async (data, thunkApi) => {
+    const accessToken = useAppSelector(selectAuthAccessToken);
+    try {
+      const { postId } = data;
+      const res = await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/admin/post/${postId}`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+        withCredentials: true,
+      });
+      return res.data;
+    } catch (err: any) {
+      return thunkApi.rejectWithValue(err.response.data);
+    }
+  },
+);

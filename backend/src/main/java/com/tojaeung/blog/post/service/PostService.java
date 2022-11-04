@@ -47,11 +47,11 @@ public class PostService {
                 .orElseThrow(() -> new CustomException(ExceptionCode.NOT_FOUND_POST));
 
         // 변경감지 사용
-        post.update(updateReqDto);
+        post.update(updateReqDto.toEntity());
 
         return new UpdateDto.Res(post);
     }
-    
+
     // 포스팅 제거
     @Transactional
     public void delete(Long postId) {

@@ -24,7 +24,7 @@ export type createPostReturnType = {
 };
 
 export type createPostParamType = {
-  category: string;
+  categoryId: number;
   formData: FormData;
 };
 
@@ -45,7 +45,7 @@ export type getPostsInCategoryReturnType = {
 };
 
 export type getPostsInCategoryParamType = {
-  category: string;
+  categoryId: number;
 };
 
 export type getPostReturnType = {

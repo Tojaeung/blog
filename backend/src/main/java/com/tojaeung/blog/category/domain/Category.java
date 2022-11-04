@@ -2,17 +2,16 @@ package com.tojaeung.blog.category.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.tojaeung.blog.post.domain.Post;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
+@Builder
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -25,14 +24,9 @@ public class Category {
     @OneToMany(mappedBy = "category"
             , fetch = FetchType.LAZY
             , orphanRemoval = true)
-    List<Post> posts = new ArrayList<>();
+    List<Post> posts;
 
-    public Category(String name) {
-        this.name = name;
-    }
-
-    public Category(Long id, String name) {
-        this.id = id;
-        this.name = name;
+    public void update(Category category) {
+        this.name = category.getName();
     }
 }

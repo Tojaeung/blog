@@ -14,6 +14,7 @@ import java.time.LocalDate;
 public class CreateDto {
 
     @Setter
+    @Getter
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
     public static class Req {
         @NotBlank(message = "포스팅 제목을 입력해주세요.")

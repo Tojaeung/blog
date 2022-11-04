@@ -1,13 +1,15 @@
 package com.tojaeung.blog.category.service;
 
 import com.tojaeung.blog.category.domain.Category;
-import com.tojaeung.blog.category.dto.CategoryResponseDto;
-import com.tojaeung.blog.category.dto.DeleteResponseDto;
+import com.tojaeung.blog.category.dto.CreateDto;
+import com.tojaeung.blog.category.dto.FindAllDto;
+import com.tojaeung.blog.category.dto.UpdateDto;
 import com.tojaeung.blog.category.repository.CategoryRepository;
 import com.tojaeung.blog.exception.CustomException;
 import com.tojaeung.blog.exception.ExceptionCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -18,49 +20,51 @@ public class CategoryService {
     private final CategoryRepository categoryRepository;
 
     // 카테고리 생성
-    public CategoryResponseDto create(Category category) {
-        Category newCategory = categoryRepository.save(category);
+    @Transactional
+    public CreateDto.Res create(CreateDto.Req createReqDto) {
+        Category category = categoryRepository.save(createReqDto.toEntity());
 
-        return new CategoryResponseDto(newCategory);
+        return new CreateDto.Res(category);
     }
 
     // 모든 카테고리 가져오기
-    public List<CategoryResponseDto> findAll() {
+    @Transactional(readOnly = true)
+    public List<FindAllDto.Res> findAll() {
         List<Category> categories = categoryRepository.findAll();
-        List<CategoryResponseDto> categoryResponseDtos = categories.stream()
-                .map(category -> new CategoryResponseDto(category))
+        List<FindAllDto.Res> allCategories = categories.stream()
+                .map(category -> new FindAllDto.Res(category))
                 .collect(Collectors.toList());
 
-        return categoryResponseDtos;
+        return allCategories;
     }
 
     // 특정카테고리 가져오기 (포스팅들과 함께)
-    public Category findOneWithPosts(String name) {
-        Category category = categoryRepository.findOneWithPosts(name)
-                .orElseThrow(() -> new CustomException(ExceptionCode.NOT_FOUND_CATEGORY));
-
-        return category;
-    }
+    // @Transactional(readOnly = true)
+    // public Category findOneWithPosts(Long categoryId) {
+    //     Category category = categoryRepository.findById(categoryId)
+    //             .orElseThrow(() -> new CustomException(ExceptionCode.NOT_FOUND_CATEGORY));
+    //
+    //     return category;
+    // }
 
     // 카테고리 수정
-    public CategoryResponseDto update(Category category) {
-        if (!categoryRepository.existsById(category.getId())) {
-            throw new CustomException(ExceptionCode.NOT_FOUND_CATEGORY);
-        } else {
-            Category updatedCategory = categoryRepository.save(category);
+    @Transactional
+    public UpdateDto.Res update(Long categoryId, UpdateDto.Req updateReqDto) {
+        Category category = categoryRepository.findById(categoryId)
+                .orElseThrow(() -> new CustomException(ExceptionCode.NOT_FOUND_CATEGORY));
 
-            return new CategoryResponseDto(updatedCategory);
-        }
+        category.update(updateReqDto.toEntity());
+
+        return new UpdateDto.Res(category);
     }
 
     // 카테고리 삭제
-    public DeleteResponseDto delete(Long id) {
-        if (!categoryRepository.existsById(id)) {
+    @Transactional
+    public void delete(Long categoryId) {
+        if (!categoryRepository.existsById(categoryId)) {
             throw new CustomException(ExceptionCode.NOT_FOUND_CATEGORY);
         } else {
-            categoryRepository.deleteById(id);
+            categoryRepository.deleteById(categoryId);
         }
-
-        return new DeleteResponseDto(id);
     }
 }

@@ -3,7 +3,6 @@ package com.tojaeung.blog.post.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.tojaeung.blog.category.domain.Category;
 import com.tojaeung.blog.comment.domain.Comment;
-import com.tojaeung.blog.post.dto.UpdateDto;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -52,10 +51,10 @@ public class Post {
     private LocalDate lastModifiedAt;
 
     // 변경감지를 위한 엔티티 업데이트
-    public void update(UpdateDto.Req updateReqDto) {
-        this.title = updateReqDto.getTitle();
-        this.content = updateReqDto.getContent();
-        this.thumbnail = updateReqDto.getThumbnail();
+    public void update(Post post) {
+        this.title = post.getTitle();
+        this.content = post.getContent();
+        this.thumbnail = post.getThumbnail();
     }
 
 }
