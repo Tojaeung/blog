@@ -1,7 +1,8 @@
 package com.tojaeung.blog.post.controller;
 
-import com.tojaeung.blog.post.domain.Post;
 import com.tojaeung.blog.post.dto.CreateDto;
+import com.tojaeung.blog.post.dto.FindAllDto;
+import com.tojaeung.blog.post.dto.FindOneDto;
 import com.tojaeung.blog.post.dto.UpdateDto;
 import com.tojaeung.blog.post.service.PostService;
 import lombok.RequiredArgsConstructor;
@@ -11,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -29,9 +31,15 @@ public class PostController {
         return ResponseEntity.status(HttpStatus.CREATED).body(newPost);
     }
 
+    // 카테고리에 해당하는 포스팅들 가져오기
+    @GetMapping("api/category/{categoryId}/post")
+    public ResponseEntity<List<FindAllDto.Res>> findAllInCategory(@PathVariable Long categoryId) {
+        return ResponseEntity.ok(postService.findAllInCategory(categoryId));
+    }
+
     // 특정 포스팅 가져오기
     @GetMapping("api/post/{postId}")
-    public ResponseEntity<Post> findOneWithCategory(@PathVariable Long postId) {
+    public ResponseEntity<FindOneDto.Res> findOneWithCategory(@PathVariable Long postId) {
         return ResponseEntity.ok(postService.findOneWithCategory(postId));
     }
 

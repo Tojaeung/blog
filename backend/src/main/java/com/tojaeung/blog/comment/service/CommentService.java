@@ -2,7 +2,7 @@ package com.tojaeung.blog.comment.service;
 
 import com.tojaeung.blog.comment.domain.Comment;
 import com.tojaeung.blog.comment.dto.CreateDto;
-import com.tojaeung.blog.comment.dto.FindAllInPost;
+import com.tojaeung.blog.comment.dto.FindAllDto;
 import com.tojaeung.blog.comment.repository.CommentRepository;
 import com.tojaeung.blog.exception.CustomException;
 import com.tojaeung.blog.exception.ExceptionCode;
@@ -47,19 +47,14 @@ public class CommentService {
 
     // 포스팅의 댓글들 조회하기
     @Transactional(readOnly = true)
-    public List<FindAllInPost.Res> findAllInPost(Long postId) {
+    public List<FindAllDto.Res> findAllInPost(Long postId) {
         if (!postRepository.existsById(postId)) {
             throw new CustomException(ExceptionCode.NOT_FOUND_POST);
         } else {
             List<Comment> comments = commentRepository.findAllInPost(postId);
-
-            // 부모댓글 필터링
-            List<Comment> filterdComments = comments.stream()
-                    .filter(comment -> comment.getParent() == null)
-                    .collect(Collectors.toList());
-
-            List<FindAllInPost.Res> allCommentsInPost = filterdComments.stream()
-                    .map(comment -> new FindAllInPost.Res(comment))
+            
+            List<FindAllDto.Res> allCommentsInPost = comments.stream()
+                    .map(comment -> new FindAllDto.Res(comment))
                     .collect(Collectors.toList());
 
             return allCommentsInPost;

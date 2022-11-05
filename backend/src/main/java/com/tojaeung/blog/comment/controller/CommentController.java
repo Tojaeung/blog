@@ -1,7 +1,7 @@
 package com.tojaeung.blog.comment.controller;
 
 import com.tojaeung.blog.comment.dto.CreateDto;
-import com.tojaeung.blog.comment.dto.FindAllInPost;
+import com.tojaeung.blog.comment.dto.FindAllDto;
 import com.tojaeung.blog.comment.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -32,7 +32,7 @@ public class CommentController {
 
     // 댓글 새로 생성
     @GetMapping("api/post/{postId}/comment")
-    public ResponseEntity<List<FindAllInPost.Res>> findAllInPost(@PathVariable Long postId) {
+    public ResponseEntity<List<FindAllDto.Res>> findAllInPost(@PathVariable Long postId) {
 
         return ResponseEntity.ok(commentService.findAllInPost(postId));
     }

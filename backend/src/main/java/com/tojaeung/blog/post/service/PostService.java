@@ -6,11 +6,16 @@ import com.tojaeung.blog.exception.CustomException;
 import com.tojaeung.blog.exception.ExceptionCode;
 import com.tojaeung.blog.post.domain.Post;
 import com.tojaeung.blog.post.dto.CreateDto;
+import com.tojaeung.blog.post.dto.FindAllDto;
+import com.tojaeung.blog.post.dto.FindOneDto;
 import com.tojaeung.blog.post.dto.UpdateDto;
 import com.tojaeung.blog.post.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -31,13 +36,25 @@ public class PostService {
         return new CreateDto.Res(post);
     }
 
+    @Transactional(readOnly = true)
+    public List<FindAllDto.Res> findAllInCategory(Long categoryId) {
+        if (!categoryRepository.existsById(categoryId)) {
+            throw new CustomException(ExceptionCode.NOT_FOUND_CATEGORY);
+        } else {
+            List<Post> posts = postRepository.findAllInCategory(categoryId);
+            List<FindAllDto.Res> allPostsInCategory = posts.stream().map(post -> new FindAllDto.Res(post)).collect(Collectors.toList());
+            return allPostsInCategory;
+        }
+
+    }
+
     // 특정포스팅 가져오기 (부모 카테고리와 함께)
     @Transactional(readOnly = true)
-    public Post findOneWithCategory(Long postId) {
+    public FindOneDto.Res findOneWithCategory(Long postId) {
         Post post = postRepository.findOneWithCategory(postId)
                 .orElseThrow(() -> new CustomException(ExceptionCode.NOT_FOUND_POST));
 
-        return post;
+        return new FindOneDto.Res(post);
     }
 
     // 포스팅 변경하기
@@ -61,6 +78,4 @@ public class PostService {
 
         postRepository.deleteById(postId);
     }
-
-
 }

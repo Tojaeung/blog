@@ -27,10 +27,12 @@ public class CreateDto {
     public static class Res {
         private Long id;
         private String name;
+        private int postCnt;
 
         public Res(Category category) {
             this.id = category.getId();
             this.name = category.getName();
+            this.postCnt = 0;
         }
     }
 }

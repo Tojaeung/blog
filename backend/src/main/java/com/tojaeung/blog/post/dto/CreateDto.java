@@ -46,7 +46,7 @@ public class CreateDto {
         private String content;
         private int views;
         private String thumbnail;
-        private Category category;
+        private String categoryName;
         private LocalDate createdAt, lastModifiedAt;
 
         public Res(Post post) {
@@ -55,7 +55,7 @@ public class CreateDto {
             this.content = post.getContent();
             this.views = post.getViews();
             this.thumbnail = post.getThumbnail();
-            this.category = post.getCategory();
+            this.categoryName = post.getCategory().getName();
             this.createdAt = post.getCreatedAt();
             this.lastModifiedAt = post.getLastModifiedAt();
         }

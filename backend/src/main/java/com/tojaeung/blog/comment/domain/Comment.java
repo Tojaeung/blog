@@ -29,8 +29,7 @@ public class Comment {
 
     @Column
     private String content;
-
-    @JsonIgnore
+    
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id")
     private Post post;

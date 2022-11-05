@@ -12,13 +12,8 @@ import java.util.List;
 public interface CommentRepository extends JpaRepository<Comment, Long> {
 
     @Query("select c from Comment c " +
-            "left join fetch c.post " +
-            "where c.post.id = :postId")
+            "join fetch c.post " +
+            "where c.post.id = :postId and c.parent.id is null ")
     List<Comment> findAllInPost(@Param("postId") Long postId);
 
-
-    // @Query("select p from Post p " +
-    //         "left join fetch p.category " +
-    //         "where p.id = :postId")
-    // Optional<Post> findOneWithCategory(@Param("postId") Long postId);
 }
