@@ -5,15 +5,18 @@ import { combineReducers } from 'redux';
 import authSlice from 'features/auth/authSlice';
 import categorySlice from 'features/category/categorySlice';
 import postSlice from 'features/post/postSlice';
+import commentSlice from 'features/comment/commentSlice';
 
 import { AuthState } from 'features/auth/type';
 import { CategoryState } from 'features/category/type';
 import { PostState } from 'features/post/type';
+import { CommentState } from 'features/comment/type';
 
 interface ReducerStates {
   auth: AuthState;
   category: CategoryState;
   post: PostState;
+  comment: CommentState;
 }
 
 // ### 루트 리듀서 생성
@@ -32,6 +35,7 @@ const rootReducer = (state: ReducerStates, action: AnyAction): CombinedState<Red
         auth: authSlice.reducer,
         category: categorySlice.reducer,
         post: postSlice.reducer,
+        comment: commentSlice.reducer,
       });
       return combinedReducer(state, action);
     }
