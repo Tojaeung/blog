@@ -10,7 +10,7 @@ import { categorys } from 'constants/practice';
 const Editor = dynamic(() => import('components/Editor'), { ssr: false }); // client 사이드에서만 동작되기 때문에 ssr false로 설정
 
 const Post: NextPage = () => {
-  const [category, setCategory] = useState('');
+  const [categoryId, setCategoryId] = useState<string>('');
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [thumbnail, setThumbnail] = useState<File>();
@@ -33,7 +33,7 @@ const Post: NextPage = () => {
     formData.append('thumbnail', thumbnail!);
 
     try {
-      await createPost({ category, formData });
+      await createPost({ categoryId: Number(categoryId), formData });
       alert('포스팅 되었습니다.');
     } catch (e) {
       alert('포스팅 실패하였습니다.');
@@ -42,9 +42,9 @@ const Post: NextPage = () => {
 
   return (
     <Container>
-      <Selector onChange={(e) => setCategory(e.target.value)} value={category}>
+      <Selector onChange={(e) => setCategoryId(e.target.value)} value={categoryId}>
         {categorys.map((category) => (
-          <Option value={category.name} key={category.id}>
+          <Option value={category.id} key={category.id}>
             {category.name} {category.postCnt}개
           </Option>
         ))}
@@ -67,27 +67,17 @@ export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps
   // 페이지 새로고침시 인증정보 다시 가져오기
   if (refreshToken && accessToken === '') {
     axios.defaults.headers.Cookie = refreshToken;
-    try {
-      await store.dispatch(refresh());
-    } catch (e) {
-      alert('인증 후 접근 가능합니다.');
-      // return {
-      //   redirect: {
-      //     permanent: false,
-      //     destination: '/',
-      //   },
-      // };
-    }
+    await store.dispatch(refresh());
   }
 
   // 인증정보(리프레쉬, 엑세스 토큰) 없을시 접근불가 홈페이지로 리다이렉트
   if (!refreshToken && accessToken === '') {
-    // return {
-    //   redirect: {
-    //     permanent: false,
-    //     destination: '/',
-    //   },
-    // };
+    return {
+      redirect: {
+        permanent: false,
+        destination: '/',
+      },
+    };
   }
 
   return { props: { message: 'Message from SSR' } };

@@ -82,27 +82,17 @@ export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps
   // 페이지 새로고침시 인증정보 다시 가져오기
   if (refreshToken && accessToken === '') {
     axios.defaults.headers.Cookie = refreshToken;
-    try {
-      await store.dispatch(refresh());
-    } catch (e) {
-      alert('인증 후 접근 가능합니다.');
-      // return {
-      //   redirect: {
-      //     permanent: false,
-      //     destination: '/',
-      //   },
-      // };
-    }
+    await store.dispatch(refresh());
   }
 
   // 인증정보(리프레쉬, 엑세스 토큰) 없을시 접근불가 홈페이지로 리다이렉트
   if (!refreshToken && accessToken === '') {
-    // return {
-    //   redirect: {
-    //     permanent: false,
-    //     destination: '/',
-    //   },
-    // };
+    return {
+      redirect: {
+        permanent: false,
+        destination: '/',
+      },
+    };
   }
 
   return { props: { message: 'Message from SSR' } };

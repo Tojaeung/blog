@@ -14,7 +14,7 @@ const categorySlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(createCategory.fulfilled, (state, { payload }) => {
-        state.categorys.push(payload.categorys);
+        state.categorys.push(payload);
       })
       .addCase(createCategory.rejected, (state) => {
         state.categorys;
@@ -22,15 +22,15 @@ const categorySlice = createSlice({
 
     builder
       .addCase(getCategorys.fulfilled, (state, { payload }) => {
-        state.categorys = payload.categorys;
+        state.categorys = payload;
       })
       .addCase(getCategorys.rejected, (state) => {
         state.categorys = [];
       });
     builder
       .addCase(updateCategory.fulfilled, (state, { payload }) => {
-        const index = state.categorys.findIndex((category) => category.id === payload.updatedCategory.id);
-        state.categorys.splice(index, 1, payload.updatedCategory);
+        const index = state.categorys.findIndex((category) => category.id === payload.id);
+        state.categorys.splice(index, 1, payload);
       })
       .addCase(updateCategory.rejected, (state) => {
         state.categorys;
@@ -38,7 +38,7 @@ const categorySlice = createSlice({
 
     builder
       .addCase(deleteCategory.fulfilled, (state, { payload }) => {
-        const index = state.categorys.findIndex((category) => category.id === payload.deletedId);
+        const index = state.categorys.findIndex((category) => category.id === payload);
         state.categorys.splice(index, 1);
       })
       .addCase(deleteCategory.rejected, (state) => {

@@ -1,10 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { RootState } from 'apps/store';
-import { createPost, deletePost, getAllPosts, getPostsTop5, getPostsInCategory, updatePost } from './postThunk';
+import { createPost, deletePost, getPost, getPostsTop5, getPostsInCategory, updatePost } from './postThunk';
 import { PostState } from './type';
 
 const initialState: PostState = {
   posts: [],
+  selectedPost: null,
 };
 
 const postSlice = createSlice({
@@ -14,7 +15,7 @@ const postSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(createPost.fulfilled, (state, { payload }) => {
-        state.posts.push(payload.post);
+        state.posts.push(payload);
       })
       .addCase(createPost.rejected, (state) => {
         state.posts;
@@ -22,23 +23,23 @@ const postSlice = createSlice({
 
     builder
       .addCase(getPostsTop5.fulfilled, (state, { payload }) => {
-        state.posts = payload.posts;
+        state.posts = payload;
       })
       .addCase(getPostsTop5.rejected, (state) => {
         state.posts = [];
       });
 
     builder
-      .addCase(getAllPosts.fulfilled, (state, { payload }) => {
-        state.posts = payload.posts;
+      .addCase(getPost.fulfilled, (state, { payload }) => {
+        state.selectedPost = payload;
       })
-      .addCase(getAllPosts.rejected, (state) => {
-        state.posts = [];
+      .addCase(getPost.rejected, (state) => {
+        state.selectedPost = null;
       });
 
     builder
       .addCase(getPostsInCategory.fulfilled, (state, { payload }) => {
-        state.posts = payload.posts;
+        state.posts = payload;
       })
       .addCase(getPostsInCategory.rejected, (state) => {
         state.posts = [];
@@ -46,8 +47,8 @@ const postSlice = createSlice({
 
     builder
       .addCase(updatePost.fulfilled, (state, { payload }) => {
-        const index = state.posts.findIndex((post) => post.id === payload.updatedPost.id);
-        state.posts.splice(index, 1, payload.updatedPost);
+        const index = state.posts.findIndex((post) => post.id === payload.id);
+        state.posts.splice(index, 1, payload);
       })
       .addCase(updatePost.rejected, (state) => {
         state.posts;

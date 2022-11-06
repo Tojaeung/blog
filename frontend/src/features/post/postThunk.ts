@@ -3,24 +3,12 @@ import axios from 'axios';
 import { RootState } from 'apps/store';
 import { selectAuthAccessToken } from 'features/auth/authSlice';
 import { useAppSelector } from 'hooks/useRtkCustomHook';
-import {
-  createPostReturnType,
-  createPostParamType,
-  getPostsReturnType,
-  getPostsParamType,
-  getPostsInCategoryParamType,
-  getPostsInCategoryReturnType,
-  getPostParamType,
-  getPostReturnType,
-  updatePostParamType,
-  updatePostReturnType,
-  deletePostParamType,
-} from './type';
+import { PostType } from './type';
 import { ErrorType } from 'interfaces/error';
 
 export const createPost = createAsyncThunk<
-  createPostReturnType,
-  createPostParamType,
+  PostType,
+  { categoryId: number; formData: FormData },
   { state: RootState; rejectValue: ErrorType }
 >('post/create', async (data, thunkApi) => {
   try {
@@ -38,7 +26,7 @@ export const createPost = createAsyncThunk<
   }
 });
 
-export const getPostsTop5 = createAsyncThunk<getPostsReturnType, void, { state: RootState; rejectValue: ErrorType }>(
+export const getPostsTop5 = createAsyncThunk<PostType[], void, { state: RootState; rejectValue: ErrorType }>(
   'post/getPostsTop5',
   async (data, thunkApi) => {
     try {
@@ -52,11 +40,28 @@ export const getPostsTop5 = createAsyncThunk<getPostsReturnType, void, { state: 
   },
 );
 
-export const getAllPosts = createAsyncThunk<getPostsReturnType, void, { state: RootState; rejectValue: ErrorType }>(
-  'post/getAllPosts',
+export const getPostsInCategory = createAsyncThunk<
+  PostType[],
+  { categoryId: number },
+  { state: RootState; rejectValue: ErrorType }
+>('post/getPostsInCategory', async (data, thunkApi) => {
+  try {
+    const { categoryId } = data;
+    const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/category/${categoryId}/post`, {
+      withCredentials: true,
+    });
+    return res.data;
+  } catch (err: any) {
+    return thunkApi.rejectWithValue(err.response.data);
+  }
+});
+
+export const getPost = createAsyncThunk<PostType, { postId: number }, { state: RootState; rejectValue: ErrorType }>(
+  'post/getPost',
   async (data, thunkApi) => {
     try {
-      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/post`, {
+      const { postId } = data;
+      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/post/${postId}`, {
         withCredentials: true,
       });
       return res.data;
@@ -66,41 +71,9 @@ export const getAllPosts = createAsyncThunk<getPostsReturnType, void, { state: R
   },
 );
 
-export const getPostsInCategory = createAsyncThunk<
-  getPostsInCategoryReturnType,
-  getPostsInCategoryParamType,
-  { state: RootState; rejectValue: ErrorType }
->('post/getPostsInCategory', async (data, thunkApi) => {
-  try {
-    const { categoryId } = data;
-    const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/category/${categoryId}`, {
-      withCredentials: true,
-    });
-    return res.data;
-  } catch (err: any) {
-    return thunkApi.rejectWithValue(err.response.data);
-  }
-});
-
-export const getPost = createAsyncThunk<
-  getPostReturnType,
-  getPostParamType,
-  { state: RootState; rejectValue: ErrorType }
->('post/getPost', async (data, thunkApi) => {
-  try {
-    const { postId } = data;
-    const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/post/${postId}`, {
-      withCredentials: true,
-    });
-    return res.data;
-  } catch (err: any) {
-    return thunkApi.rejectWithValue(err.response.data);
-  }
-});
-
 export const updatePost = createAsyncThunk<
-  updatePostReturnType,
-  updatePostParamType,
+  PostType,
+  { postId: number; formData: FormData },
   { state: RootState; rejectValue: ErrorType }
 >('post/update', async (data, thunkApi) => {
   const accessToken = useAppSelector(selectAuthAccessToken);
@@ -118,7 +91,7 @@ export const updatePost = createAsyncThunk<
   }
 });
 
-export const deletePost = createAsyncThunk<number, deletePostParamType, { state: RootState; rejectValue: ErrorType }>(
+export const deletePost = createAsyncThunk<number, { postId: number }, { state: RootState; rejectValue: ErrorType }>(
   'post/delete',
   async (data, thunkApi) => {
     const accessToken = useAppSelector(selectAuthAccessToken);

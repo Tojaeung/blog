@@ -2,17 +2,13 @@ import type { GetServerSideProps, NextPage } from 'next';
 import axios from 'axios';
 import wrapper from 'apps/store';
 import { refresh } from 'features/auth/authThunk';
-import { getPostsTop5 } from 'features/post/postThunk';
+import { getPost, getPostsTop5 } from 'features/post/postThunk';
 import { getCategorys } from 'features/category/categoryThunk';
-import { selectPosts } from 'features/post/postSlice';
-import { useAppSelector } from 'hooks/useRtkCustomHook';
 import Intro from 'components/Intro';
 import HomePost from 'components/HomePost';
 import HomeCategory from 'components/HomeCategory';
 
 const Home: NextPage = () => {
-  // const posts = useAppSelector(selectPosts);
-
   return (
     <Container>
       <Intro />
@@ -33,26 +29,11 @@ export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps
   // 페이지 새로고침시 인증정보 다시 가져오기
   if (refreshToken && accessToken === '') {
     axios.defaults.headers.Cookie = refreshToken;
-    try {
-      await store.dispatch(refresh());
-    } catch (e) {
-      alert('인증 후 접근 가능합니다.');
-      // return {
-      //   redirect: {
-      //     permanent: false,
-      //     destination: '/',
-      //   },
-      // };
-    }
+    await store.dispatch(refresh());
   }
 
-  try {
-    await store.dispatch(getCategorys());
-  } catch (e) {}
-
-  try {
-    await store.dispatch(getPostsTop5());
-  } catch (e) {}
+  await store.dispatch(getCategorys());
+  await store.dispatch(getPostsTop5());
 
   return { props: {} };
 });

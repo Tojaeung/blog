@@ -1,13 +1,11 @@
 import Image from 'next/image';
-import React from 'react';
 import { selectPosts } from 'features/post/postSlice';
 import { useAppSelector } from 'hooks/useRtkCustomHook';
-import { posts } from 'constants/practice';
 import { PostBox, PostList, TextBox, Content, Detailed, Title, ImageBox } from './style';
 import Link from 'next/link';
 
 function HomePost() {
-  // const posts = useAppSelector(selectPosts);
+  const posts = useAppSelector(selectPosts);
 
   return (
     <PostBox>
