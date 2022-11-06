@@ -5,12 +5,11 @@ import com.tojaeung.blog.category.repository.CategoryRepository;
 import com.tojaeung.blog.exception.CustomException;
 import com.tojaeung.blog.exception.ExceptionCode;
 import com.tojaeung.blog.post.domain.Post;
-import com.tojaeung.blog.post.dto.CreateDto;
-import com.tojaeung.blog.post.dto.FindAllDto;
-import com.tojaeung.blog.post.dto.FindOneDto;
-import com.tojaeung.blog.post.dto.UpdateDto;
+import com.tojaeung.blog.post.dto.*;
 import com.tojaeung.blog.post.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -48,13 +47,28 @@ public class PostService {
 
     }
 
+    public List<FindTop5.Res> findTop5(int five) {
+        Page<Post> posts = postRepository.findTop5(PageRequest.of(0, five));
+        List<FindTop5.Res> top5Posts = posts.stream()
+                .map(post -> new FindTop5.Res(post))
+                .collect(Collectors.toList());
+        return top5Posts;
+    }
+
     // 특정포스팅 가져오기 (부모 카테고리와 함께)
     @Transactional(readOnly = true)
     public FindOneDto.Res findOneWithCategory(Long postId) {
-        Post post = postRepository.findOneWithCategory(postId)
-                .orElseThrow(() -> new CustomException(ExceptionCode.NOT_FOUND_POST));
+        if (!postRepository.existsById(postId)) {
+            throw new CustomException(ExceptionCode.NOT_FOUND_POST);
+        } else {
+            // 조회수 views 증가 
+            postRepository.addView(postId);
 
-        return new FindOneDto.Res(post);
+            Post post = postRepository.findOneWithCategory(postId)
+                    .orElseThrow(() -> new CustomException(ExceptionCode.NOT_FOUND_POST));
+
+            return new FindOneDto.Res(post);
+        }
     }
 
     // 포스팅 변경하기

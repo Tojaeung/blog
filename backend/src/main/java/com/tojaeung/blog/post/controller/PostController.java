@@ -1,9 +1,6 @@
 package com.tojaeung.blog.post.controller;
 
-import com.tojaeung.blog.post.dto.CreateDto;
-import com.tojaeung.blog.post.dto.FindAllDto;
-import com.tojaeung.blog.post.dto.FindOneDto;
-import com.tojaeung.blog.post.dto.UpdateDto;
+import com.tojaeung.blog.post.dto.*;
 import com.tojaeung.blog.post.service.PostService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -35,6 +32,12 @@ public class PostController {
     @GetMapping("api/category/{categoryId}/post")
     public ResponseEntity<List<FindAllDto.Res>> findAllInCategory(@PathVariable Long categoryId) {
         return ResponseEntity.ok(postService.findAllInCategory(categoryId));
+    }
+
+    // 조회수가 많은 top5 가져오기
+    @GetMapping("api/post")
+    public ResponseEntity<List<FindTop5.Res>> findTop5(@RequestParam(value = "top") int five) {
+        return ResponseEntity.ok(postService.findTop5(five));
     }
 
     // 특정 포스팅 가져오기
