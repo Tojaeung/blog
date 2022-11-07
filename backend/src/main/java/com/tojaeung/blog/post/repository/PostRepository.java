@@ -17,20 +17,26 @@ import java.util.Optional;
 @Repository
 public interface PostRepository extends JpaRepository<Post, Long> {
 
+    @Override
+    @EntityGraph(attributePaths = {"category"})
+    @Query("select p from Post p ")
+    Page<Post> findAll(Pageable pageable);
+
     @Query("select p from Post p " +
             "join fetch p.category " +
             "where p.id = :postId")
     Optional<Post> findOneWithCategory(@Param("postId") Long postId);
 
-    @Query("select p from Post p " +
-            "join fetch p.category " +
-            "where p.category.id = :categoryId")
-    List<Post> findAllInCategory(@Param("categoryId") Long categoryId);
-
     @EntityGraph(attributePaths = {"category"})
     @Query("select p from Post p " +
-            "order by p.views DESC ")
-    Page<Post> findTop5(Pageable pageable);
+            // "join fetch p.category " +   // 페이징시 페치조인 안되기떄문에 @EntityGraph를 사용해줬다. 
+            "where p.category.id = :categoryId")
+    Page<Post> findAllInCategory(@Param("categoryId") Long categoryId, Pageable pageable);
+
+    // @EntityGraph(attributePaths = {"category"})
+    // @Query("select p from Post p " +
+    //         "order by p.views DESC ")
+    List<Post> findTop5ByOrderByViewsDesc();
 
     // 포스팅 조회수 증가
     @Modifying

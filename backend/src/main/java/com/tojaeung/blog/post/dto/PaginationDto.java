@@ -4,13 +4,14 @@ import lombok.Getter;
 
 import java.util.List;
 
+// 페이지네이션을 위한 totalCount를 프론트에 보내주기 위한 dto
 @Getter
-public class Re {
-    private int totalCnt;
-    private List<FindAllDto.Res | FindAllInCategoryDto.Res> findAllDtos;
+public class PaginationDto {
+    private long totalCnt;
+    private List<PostResponseDto> posts;
 
-    public Re(int totalCnt, List<FindAllDto.Res> findAllDtos) {
+    public PaginationDto(long totalCnt, List<PostResponseDto> posts) {
         this.totalCnt = totalCnt;
-        this.findAllDtos = findAllDtos;
+        this.posts = posts;
     }
 }
