@@ -1,17 +1,28 @@
 import { GetServerSideProps, NextPage } from 'next';
-import React from 'react';
-import wrapper from 'apps/store';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import wrapper from 'apps/store';
 import { refresh } from 'features/auth/authThunk';
 import { getCategorys } from 'features/category/categoryThunk';
 import { getAllPosts } from 'features/post/postThunk';
 import { selectAllPostsCnt } from 'features/category/categorySlice';
-import { useAppSelector } from 'hooks/useRtkCustomHook';
+import { selectTotalCnt } from 'features/post/postSlice';
+import { useAppDispatch, useAppSelector } from 'hooks/useRtkCustomHook';
 import BlogCategory from 'components/BlogCategory';
 import BlogPost from 'components/BlogPost';
+import Pagination from 'components/Pagination';
 
 const Blog: NextPage = () => {
+  const dispatch = useAppDispatch();
   const allPostsCnt = useAppSelector(selectAllPostsCnt);
+
+  const [page, setPage] = useState(1);
+  const totalCnt = useAppSelector(selectTotalCnt);
+  const [blockNum, setBlockNum] = useState(0); // 한 페이지에 보여 줄 페이지네이션의 개수를 block으로 지정하는 state. 초기 값은 0
+
+  useEffect(() => {
+    dispatch(getAllPosts({ pageNumber: Number(page) }));
+  }, [page]);
 
   return (
     <Container>
@@ -21,6 +32,7 @@ const Blog: NextPage = () => {
       </TitleBox>
       <BlogCategory />
       <BlogPost />
+      <Pagination page={page} setPage={setPage} blockNum={blockNum} setBlockNum={setBlockNum} totalCnt={totalCnt} />
     </Container>
   );
 };
@@ -36,7 +48,7 @@ export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps
   }
 
   await store.dispatch(getCategorys());
-  await store.dispatch(getAllPosts());
+  await store.dispatch(getAllPosts({ pageNumber: 1 }));
 
   return { props: {} };
 });

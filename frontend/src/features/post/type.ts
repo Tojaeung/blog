@@ -11,6 +11,7 @@ export type PostType = {
 
 export type PostState = {
   posts: PostType[];
+  totalCnt: number;
   selectedPost: PostType | null;
 };
 

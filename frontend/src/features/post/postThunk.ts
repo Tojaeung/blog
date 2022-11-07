@@ -26,19 +26,21 @@ export const createPost = createAsyncThunk<
   }
 });
 
-export const getAllPosts = createAsyncThunk<PostType[], void, { state: RootState; rejectValue: ErrorType }>(
-  'post/getAllPosts',
-  async (data, thunkApi) => {
-    try {
-      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/post`, {
-        withCredentials: true,
-      });
-      return res.data;
-    } catch (err: any) {
-      return thunkApi.rejectWithValue(err.response.data);
-    }
-  },
-);
+export const getAllPosts = createAsyncThunk<
+  { totalCnt: number; posts: PostType[] },
+  { pageNumber: number },
+  { state: RootState; rejectValue: ErrorType }
+>('post/getAllPosts', async (data, thunkApi) => {
+  try {
+    const { pageNumber } = data;
+    const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/post?page=${pageNumber}`, {
+      withCredentials: true,
+    });
+    return res.data;
+  } catch (err: any) {
+    return thunkApi.rejectWithValue(err.response.data);
+  }
+});
 
 export const getPostsTop5 = createAsyncThunk<PostType[], void, { state: RootState; rejectValue: ErrorType }>(
   'post/getPostsTop5',

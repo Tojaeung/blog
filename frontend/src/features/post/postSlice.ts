@@ -5,6 +5,7 @@ import { PostState, PostType } from './type';
 
 const initialState: PostState = {
   posts: [],
+  totalCnt: 0,
   selectedPost: null,
 };
 
@@ -30,7 +31,8 @@ const postSlice = createSlice({
 
     builder
       .addCase(getAllPosts.fulfilled, (state, { payload }) => {
-        state.posts = payload;
+        state.posts = payload.posts;
+        state.totalCnt = payload.totalCnt;
       })
       .addCase(getAllPosts.rejected, (state) => {
         state.posts = [];
@@ -82,6 +84,7 @@ const postSlice = createSlice({
 
 export const { getPost, getPostsInCategory } = postSlice.actions;
 
+export const selectTotalCnt = (state: RootState) => state.post.totalCnt;
 export const selectPosts = (state: RootState) => state.post.posts;
 export const selectPost = (state: RootState) => state.post.selectedPost;
 
