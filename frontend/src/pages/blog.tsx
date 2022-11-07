@@ -9,16 +9,15 @@ import { selectAllPostsCnt } from 'features/category/categorySlice';
 import { useAppSelector } from 'hooks/useRtkCustomHook';
 import BlogCategory from 'components/BlogCategory';
 import BlogPost from 'components/BlogPost';
-import { categorys } from 'constants/practice';
 
 const Blog: NextPage = () => {
-  // const categorys = useAppSelector(selectAllPostsCnt);
+  const allPostsCnt = useAppSelector(selectAllPostsCnt);
 
   return (
     <Container>
       <TitleBox>
         <Title>Blog</Title>
-        <AllPostsCnt>전체 ({categorys.length})</AllPostsCnt>
+        <AllPostsCnt>전체 ({allPostsCnt})</AllPostsCnt>
       </TitleBox>
       <BlogCategory />
       <BlogPost />
@@ -33,26 +32,11 @@ export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps
   // 페이지 새로고침시 인증정보 다시 가져오기
   if (refreshToken && accessToken === '') {
     axios.defaults.headers.Cookie = refreshToken;
-    try {
-      await store.dispatch(refresh());
-    } catch (e) {
-      alert('인증 후 접근 가능합니다.');
-      // return {
-      //   redirect: {
-      //     permanent: false,
-      //     destination: '/',
-      //   },
-      // };
-    }
+    await store.dispatch(refresh());
   }
 
-  try {
-    await store.dispatch(getCategorys());
-  } catch (e) {}
-
-  try {
-    await store.dispatch(getAllPosts());
-  } catch (e) {}
+  await store.dispatch(getCategorys());
+  await store.dispatch(getAllPosts());
 
   return { props: {} };
 });

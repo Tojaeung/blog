@@ -8,6 +8,7 @@ export type CategoryType = {
 
 export type CategoryState = {
   categorys: CategoryType[];
+  selectedCategory: CategoryType | null;
 };
 
 //////// thunk //////////////

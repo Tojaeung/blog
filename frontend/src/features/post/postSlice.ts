@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { RootState } from 'apps/store';
-import { createPost, deletePost, getPost, getPostsTop5, getPostsInCategory, updatePost } from './postThunk';
-import { PostState } from './type';
+import { createPost, deletePost, getPostsTop5, updatePost, getAllPosts } from './postThunk';
+import { PostState, PostType } from './type';
 
 const initialState: PostState = {
   posts: [],
@@ -11,7 +11,14 @@ const initialState: PostState = {
 const postSlice = createSlice({
   name: 'post',
   initialState,
-  reducers: {},
+  reducers: {
+    getPost: (state, { payload }) => {
+      state.selectedPost = payload.post;
+    },
+    getPostsInCategory: (state, { payload }) => {
+      state.posts = payload.posts;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(createPost.fulfilled, (state, { payload }) => {
@@ -22,6 +29,14 @@ const postSlice = createSlice({
       });
 
     builder
+      .addCase(getAllPosts.fulfilled, (state, { payload }) => {
+        state.posts = payload;
+      })
+      .addCase(getAllPosts.rejected, (state) => {
+        state.posts = [];
+      });
+
+    builder
       .addCase(getPostsTop5.fulfilled, (state, { payload }) => {
         state.posts = payload;
       })
@@ -29,25 +44,25 @@ const postSlice = createSlice({
         state.posts = [];
       });
 
-    builder
-      .addCase(getPost.fulfilled, (state, { payload }) => {
-        state.selectedPost = payload;
-      })
-      .addCase(getPost.rejected, (state) => {
-        state.selectedPost = null;
-      });
+    // builder
+    //   .addCase(getPost.fulfilled, (state, { payload }) => {
+    //     state.selectedPost = payload;
+    //   })
+    //   .addCase(getPost.rejected, (state) => {
+    //     state.selectedPost = null;
+    //   });
 
-    builder
-      .addCase(getPostsInCategory.fulfilled, (state, { payload }) => {
-        state.posts = payload;
-      })
-      .addCase(getPostsInCategory.rejected, (state) => {
-        state.posts = [];
-      });
+    // builder
+    //   .addCase(getPostsInCategory.fulfilled, (state, { payload }) => {
+    //     state.posts = payload;
+    //   })
+    //   .addCase(getPostsInCategory.rejected, (state) => {
+    //     state.posts = [];
+    //   });
 
     builder
       .addCase(updatePost.fulfilled, (state, { payload }) => {
-        const index = state.posts.findIndex((post) => post.id === payload.id);
+        const index = state.posts.findIndex((post: PostType) => post.id === payload.id);
         state.posts.splice(index, 1, payload);
       })
       .addCase(updatePost.rejected, (state) => {
@@ -56,7 +71,7 @@ const postSlice = createSlice({
 
     builder
       .addCase(deletePost.fulfilled, (state, { payload }) => {
-        const index = state.posts.findIndex((post) => post.id === payload);
+        const index = state.posts.findIndex((post: PostType) => post.id === payload);
         state.posts.splice(index, 1);
       })
       .addCase(deletePost.rejected, (state) => {
@@ -65,6 +80,9 @@ const postSlice = createSlice({
   },
 });
 
+export const { getPost, getPostsInCategory } = postSlice.actions;
+
 export const selectPosts = (state: RootState) => state.post.posts;
+export const selectPost = (state: RootState) => state.post.selectedPost;
 
 export default postSlice;

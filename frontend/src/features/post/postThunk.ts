@@ -26,11 +26,25 @@ export const createPost = createAsyncThunk<
   }
 });
 
+export const getAllPosts = createAsyncThunk<PostType[], void, { state: RootState; rejectValue: ErrorType }>(
+  'post/getAllPosts',
+  async (data, thunkApi) => {
+    try {
+      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/post`, {
+        withCredentials: true,
+      });
+      return res.data;
+    } catch (err: any) {
+      return thunkApi.rejectWithValue(err.response.data);
+    }
+  },
+);
+
 export const getPostsTop5 = createAsyncThunk<PostType[], void, { state: RootState; rejectValue: ErrorType }>(
   'post/getPostsTop5',
   async (data, thunkApi) => {
     try {
-      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/post?top=5`, {
+      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/post/top5`, {
         withCredentials: true,
       });
       return res.data;
@@ -40,36 +54,36 @@ export const getPostsTop5 = createAsyncThunk<PostType[], void, { state: RootStat
   },
 );
 
-export const getPostsInCategory = createAsyncThunk<
-  PostType[],
-  { categoryId: number },
-  { state: RootState; rejectValue: ErrorType }
->('post/getPostsInCategory', async (data, thunkApi) => {
-  try {
-    const { categoryId } = data;
-    const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/category/${categoryId}/post`, {
-      withCredentials: true,
-    });
-    return res.data;
-  } catch (err: any) {
-    return thunkApi.rejectWithValue(err.response.data);
-  }
-});
+// export const getPostsInCategory = createAsyncThunk<
+//   PostType[],
+//   { categoryId: number },
+//   { state: RootState; rejectValue: ErrorType }
+// >('post/getPostsInCategory', async (data, thunkApi) => {
+//   try {
+//     const { categoryId } = data;
+//     const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/category/${categoryId}/post`, {
+//       withCredentials: true,
+//     });
+//     return res.data;
+//   } catch (err: any) {
+//     return thunkApi.rejectWithValue(err.response.data);
+//   }
+// });
 
-export const getPost = createAsyncThunk<PostType, { postId: number }, { state: RootState; rejectValue: ErrorType }>(
-  'post/getPost',
-  async (data, thunkApi) => {
-    try {
-      const { postId } = data;
-      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/post/${postId}`, {
-        withCredentials: true,
-      });
-      return res.data;
-    } catch (err: any) {
-      return thunkApi.rejectWithValue(err.response.data);
-    }
-  },
-);
+// export const getPost = createAsyncThunk<PostType, { postId: number }, { state: RootState; rejectValue: ErrorType }>(
+//   'post/getPost',
+//   async (data, thunkApi) => {
+//     try {
+//       const { postId } = data;
+//       const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/post/${postId}`, {
+//         withCredentials: true,
+//       });
+//       return res.data;
+//     } catch (err: any) {
+//       return thunkApi.rejectWithValue(err.response.data);
+//     }
+//   },
+// );
 
 export const updatePost = createAsyncThunk<
   PostType,

@@ -1,10 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
-import type { RootState } from '../../apps/store';
+import type { RootState } from 'apps/store';
 import { createCategory, deleteCategory, getCategorys, updateCategory } from './categoryThunk';
 import { CategoryState } from './type';
 
 const initialState: CategoryState = {
   categorys: [],
+  selectedCategory: null,
 };
 
 const categorySlice = createSlice({

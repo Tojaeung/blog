@@ -11,7 +11,7 @@ function HomeCategory() {
     <CategoryBox>
       <Title>Category</Title>
       {categorys.map((category) => (
-        <Link href={`도메인주소/category/${category.name}`} key={category.id}>
+        <Link href={`category/${category.id}`} key={category.id}>
           <CategoryList>
             {category.name} ({category.postCnt})
           </CategoryList>

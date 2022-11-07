@@ -14,7 +14,7 @@ function HomePost() {
           <Link href={`/post/${post.id}`} key={post.id}>
             <PostList>
               <ImageBox>
-                <Image src={post.thumbnail} width="200" height="200" alt="포스팅 썸네일" />
+                <Image src={post.thumbnail} width="200" height="200" alt="포스팅 썸네일" priority={true} />
               </ImageBox>
               <TextBox>
                 <Title>{post.title}</Title>

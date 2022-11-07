@@ -6,10 +6,11 @@ export const CategoryBadge = styled.ul`
   align-items: center;
   gap: 20px;
   flex-wrap: wrap;
+  cursor: pointer;
 `;
-export const Category = styled.li`
+export const Category = styled.li<{ currentPage: boolean }>`
   font-size: 14px;
-  background-color: yellow;
+  background-color: ${(props) => (props.currentPage ? 'red ' : 'yellow')};
   padding: 10px;
   border-radius: 5px;
 `;
