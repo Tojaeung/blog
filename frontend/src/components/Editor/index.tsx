@@ -1,7 +1,6 @@
 import { NextPage } from 'next';
 import { useEffect, useRef } from 'react';
 import axios from 'axios';
-import styled from 'styled-components';
 import { IEditor } from './type';
 
 import { Editor as ToastEditor } from '@toast-ui/react-editor';
@@ -17,9 +16,12 @@ import codeSyntaxHighlight from '@toast-ui/editor-plugin-code-syntax-highlight';
 
 import '@toast-ui/editor-plugin-table-merged-cell/dist/toastui-editor-plugin-table-merged-cell.css';
 import tableMergedCell from '@toast-ui/editor-plugin-table-merged-cell';
+import { useAppSelector } from 'hooks/useRtkCustomHook';
+import { selectAuthAccessToken } from 'features/auth/authSlice';
 
 const Editor: NextPage<IEditor> = ({ htmlStr, setHtmlStr }) => {
   const editorRef = useRef<ToastEditor>(null);
+  const accessToken = useAppSelector(selectAuthAccessToken);
 
   // Editor Change 이벤트
   const onChangeEditor = () => {
@@ -39,11 +41,16 @@ const Editor: NextPage<IEditor> = ({ htmlStr, setHtmlStr }) => {
       editorRef.current.getInstance().addHook('addImageBlobHook', (blob, callback) => {
         (async () => {
           const formData = new FormData();
-          formData.append('multipartFiles', blob);
+          formData.append('file', blob);
 
-          const res = await axios.post('http://localhost:8080/uploadImage', formData);
+          const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/admin/post/upload`, formData, {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+            withCredentials: true,
+          });
 
-          callback(res.data, 'input alt text');
+          callback(res.data.imageUrl, '이미지 파일');
         })();
 
         return false;
@@ -59,12 +66,13 @@ const Editor: NextPage<IEditor> = ({ htmlStr, setHtmlStr }) => {
   ];
 
   return (
-    <CustomReactQuill
+    <ToastEditor
       initialValue=""
       previewStyle="vertical"
       initialEditType="wysiwyg"
       useCommandShortcut={true}
       ref={editorRef}
+      height="500px"
       plugins={plugins}
       onChange={onChangeEditor}
     />
@@ -72,8 +80,3 @@ const Editor: NextPage<IEditor> = ({ htmlStr, setHtmlStr }) => {
 };
 
 export default Editor;
-
-// style
-const CustomReactQuill = styled(ToastEditor)`
-  height: 300px;
-`;

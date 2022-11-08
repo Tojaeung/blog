@@ -5,12 +5,18 @@ import axios from 'axios';
 import wrapper from 'apps/store';
 import { refresh } from 'features/auth/authThunk';
 import { createPost } from 'features/post/postThunk';
-import { categorys } from 'constants/practice';
+import { selectCategorys } from 'features/category/categorySlice';
+import { getCategorys } from 'features/category/categoryThunk';
+import { useAppDispatch, useAppSelector } from 'hooks/useRtkCustomHook';
 
 const Editor = dynamic(() => import('components/Editor'), { ssr: false }); // client 사이드에서만 동작되기 때문에 ssr false로 설정
 
 const Post: NextPage = () => {
-  const [categoryId, setCategoryId] = useState<string>('');
+  const dispatch = useAppDispatch();
+  const accessToken = useAppSelector(selectAuthAccessToken);
+  const categorys = useAppSelector(selectCategorys);
+
+  const [categoryId, setCategoryId] = useState<number>(categorys[0].id);
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [thumbnail, setThumbnail] = useState<File>();
@@ -33,7 +39,12 @@ const Post: NextPage = () => {
     formData.append('thumbnail', thumbnail!);
 
     try {
-      await createPost({ categoryId: Number(categoryId), formData });
+      const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/admin/category/${categoryId}/post`, formData, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+        withCredentials: true,
+      });
       alert('포스팅 되었습니다.');
     } catch (e) {
       alert('포스팅 실패하였습니다.');
@@ -42,7 +53,7 @@ const Post: NextPage = () => {
 
   return (
     <Container>
-      <Selector onChange={(e) => setCategoryId(e.target.value)} value={categoryId}>
+      <Selector onChange={(e) => setCategoryId(Number(e.target.value))} value={categoryId}>
         {categorys.map((category) => (
           <Option value={category.id} key={category.id}>
             {category.name} {category.postCnt}개
@@ -80,11 +91,14 @@ export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps
     };
   }
 
+  await store.dispatch(getCategorys());
+
   return { props: { message: 'Message from SSR' } };
 });
 
 import styled from 'styled-components';
 import { CommonButtonStyle, CommonInputStyle, CommonSelectStyle, CommonOptionStyle } from 'styles/globalStyle';
+import { selectAuthAccessToken } from 'features/auth/authSlice';
 
 const Container = styled.div`
   width: 100%;
@@ -101,7 +115,8 @@ const ThumbnailInput = styled.input``;
 
 const EditorBox = styled.div`
   width: 100%;
-  height: 400px;
+  height: 500px;
+  border: 1px solid;
 `;
 
 const SubmitButton = styled(CommonButtonStyle)``;

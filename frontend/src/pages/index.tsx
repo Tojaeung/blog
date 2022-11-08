@@ -2,7 +2,7 @@ import type { GetServerSideProps, NextPage } from 'next';
 import axios from 'axios';
 import wrapper from 'apps/store';
 import { refresh } from 'features/auth/authThunk';
-import { getPost, getPostsTop5 } from 'features/post/postThunk';
+import { getPostsTop5 } from 'features/post/postThunk';
 import { getCategorys } from 'features/category/categoryThunk';
 import Intro from 'components/Intro';
 import HomePost from 'components/HomePost';
