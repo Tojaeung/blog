@@ -1,133 +1,75 @@
-package com.tojaeung.blog.post.service;
+package com.tojaeung.blog.File.service;
 
-import com.tojaeung.blog.category.domain.Category;
-import com.tojaeung.blog.category.repository.CategoryRepository;
+import com.amazonaws.services.s3.AmazonS3Client;
+import com.amazonaws.services.s3.model.CannedAccessControlList;
+import com.amazonaws.services.s3.model.ObjectMetadata;
+import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.tojaeung.blog.File.domain.File;
+import com.tojaeung.blog.File.dto.ResponseDto;
+import com.tojaeung.blog.File.repository.FileRepository;
 import com.tojaeung.blog.exception.CustomException;
 import com.tojaeung.blog.exception.ExceptionCode;
-import com.tojaeung.blog.post.domain.Post;
-import com.tojaeung.blog.post.dto.CreateDto;
-import com.tojaeung.blog.post.dto.PaginationDto;
-import com.tojaeung.blog.post.dto.PostResponseDto;
-import com.tojaeung.blog.post.dto.UpdateDto;
-import com.tojaeung.blog.post.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
-import java.util.stream.Collectors;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.UUID;
 
 
 @Service
 @RequiredArgsConstructor
-public class PostService {
-    private final PostRepository postRepository;
-    private final CategoryRepository categoryRepository;
+public class FileService {
+
+    @Value("${cloud.aws.s3.bucket}")
+    private String bucket;
+
+    private final FileRepository fileRepository;
+    private final AmazonS3Client amazonS3Client;
 
     // 포스팅 생성
     @Transactional
-    public PostResponseDto create(Long categotyId, CreateDto.Req createReqDto) {
-        Category category = categoryRepository.findById(categotyId)
-                .orElseThrow(() -> new CustomException(ExceptionCode.NOT_FOUND_CATEGORY));
+    public ResponseDto upload(MultipartFile multipartFile) {
+        if (multipartFile.isEmpty()) {
+            return null;
+        }
+        String originalName = multipartFile.getOriginalFilename();
+        // 파일 이름으로 쓸 uuid 생성
+        String uuid = UUID.randomUUID().toString();
 
-        createReqDto.setCategory(category);
-        Post post = postRepository.save(createReqDto.toEntity());
+        // 확장자 추출(ex : .png)
+        String extension = originalName.substring(originalName.lastIndexOf("."));
 
-        return new PostResponseDto(post);
-    }
+        // uuid와 확장자 결합
+        String savedName = uuid + extension;
 
-    @Transactional(readOnly = true)
-    public PaginationDto findAll(Pageable pageable) {
-        int pageNumber = pageable.getPageNumber();
-        PageRequest pageRequest = PageRequest.of(
-                pageNumber - 1,
-                pageable.getPageSize(),
-                Sort.by("createdAt").descending()
-        );
+        // 파일을 불러올 때 사용할 파일 경로
+        String savedPath = "https://" + bucket + ".s3.ap-northeast-2.amazonaws.com/" + savedName;
 
-        Page<Post> pages = postRepository.findAll(pageRequest);
+        // 파일 엔티티 생성
+        File file = File.builder()
+                .originalName(originalName)
+                .savedName(savedName)
+                .savedPath(savedPath)
+                .build();
 
-        long totalCnt = pages.getTotalElements();
+        ObjectMetadata objectMetadata = new ObjectMetadata();
+        objectMetadata.setContentLength(multipartFile.getSize());
+        objectMetadata.setContentType(multipartFile.getContentType());
 
-        List<PostResponseDto> allPosts = pages.getContent().stream()
-                .map(post -> new PostResponseDto(post))
-                .collect(Collectors.toList());
-
-        return new PaginationDto(totalCnt, allPosts);
-
-    }
-
-    @Transactional(readOnly = true)
-    public PaginationDto findAllInCategory(Long categoryId, Pageable pageable) {
-        if (!categoryRepository.existsById(categoryId)) {
-            throw new CustomException(ExceptionCode.NOT_FOUND_CATEGORY);
-        } else {
-            int pageNumber = pageable.getPageNumber();
-            PageRequest pageRequest = PageRequest.of(
-                    pageNumber - 1,
-                    pageable.getPageSize(),
-                    Sort.by("createdAt").descending()
-            );
-
-            Page<Post> pages = postRepository.findAllInCategory(categoryId, pageRequest);
-            long totalCnt = pages.getTotalElements();
-
-            List<PostResponseDto> allPostsInCategory = pages.stream()
-                    .map(post -> new PostResponseDto(post))
-                    .collect(Collectors.toList());
-
-            return new PaginationDto(totalCnt, allPostsInCategory);
+        try (InputStream inputStream = multipartFile.getInputStream()) {
+            amazonS3Client.putObject(new PutObjectRequest(bucket, savedName, inputStream, objectMetadata)
+                    .withCannedAcl(CannedAccessControlList.PublicRead));
+        } catch (IOException e) {
+            throw new CustomException(ExceptionCode.FAILED_IMAGE_UPLOAD);
         }
 
-    }
+        // 데이터베이스에 파일 정보 저장 
+        File newFile = fileRepository.save(file);
 
-    public List<PostResponseDto> findTop5() {
-        List<Post> posts = postRepository.findTop5ByOrderByViewsDesc();
-        List<PostResponseDto> top5Posts = posts.stream()
-                .map(post -> new PostResponseDto(post))
-                .collect(Collectors.toList());
-        return top5Posts;
-    }
-
-    // 특정포스팅 가져오기 (부모 카테고리와 함께)
-    @Transactional(readOnly = true)
-    public PostResponseDto findOneWithCategory(Long postId) {
-        if (!postRepository.existsById(postId)) {
-            throw new CustomException(ExceptionCode.NOT_FOUND_POST);
-        } else {
-            // 조회수 views 증가 
-            postRepository.addView(postId);
-
-            Post post = postRepository.findOneWithCategory(postId)
-                    .orElseThrow(() -> new CustomException(ExceptionCode.NOT_FOUND_POST));
-
-            return new PostResponseDto(post);
-        }
-    }
-
-    // 포스팅 변경하기
-    @Transactional
-    public UpdateDto.Res update(Long postId, UpdateDto.Req updateReqDto) {
-        Post post = postRepository.findOneWithCategory(postId)
-                .orElseThrow(() -> new CustomException(ExceptionCode.NOT_FOUND_POST));
-
-        // 변경감지 사용
-        post.update(updateReqDto.toEntity());
-
-        return new UpdateDto.Res(post);
-    }
-
-    // 포스팅 제거
-    @Transactional
-    public void delete(Long postId) {
-        if (!postRepository.existsById(postId)) {
-            throw new CustomException(ExceptionCode.NOT_FOUND_POST);
-        }
-
-        postRepository.deleteById(postId);
+        return new ResponseDto(newFile.getId(), newFile.getSavedPath());
     }
 }

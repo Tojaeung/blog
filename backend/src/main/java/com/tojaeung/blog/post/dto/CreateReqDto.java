@@ -9,7 +9,7 @@ import javax.validation.constraints.NotBlank;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class CreateDto {
+public class CreateReqDto {
 
     @NotBlank(message = "포스팅 제목을 입력해주세요.")
     private String title;
@@ -18,7 +18,7 @@ public class CreateDto {
     @NotBlank(message = "썸네일을 추가해주세요.")
     private MultipartFile thumbnail;
 
-    public CreateDto(String title, String content, MultipartFile thumbnail) {
+    public CreateReqDto(String title, String content, MultipartFile thumbnail) {
         this.title = title;
         this.content = content;
         this.thumbnail = thumbnail;

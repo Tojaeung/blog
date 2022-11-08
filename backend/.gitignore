@@ -24,6 +24,8 @@ bin/
 **/data.sql
 **/log
 **/schema.sql
+**/images
+**/thumbnails
 
 .idea
 *.iws

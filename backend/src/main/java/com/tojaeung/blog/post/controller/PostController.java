@@ -1,8 +1,8 @@
 package com.tojaeung.blog.post.controller;
 
-import com.tojaeung.blog.post.dto.CreateDto;
+import com.tojaeung.blog.post.dto.CreateReqDto;
 import com.tojaeung.blog.post.dto.PaginationDto;
-import com.tojaeung.blog.post.dto.PostResponseDto;
+import com.tojaeung.blog.post.dto.ResponseDto;
 import com.tojaeung.blog.post.dto.UpdateDto;
 import com.tojaeung.blog.post.service.PostService;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +12,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -24,11 +25,15 @@ public class PostController {
 
     // 포스팅 새로 생성
     @PostMapping("admin/category/{categoryId}/post")
-    public ResponseEntity<PostResponseDto> create(
+    public ResponseEntity<ResponseDto> create(
             @PathVariable Long categoryId,
-            @Valid @RequestBody CreateDto.Req createReqDto) {
+            @RequestParam("title") String title,
+            @RequestParam("content") String content,
+            @RequestParam("thumbnail") MultipartFile multipartFile) {
 
-        PostResponseDto newPost = postService.create(categoryId, createReqDto);
+        CreateReqDto createReqDto = new CreateReqDto(title, content, multipartFile);
+
+        ResponseDto newPost = postService.create(categoryId, createReqDto);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(newPost);
     }
@@ -49,13 +54,13 @@ public class PostController {
 
     // 조회수가 많은 top5 가져오기
     @GetMapping("api/post/top5")
-    public ResponseEntity<List<PostResponseDto>> findTop5() {
+    public ResponseEntity<List<ResponseDto>> findTop5() {
         return ResponseEntity.ok(postService.findTop5());
     }
 
     // 특정 포스팅 가져오기
     @GetMapping("api/post/{postId}")
-    public ResponseEntity<PostResponseDto> findOneWithCategory(@PathVariable Long postId) {
+    public ResponseEntity<ResponseDto> findOneWithCategory(@PathVariable Long postId) {
         return ResponseEntity.ok(postService.findOneWithCategory(postId));
     }
 

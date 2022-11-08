@@ -8,9 +8,9 @@ import java.util.List;
 @Getter
 public class PaginationDto {
     private long totalCnt;
-    private List<PostResponseDto> posts;
+    private List<ResponseDto> posts;
 
-    public PaginationDto(long totalCnt, List<PostResponseDto> posts) {
+    public PaginationDto(long totalCnt, List<ResponseDto> posts) {
         this.totalCnt = totalCnt;
         this.posts = posts;
     }
