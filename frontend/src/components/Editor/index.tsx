@@ -16,12 +16,9 @@ import codeSyntaxHighlight from '@toast-ui/editor-plugin-code-syntax-highlight';
 
 import '@toast-ui/editor-plugin-table-merged-cell/dist/toastui-editor-plugin-table-merged-cell.css';
 import tableMergedCell from '@toast-ui/editor-plugin-table-merged-cell';
-import { useAppSelector } from 'hooks/useRtkCustomHook';
-import { selectAuthAccessToken } from 'features/auth/authSlice';
 
 const Editor: NextPage<IEditor> = ({ htmlStr, setHtmlStr }) => {
   const editorRef = useRef<ToastEditor>(null);
-  const accessToken = useAppSelector(selectAuthAccessToken);
 
   // Editor Change 이벤트
   const onChangeEditor = () => {
@@ -43,10 +40,7 @@ const Editor: NextPage<IEditor> = ({ htmlStr, setHtmlStr }) => {
           const formData = new FormData();
           formData.append('file', blob);
 
-          const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/admin/post/upload`, formData, {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
+          const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/post/upload`, formData, {
             withCredentials: true,
           });
 

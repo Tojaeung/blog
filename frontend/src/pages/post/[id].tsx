@@ -1,39 +1,36 @@
 import React from 'react';
 import axios from 'axios';
-import { GetServerSideProps } from 'next';
-import wrapper from 'apps/store';
-import { refresh } from 'features/auth/authThunk';
-import { getCategorys } from 'features/category/categoryThunk';
-import { getPost } from 'features/post/postSlice';
+import { GetServerSideProps, NextPage } from 'next';
+
+import { getRefresh } from 'apis/auth';
+import { getCategories } from 'apis/category';
+import { getPost } from 'apis/post';
+
 import BlogCategory from 'components/BlogCategory';
 import Posting from 'components/Posting';
 
-const Post = () => {
+import { Container } from './style';
+import { IProps } from './type';
+
+const Post: NextPage<IProps> = ({ auth, categories, post }) => {
   return (
     <Container>
-      <BlogCategory />
-      <Posting />
+      <BlogCategory categories={categories} />
+      <Posting auth={auth} post={post} />
     </Container>
   );
 };
 
-export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps((store) => async (ctx) => {
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const { refreshToken } = ctx.req.cookies;
-  const { accessToken } = store.getState().auth;
+  if (refreshToken) axios.defaults.headers.Cookie = refreshToken;
 
-  // 페이지 새로고침시 인증정보 다시 가져오기
-  if (refreshToken && accessToken === '') {
-    axios.defaults.headers.Cookie = refreshToken;
-    await store.dispatch(refresh());
-  }
+  const auth = await getRefresh();
+  const categories = await getCategories();
 
-  await store.dispatch(getCategorys());
-
+  let post;
   try {
-    const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/post/${ctx.query.id}`, {
-      withCredentials: true,
-    });
-    store.dispatch(getPost({ post: res.data }));
+    post = await getPost(Number(ctx.query.id));
   } catch (e) {
     return {
       redirect: {
@@ -43,16 +40,7 @@ export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps
     };
   }
 
-  return { props: {} };
-});
-
-import styled from 'styled-components';
-
-const Container = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 40px;
-`;
+  return { props: { auth, categories, post } };
+};
 
 export default Post;

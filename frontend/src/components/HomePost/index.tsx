@@ -1,15 +1,12 @@
 import Image from 'next/image';
-import { selectPosts } from 'features/post/postSlice';
-import { useAppSelector } from 'hooks/useRtkCustomHook';
-import { PostBox, PostList, TextBox, Content, Detailed, Title, ImageBox } from './style';
 import Link from 'next/link';
+import { PostBox, PostList, TextBox, Content, Detailed, Title, ImageBox } from './style';
+import { IProp } from './type';
 
-function HomePost() {
-  const posts = useAppSelector(selectPosts);
-
+function HomePost({ postsTop5 }: IProp) {
   return (
     <PostBox>
-      {posts.map((post) => {
+      {postsTop5?.map((post) => {
         return (
           <Link href={`/post/${post.id}`} key={post.id}>
             <PostList>

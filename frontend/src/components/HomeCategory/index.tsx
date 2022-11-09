@@ -1,16 +1,14 @@
 import Link from 'next/link';
 import React from 'react';
-import { selectCategorys } from 'features/category/categorySlice';
-import { useAppSelector } from 'hooks/useRtkCustomHook';
+
 import { Title, CategoryBox, CategoryList } from './style';
+import { IProp } from './type';
 
-function HomeCategory() {
-  const categorys = useAppSelector(selectCategorys);
-
+function HomeCategory({ categories }: IProp) {
   return (
     <CategoryBox>
       <Title>Category</Title>
-      {categorys.map((category) => (
+      {categories?.map((category) => (
         <Link href={`category/${category.id}`} key={category.id}>
           <CategoryList>
             {category.name} ({category.postCnt})

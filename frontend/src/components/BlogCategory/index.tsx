@@ -1,17 +1,16 @@
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import React from 'react';
-import { selectCategorys } from 'features/category/categorySlice';
-import { useAppSelector } from 'hooks/useRtkCustomHook';
-import { Category, CategoryBadge } from './style';
 
-function BlogCategory() {
+import { Category, CategoryBadge } from './style';
+import { IProp } from './type';
+
+function BlogCategory({ categories }: IProp) {
   const router = useRouter();
-  const categorys = useAppSelector(selectCategorys);
 
   return (
     <CategoryBadge>
-      {categorys.map((category) => (
+      {categories.map((category) => (
         <Link href={`/category/${category.id}`} key={category.id}>
           <Category currentPage={category.id === Number(router.query.id)}>
             {category.name} ({category.postCnt})

@@ -2,12 +2,9 @@ import Link from 'next/link';
 import Image from 'next/image';
 import React from 'react';
 import { PostBox, PostList, Content, Detailed, Title } from './style';
-import { useAppSelector } from 'hooks/useRtkCustomHook';
-import { selectPosts } from 'features/post/postSlice';
+import { IProp } from './type';
 
-const BlogPost = () => {
-  const posts = useAppSelector(selectPosts);
-
+function BlogPost({ posts }: IProp) {
   return (
     <PostBox>
       {posts.map((post) => {
@@ -26,6 +23,6 @@ const BlogPost = () => {
       })}
     </PostBox>
   );
-};
+}
 
 export default BlogPost;
