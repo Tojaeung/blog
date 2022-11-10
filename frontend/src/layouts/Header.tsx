@@ -10,7 +10,7 @@ const Header = () => {
       <Link href="/">
         <LogoBox>
           <LogoImg />
-          <LogoTypography>Tojaeung</LogoTypography>
+          <LogoTypography>TOJAEUNG</LogoTypography>
         </LogoBox>
       </Link>
 
@@ -50,7 +50,12 @@ const LogoBox = styled.div`
 `;
 const LogoImg = styled.img``;
 const LogoTypography = styled.p`
-  font-size: 30px;
+  font-size: 40px;
+  font-family: 'Jua', sans-serif;
+  letter-spacing: 5px;
+
+  /* font-family: 'Do Hyeon', sans-serif; */
+  /* font-family: 'Noto Sans KR'; */
   font-weight: bold;
 `;
 
@@ -66,6 +71,7 @@ const MenuBox = styled.ul`
   display: flex;
   gap: 20px;
   font-size: 20px;
+  font-family: 'Roboto';
 `;
 const MenuList = styled.li``;
 
