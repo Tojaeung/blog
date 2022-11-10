@@ -1,7 +1,10 @@
+import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import Link from 'next/link';
-import { PostBox, PostList, TextBox, Content, Detailed, Title, ImageBox } from './style';
+import { PostBox, PostList, TextBox, ViewBox, Detailed, Title, ImageBox } from './style';
 import { IProp } from './type';
+
+const Viewer = dynamic(() => import('components/EditorViewer'), { ssr: false });
 
 function HomePost({ postsTop5 }: IProp) {
   return (
@@ -15,7 +18,9 @@ function HomePost({ postsTop5 }: IProp) {
               </ImageBox>
               <TextBox>
                 <Title>{post.title}</Title>
-                <Content>{post.content}</Content>
+                <ViewBox>
+                  <Viewer content={post.content} />
+                </ViewBox>
                 <Detailed>
                   {post.createdAt} | 조회수 {post.views}
                 </Detailed>

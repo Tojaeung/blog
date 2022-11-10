@@ -5,7 +5,7 @@ import React from 'react';
 import { Container, Detail, ImageBox, Title } from './style';
 import { IProps } from './type';
 
-const Viewer = dynamic(() => import('components/EditorViewer'), { ssr: false }); // client 사이드에서만 동작되기 때문에 ssr false로 설정
+const Viewer = dynamic(() => import('components/EditorViewer'), { ssr: false });
 
 function Posting({ auth, post }: IProps) {
   return (

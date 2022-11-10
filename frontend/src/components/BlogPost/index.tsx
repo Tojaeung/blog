@@ -1,8 +1,11 @@
+import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import Image from 'next/image';
 import React from 'react';
-import { PostBox, PostList, Content, Detailed, Title } from './style';
+import { PostBox, PostList, ViewBox, Detailed, Title } from './style';
 import { IProp } from './type';
+
+const Viewer = dynamic(() => import('components/EditorViewer'), { ssr: false });
 
 function BlogPost({ posts }: IProp) {
   return (
@@ -13,7 +16,9 @@ function BlogPost({ posts }: IProp) {
             <PostList>
               <Image src="/images/profile.jpg" width="300" height="300" alt="포스팅 썸네일" priority={true} />
               <Title>{post.title}</Title>
-              <Content>{post.content}</Content>
+              <ViewBox>
+                <Viewer content={post.content} />
+              </ViewBox>
               <Detailed>
                 {post.createdAt} | {post.views}
               </Detailed>

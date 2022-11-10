@@ -36,7 +36,7 @@ export const Title = styled(CommonTextStyle)`
   font-size: 23px;
   font-weight: bold;
 `;
-export const Content = styled.div`
+export const ViewBox = styled.div`
   line-height: 20px;
   font-size: 16px;
   overflow: hidden;
