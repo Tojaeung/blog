@@ -1,4 +1,4 @@
-package com.tojaeung.blog.auth.utils;
+package com.tojaeung.blog.auth.util;
 
 import com.tojaeung.blog.auth.jwt.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;

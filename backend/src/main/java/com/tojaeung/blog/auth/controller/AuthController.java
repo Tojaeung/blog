@@ -5,7 +5,7 @@ import com.tojaeung.blog.auth.dto.LoginDto;
 import com.tojaeung.blog.auth.dto.LoginResponseDto;
 import com.tojaeung.blog.auth.dto.RefreshResponseDto;
 import com.tojaeung.blog.auth.service.AuthService;
-import com.tojaeung.blog.auth.utils.CookieUtil;
+import com.tojaeung.blog.auth.util.CookieUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
