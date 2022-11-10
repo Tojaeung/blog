@@ -24,6 +24,12 @@ const Category: NextPage<IProps> = ({ categories, page1Posts }) => {
   const [page, setPage] = useState(1);
   const [blockNum, setBlockNum] = useState(0); // 한 페이지에 보여 줄 페이지네이션의 개수를 block으로 지정하는 state. 초기 값은 0
 
+  // 카테고리 이동시
+  useEffect(() => {
+    setPosts(page1Posts.posts);
+  }, [router.query.id]);
+
+  // 페이지 이동시
   useEffect(() => {
     getPostsInCategory(Number(router.query.id), page).then(({ posts }) => setPosts(posts));
   }, [page]);
