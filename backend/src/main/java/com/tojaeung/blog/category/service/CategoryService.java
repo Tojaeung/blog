@@ -1,9 +1,9 @@
 package com.tojaeung.blog.category.service;
 
 import com.tojaeung.blog.category.domain.Category;
-import com.tojaeung.blog.category.dto.CreateDto;
-import com.tojaeung.blog.category.dto.FindAllDto;
-import com.tojaeung.blog.category.dto.UpdateDto;
+import com.tojaeung.blog.category.dto.CreateReqDto;
+import com.tojaeung.blog.category.dto.PostCntResDto;
+import com.tojaeung.blog.category.dto.UpdateReqDto;
 import com.tojaeung.blog.category.repository.CategoryRepository;
 import com.tojaeung.blog.exception.CustomException;
 import com.tojaeung.blog.exception.ExceptionCode;
@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -21,19 +20,26 @@ public class CategoryService {
 
     // 카테고리 생성
     @Transactional
-    public CreateDto.Res create(CreateDto.Req createReqDto) {
-        Category category = categoryRepository.save(createReqDto.toEntity());
+    public PostCntResDto create(CreateReqDto createReqDto) {
+        Category category = Category.builder()
+                .name(createReqDto.getName())
+                .build();
 
-        return new CreateDto.Res(category);
+        Category newCategory = categoryRepository.save(category);
+
+        PostCntResDto postCntResDto = PostCntResDto.builder()
+                .id(newCategory.getId())
+                .name(newCategory.getName())
+                .postCnt(0)
+                .build();
+
+        return postCntResDto;
     }
 
     // 모든 카테고리 가져오기
     @Transactional(readOnly = true)
-    public List<FindAllDto.Res> findAll() {
-        List<Category> categories = categoryRepository.findAll();
-        List<FindAllDto.Res> allCategories = categories.stream()
-                .map(category -> new FindAllDto.Res(category))
-                .collect(Collectors.toList());
+    public List<PostCntResDto> countPostsInCategory() {
+        List<PostCntResDto> allCategories = categoryRepository.countPostsInCategory();
 
         return allCategories;
     }
@@ -49,13 +55,23 @@ public class CategoryService {
 
     // 카테고리 수정
     @Transactional
-    public UpdateDto.Res update(Long categoryId, UpdateDto.Req updateReqDto) {
-        Category category = categoryRepository.findById(categoryId)
+    public PostCntResDto update(Long categoryId, UpdateReqDto updateReqDto) {
+        Category findCategory = categoryRepository.findById(categoryId)
                 .orElseThrow(() -> new CustomException(ExceptionCode.NOT_FOUND_CATEGORY));
 
-        category.update(updateReqDto.toEntity());
+        Category category = Category.builder()
+                .name(updateReqDto.getUpdatedName())
+                .build();
 
-        return new UpdateDto.Res(category);
+        findCategory.update(category);
+
+        PostCntResDto postCntResDto = PostCntResDto.builder()
+                .id(findCategory.getId())
+                .name(findCategory.getName())
+                .postCnt(findCategory.getPosts().size())
+                .build();
+
+        return postCntResDto;
     }
 
     // 카테고리 삭제

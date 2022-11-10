@@ -18,7 +18,7 @@ public class FileController {
     private final FileService fileService;
 
     // 포스팅 내 이미지 업로드
-    @PostMapping("admin/post/upload")
+    @PostMapping("api/post/upload")
     public ResponseEntity<ResponseDto> upload(
             @RequestParam("file") MultipartFile multipartFile) {
 

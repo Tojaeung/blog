@@ -1,8 +1,8 @@
 package com.tojaeung.blog.category.controller;
 
-import com.tojaeung.blog.category.dto.CreateDto;
-import com.tojaeung.blog.category.dto.FindAllDto;
-import com.tojaeung.blog.category.dto.UpdateDto;
+import com.tojaeung.blog.category.dto.CreateReqDto;
+import com.tojaeung.blog.category.dto.PostCntResDto;
+import com.tojaeung.blog.category.dto.UpdateReqDto;
 import com.tojaeung.blog.category.service.CategoryService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,16 +21,14 @@ public class CategoryController {
 
     // 카테고리 새로 생성
     @PostMapping("admin/category")
-    public ResponseEntity<CreateDto.Res> create(@Valid @RequestBody CreateDto.Req createReqDto) {
-        CreateDto.Res newCategory = categoryService.create(createReqDto);
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(newCategory);
+    public ResponseEntity<PostCntResDto> create(@Valid @RequestBody CreateReqDto createReqDto) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(categoryService.create(createReqDto));
     }
 
     // 모든 카테고리 가져오기
     @GetMapping("api/category")
-    public ResponseEntity<List<FindAllDto.Res>> findAll() {
-        return ResponseEntity.ok(categoryService.findAll());
+    public ResponseEntity<List<PostCntResDto>> findAll() {
+        return ResponseEntity.ok(categoryService.countPostsInCategory());
     }
 
     // 특정카테고리 가져오기 (포스팅들과 함께)
@@ -41,8 +39,8 @@ public class CategoryController {
 
     // 카테고리 수정
     @PutMapping("admin/category/{categoryId}")
-    public ResponseEntity<UpdateDto.Res> update(@PathVariable Long categoryId, @Valid @RequestBody UpdateDto.Req updateReqDto) {
-        UpdateDto.Res updatedCategory = categoryService.update(categoryId, updateReqDto);
+    public ResponseEntity<PostCntResDto> update(@PathVariable Long categoryId, @Valid @RequestBody UpdateReqDto updateReqDto) {
+        PostCntResDto updatedCategory = categoryService.update(categoryId, updateReqDto);
 
         return ResponseEntity.ok(updatedCategory);
     }
