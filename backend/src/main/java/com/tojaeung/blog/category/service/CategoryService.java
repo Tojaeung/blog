@@ -27,13 +27,7 @@ public class CategoryService {
 
         Category newCategory = categoryRepository.save(category);
 
-        PostCntResDto postCntResDto = PostCntResDto.builder()
-                .id(newCategory.getId())
-                .name(newCategory.getName())
-                .postCnt(0)
-                .build();
-
-        return postCntResDto;
+        return new PostCntResDto(newCategory.getId(), newCategory.getName(), 0);
     }
 
     // 모든 카테고리 가져오기
@@ -65,13 +59,7 @@ public class CategoryService {
 
         findCategory.update(category);
 
-        PostCntResDto postCntResDto = PostCntResDto.builder()
-                .id(findCategory.getId())
-                .name(findCategory.getName())
-                .postCnt(findCategory.getPosts().size())
-                .build();
-
-        return postCntResDto;
+        return new PostCntResDto(findCategory.getId(), findCategory.getName(), findCategory.getPosts().size());
     }
 
     // 카테고리 삭제

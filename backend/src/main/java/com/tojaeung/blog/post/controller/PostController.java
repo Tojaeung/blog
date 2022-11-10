@@ -1,8 +1,8 @@
 package com.tojaeung.blog.post.controller;
 
 import com.tojaeung.blog.post.dto.CreateReqDto;
-import com.tojaeung.blog.post.dto.PaginationDto;
-import com.tojaeung.blog.post.dto.ResponseDto;
+import com.tojaeung.blog.post.dto.PageResDto;
+import com.tojaeung.blog.post.dto.PostResDto;
 import com.tojaeung.blog.post.dto.UpdateDto;
 import com.tojaeung.blog.post.service.PostService;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +25,7 @@ public class PostController {
 
     // 포스팅 새로 생성
     @PostMapping("admin/category/{categoryId}/post")
-    public ResponseEntity<ResponseDto> create(
+    public ResponseEntity<PostResDto> create(
             @PathVariable Long categoryId,
             @RequestParam("title") String title,
             @RequestParam("content") String content,
@@ -33,20 +33,20 @@ public class PostController {
 
         CreateReqDto createReqDto = new CreateReqDto(title, content, multipartFile);
 
-        ResponseDto newPost = postService.create(categoryId, createReqDto);
+        PostResDto newPost = postService.create(categoryId, createReqDto);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(newPost);
     }
 
     // 모든 블로그 가져오기 (페이지네이션)
     @GetMapping("api/post")
-    public ResponseEntity<PaginationDto> findAll(@PageableDefault(size = 10) Pageable pageable) {
+    public ResponseEntity<PageResDto> findAll(@PageableDefault(size = 10) Pageable pageable) {
         return ResponseEntity.ok(postService.findAll(pageable));
     }
 
     // 카테고리에 해당하는 포스팅들 가져오기
     @GetMapping("api/category/{categoryId}/post")
-    public ResponseEntity<PaginationDto> findAllInCategory(
+    public ResponseEntity<PageResDto> findAllInCategory(
             @PathVariable Long categoryId,
             @PageableDefault(size = 10) Pageable pageable) {
         return ResponseEntity.ok(postService.findAllInCategory(categoryId, pageable));
@@ -54,13 +54,13 @@ public class PostController {
 
     // 조회수가 많은 top5 가져오기
     @GetMapping("api/post/top5")
-    public ResponseEntity<List<ResponseDto>> findTop5() {
+    public ResponseEntity<List<PostResDto>> findTop5() {
         return ResponseEntity.ok(postService.findTop5());
     }
 
     // 특정 포스팅 가져오기
     @GetMapping("api/post/{postId}")
-    public ResponseEntity<ResponseDto> findOneWithCategory(@PathVariable Long postId) {
+    public ResponseEntity<PostResDto> findOneWithCategory(@PathVariable Long postId) {
         return ResponseEntity.ok(postService.findOneWithCategory(postId));
     }
 

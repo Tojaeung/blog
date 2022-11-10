@@ -10,8 +10,8 @@ import com.tojaeung.blog.exception.CustomException;
 import com.tojaeung.blog.exception.ExceptionCode;
 import com.tojaeung.blog.post.domain.Post;
 import com.tojaeung.blog.post.dto.CreateReqDto;
-import com.tojaeung.blog.post.dto.PaginationDto;
-import com.tojaeung.blog.post.dto.ResponseDto;
+import com.tojaeung.blog.post.dto.PageResDto;
+import com.tojaeung.blog.post.dto.PostResDto;
 import com.tojaeung.blog.post.dto.UpdateDto;
 import com.tojaeung.blog.post.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
@@ -43,7 +43,7 @@ public class PostService {
 
     // 포스팅 생성
     @Transactional
-    public ResponseDto create(Long categotyId, CreateReqDto createReqDto) {
+    public PostResDto create(Long categotyId, CreateReqDto createReqDto) {
         Category category = categoryRepository.findById(categotyId)
                 .orElseThrow(() -> new CustomException(ExceptionCode.NOT_FOUND_CATEGORY));
 
@@ -55,11 +55,11 @@ public class PostService {
                 .category(category)
                 .build();
 
-        return new ResponseDto(postRepository.save(post));
+        return new PostResDto(postRepository.save(post));
     }
 
     @Transactional(readOnly = true)
-    public PaginationDto findAll(Pageable pageable) {
+    public PageResDto findAll(Pageable pageable) {
         int pageNumber = pageable.getPageNumber();
         PageRequest pageRequest = PageRequest.of(
                 pageNumber - 1,
@@ -71,16 +71,16 @@ public class PostService {
 
         long totalCnt = pages.getTotalElements();
 
-        List<ResponseDto> allPosts = pages.getContent().stream()
-                .map(post -> new ResponseDto(post))
+        List<PostResDto> allPosts = pages.getContent().stream()
+                .map(post -> new PostResDto(post))
                 .collect(Collectors.toList());
 
-        return new PaginationDto(totalCnt, allPosts);
+        return new PageResDto(totalCnt, allPosts);
 
     }
 
     @Transactional(readOnly = true)
-    public PaginationDto findAllInCategory(Long categoryId, Pageable pageable) {
+    public PageResDto findAllInCategory(Long categoryId, Pageable pageable) {
         if (!categoryRepository.existsById(categoryId)) {
             throw new CustomException(ExceptionCode.NOT_FOUND_CATEGORY);
         } else {
@@ -94,26 +94,26 @@ public class PostService {
             Page<Post> pages = postRepository.findAllInCategory(categoryId, pageRequest);
             long totalCnt = pages.getTotalElements();
 
-            List<ResponseDto> allPostsInCategory = pages.stream()
-                    .map(post -> new ResponseDto(post))
+            List<PostResDto> allPostsInCategory = pages.stream()
+                    .map(post -> new PostResDto(post))
                     .collect(Collectors.toList());
 
-            return new PaginationDto(totalCnt, allPostsInCategory);
+            return new PageResDto(totalCnt, allPostsInCategory);
         }
 
     }
 
-    public List<ResponseDto> findTop5() {
+    public List<PostResDto> findTop5() {
         List<Post> posts = postRepository.findTop5ByOrderByViewsDesc();
-        List<ResponseDto> top5Posts = posts.stream()
-                .map(post -> new ResponseDto(post))
+        List<PostResDto> top5Posts = posts.stream()
+                .map(post -> new PostResDto(post))
                 .collect(Collectors.toList());
         return top5Posts;
     }
 
     // 특정포스팅 가져오기 (부모 카테고리와 함께)
     @Transactional(readOnly = true)
-    public ResponseDto findOneWithCategory(Long postId) {
+    public PostResDto findOneWithCategory(Long postId) {
         if (!postRepository.existsById(postId)) {
             throw new CustomException(ExceptionCode.NOT_FOUND_POST);
         } else {
@@ -123,7 +123,7 @@ public class PostService {
             Post post = postRepository.findOneWithCategory(postId)
                     .orElseThrow(() -> new CustomException(ExceptionCode.NOT_FOUND_POST));
 
-            return new ResponseDto(post);
+            return new PostResDto(post);
         }
     }
 
