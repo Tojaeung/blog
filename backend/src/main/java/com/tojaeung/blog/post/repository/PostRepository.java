@@ -43,4 +43,11 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     @Transactional
     @Query("update Post p set p.views = p.views + 1  where p.id = :postId ")
     void addView(@Param("postId") Long postId);
+
+    // 포스팅 검색
+    @EntityGraph(attributePaths = {"category"})
+    @Query("select p from Post p " +
+            // "join fetch p.category " +   // 페이징시 페치조인 안되기떄문에 @EntityGraph를 사용해줬다. 
+            "where p.title like %:keyword% or p.content like %:keyword% ")
+    Page<Post> search(@Param("keyword") String keyword, Pageable pageable);
 }
