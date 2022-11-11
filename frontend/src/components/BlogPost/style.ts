@@ -1,32 +1,36 @@
 import styled from 'styled-components';
-import { CommonTextStyle } from 'styles/globalStyle';
+import { CommonCardStyle, CommonTextStyle } from 'styles/globalStyle';
 
 export const PostBox = styled.ul`
   width: 100%;
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   gap: 20px;
+
+  @media ${({ theme }) => theme.device.tablet} {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+  @media ${({ theme }) => theme.device.mobile} {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
 `;
 
-export const PostList = styled.li`
-  width: 32.22%;
-  height: 500px;
+export const PostList = styled(CommonCardStyle)`
+  /* width: 32.22%; */
   display: flex;
   flex-direction: column;
   gap: 10px;
-  border-radius: 10px;
-  border: 1px solid;
-  cursor: pointer;
-  padding: 20px;
 `;
 
-export const Title = styled(CommonTextStyle)`
+export const Title = styled.h1`
+  margin-top: 10px;
   font-size: 23px;
+  font-family: Noto Sans KR;
   font-weight: bold;
 `;
 export const ViewBox = styled.div`
-  line-height: 20px;
-  font-size: 16px;
   overflow: hidden;
   text-overflow: ellipsis;
   word-wrap: break-word;
@@ -35,5 +39,5 @@ export const ViewBox = styled.div`
   -webkit-box-orient: vertical;
 `;
 export const Detailed = styled(CommonTextStyle)`
-  color: gray;
+  margin-top: 10px;
 `;

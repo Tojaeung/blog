@@ -16,10 +16,25 @@ export const PageNumberBox = styled.div`
 `;
 
 export const PageButton = styled(CommonButtonStyle)<{ currentPage: boolean }>`
-  background-color: ${(props) => (props.currentPage ? 'red' : 'inherit')};
+  background: ${(props) => (props.currentPage ? props.theme.palette.textColor : props.theme.palette.badgeColor)};
+  color: ${(props) => (props.currentPage ? props.theme.palette.white : props.theme.palette.textColor)};
+  cursor: ${(props) => (props.currentPage ? 'none' : 'pointer')};
   font-weight: bold;
+  transition: all 0.5s;
+
+  &:hover {
+    background: ${(props) => (props.currentPage ? props.theme.palette.textColor : props.theme.palette.mainColor)};
+    color: ${({ theme }) => theme.palette.white};
+  }
 `;
 
 export const ArrowButton = styled(CommonButtonStyle)`
+  background: ${({ theme }) => theme.palette.badgeColor};
+  color: ${({ theme }) => theme.palette.textColor};
   font-weight: bold;
+  transition: all 0.5s;
+  &:hover {
+    background: ${({ theme }) => theme.palette.mainColor};
+    color: ${({ theme }) => theme.palette.white};
+  }
 `;

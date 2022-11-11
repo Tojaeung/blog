@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import React from 'react';
 
-import { Title, CategoryBox, CategoryList } from './style';
+import { Title, CategoryBox, Badge } from './style';
 import { IProp } from './type';
 
 function HomeCategory({ categories }: IProp) {
@@ -10,9 +10,9 @@ function HomeCategory({ categories }: IProp) {
       <Title>Category</Title>
       {categories?.map((category) => (
         <Link href={`category/${category.id}`} key={category.id}>
-          <CategoryList>
+          <Badge>
             {category.name} ({category.postCnt})
-          </CategoryList>
+          </Badge>
         </Link>
       ))}
     </CategoryBox>

@@ -10,21 +10,37 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ThemeProvider theme={lightTheme}>
       <GlobalStyles />
-      <Container>
+      <OuterContainer>
         <Header />
-        <Component {...pageProps} />;
+        <InnerContainer>
+          <Component {...pageProps} />;
+        </InnerContainer>
         <Footer />
-      </Container>
+      </OuterContainer>
     </ThemeProvider>
   );
 }
 
 import styled from 'styled-components';
 
-const Container = styled.div`
-  width: 1200px;
+const OuterContainer = styled.div`
+  width: 100%;
   margin: 0 auto;
-  font-family: Roboto;
+  font-family: ${({ theme }) => theme.font.text};
+  background-color: ${({ theme }) => theme.palette.bgColor};
+`;
+
+const InnerContainer = styled.div`
+  width: 1000px;
+  margin: 0 auto;
+  background-color: ${({ theme }) => theme.palette.bgColor};
+  @media ${({ theme }) => theme.device.laptop} {
+    width: 100%;
+    padding: 0 20px;
+  }
+  @media ${({ theme }) => theme.device.mobile} {
+    padding: 0 10px;
+  }
 `;
 
 export default MyApp;

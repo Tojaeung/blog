@@ -12,7 +12,7 @@ import Pagination from 'components/Pagination';
 
 import { PostType } from 'interfaces/post';
 
-import { Container, Detail, PostsCnt, Title, TitleBox } from './style';
+import { Container, Detail, PostCntBadge, Title, TitleBox } from './style';
 import { IProps } from './type';
 
 const Category: NextPage<IProps> = ({ categories, page1Posts }) => {
@@ -36,12 +36,12 @@ const Category: NextPage<IProps> = ({ categories, page1Posts }) => {
 
   return (
     <Container>
+      <BlogCategory categories={categories} />
       <TitleBox>
         <Title>{selectedCategory?.name}</Title>
-        <PostsCnt>{selectedCategory?.postCnt}</PostsCnt>
+        <PostCntBadge>{selectedCategory?.postCnt}</PostCntBadge>
       </TitleBox>
-      <Detail>{selectedCategory?.name}와 관련된 모든 포스팅을 모아놓았습니다.</Detail>
-      <BlogCategory categories={categories} />
+      <Detail>"{selectedCategory?.name}" 관련된 포스팅을 모아놓았습니다.</Detail>
       <BlogPost posts={posts} />
       <Pagination
         page={page}

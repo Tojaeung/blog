@@ -26,11 +26,11 @@ const Blog: NextPage<IProps> = ({ categories, page1Posts }) => {
 
   return (
     <Container>
+      <BlogCategory categories={categories} />
       <TitleBox>
         <Title>Blog</Title>
         <AllPostsCnt>전체 ({page1Posts.totalCnt})</AllPostsCnt>
       </TitleBox>
-      <BlogCategory categories={categories} />
       <BlogPost posts={posts} />
       <Pagination
         page={page}

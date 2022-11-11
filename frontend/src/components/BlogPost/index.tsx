@@ -20,7 +20,7 @@ function BlogPost({ posts }: IProp) {
                 <Viewer content={post.content} />
               </ViewBox>
               <Detailed>
-                {post.createdAt} | {post.views}
+                {post.createdAt} | 조회수 {post.views}
               </Detailed>
             </PostList>
           </Link>

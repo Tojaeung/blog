@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { CommonTextStyle, CommonTitleStyle } from 'styles/globalStyle';
+import { CommonCardStyle, CommonTextStyle } from 'styles/globalStyle';
 
 export const PostBox = styled.ul`
   width: 85%;
@@ -8,16 +8,12 @@ export const PostBox = styled.ul`
   gap: 20px;
 `;
 
-export const PostList = styled.li`
+export const PostList = styled(CommonCardStyle)`
   width: 100%;
-  height: 200px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border: 1px solid;
-  border-radius: 10px;
-  cursor: pointer;
-  padding: 20px;
+  gap: 10px;
 `;
 
 export const ImageBox = styled.div`
@@ -29,15 +25,14 @@ export const TextBox = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
-  gap: 10px;
   justify-content: space-between;
 `;
-export const Title = styled(CommonTextStyle)`
+export const Title = styled.h1`
   font-size: 23px;
+  font-family: Noto Sans KR;
   font-weight: bold;
 `;
 export const ViewBox = styled.div`
-  line-height: 20px;
   font-size: 16px;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -47,5 +42,5 @@ export const ViewBox = styled.div`
   -webkit-box-orient: vertical;
 `;
 export const Detailed = styled(CommonTextStyle)`
-  color: gray;
+  margin-top: 10px;
 `;

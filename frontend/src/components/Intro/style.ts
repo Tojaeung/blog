@@ -8,8 +8,8 @@ export const Container = styled.div`
   display: flex;
   justify-content: space-around;
   align-items: center;
-  background-color: salmon;
   padding: 10px;
+  color: ${({ theme }) => theme.palette.black};
 `;
 
 export const TypographyBox = styled.div`
@@ -18,15 +18,8 @@ export const TypographyBox = styled.div`
   justify-content: center;
   gap: 20px;
 `;
-export const Title = styled.span`
-  background-color: yellow;
-  font-size: 30px;
-  font-weight: bold;
-  text-align: center;
-`;
 export const IntroMySelf = styled(CommonTextStyle)`
   font-size: 25px;
-
   font-weight: bold;
   line-height: 50px;
 `;
@@ -35,19 +28,19 @@ export const MyName = styled.span`
   font-weight: bold;
 `;
 export const Slogan = styled(CommonTextStyle)`
-  color: gray;
   font-size: 15px;
 `;
 
 export const ImageBox = styled.div`
   border-radius: 50%;
   border: 5px double;
+  transition: all 0.5s;
+  &:hover {
+    transform: skewX(10deg);
+  }
 `;
 export const Profile = styled(Image)`
   border-radius: 50%;
 `;
 
-export const GoAboutMe = styled(CommonButtonStyle)`
-  background: linear-gradient(120deg, #4a90e2, #bd10e0);
-  color: white;
-`;
+export const GoAboutMe = styled(CommonButtonStyle)``;

@@ -1,12 +1,11 @@
 import Link from 'next/link';
 import React from 'react';
-import { Container, Profile, TypographyBox, IntroMySelf, Title, MyName, Slogan, ImageBox, GoAboutMe } from './style';
+import { Container, Profile, TypographyBox, IntroMySelf, MyName, Slogan, ImageBox, GoAboutMe } from './style';
 
 function Intro() {
   return (
     <Container>
       <TypographyBox>
-        <Title>DevLog...</Title>
         <IntroMySelf>
           안녕하세요 !!
           <br />

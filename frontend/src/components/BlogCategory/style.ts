@@ -1,16 +1,22 @@
 import styled from 'styled-components';
+import { CommonBadgeStyle } from 'styles/globalStyle';
 
-export const CategoryBadge = styled.ul`
+export const Container = styled.ul`
   width: 100%;
   display: flex;
+  justify-content: center;
   align-items: center;
-  gap: 20px;
+  gap: 10px;
   flex-wrap: wrap;
   cursor: pointer;
 `;
-export const Category = styled.li<{ currentPage: boolean }>`
-  font-size: 14px;
-  background-color: ${(props) => (props.currentPage ? 'red ' : 'yellow')};
-  padding: 10px;
-  border-radius: 5px;
+
+export const Badge = styled(CommonBadgeStyle)<{ currentPage: boolean }>`
+  background-color: ${(props) => (props.currentPage ? props.theme.palette.mainColor : props.theme.palette.badgeColor)};
+  color: ${(props) => (props.currentPage ? props.theme.palette.white : props.theme.palette.black)};
+
+  &:hover {
+    background-color: ${({ theme }) => theme.palette.mainColor};
+    color: ${({ theme }) => theme.palette.white};
+  }
 `;
