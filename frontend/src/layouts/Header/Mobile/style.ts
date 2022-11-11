@@ -1,5 +1,4 @@
 import styled, { css, keyframes } from 'styled-components';
-import { CommonInputStyle } from 'styles/globalStyle';
 import { AiOutlineClose } from 'react-icons/ai';
 
 export const Container = styled.div`
@@ -9,20 +8,6 @@ export const Container = styled.div`
     justify-content: space-between;
     align-items: center;
   }
-`;
-
-export const LogoBox = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-`;
-export const LogoImg = styled.img``;
-export const LogoTypography = styled.p`
-  font-size: 40px;
-  font-family: ${({ theme }) => theme.font.logo};
-  letter-spacing: 5px;
-  font-weight: bold;
 `;
 
 export const Background = styled.div<{ isOpen: boolean }>`

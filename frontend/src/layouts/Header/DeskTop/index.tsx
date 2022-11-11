@@ -1,18 +1,13 @@
 import Link from 'next/link';
 import React, { useState } from 'react';
+import Logo from 'components/Logo';
 import Search from 'components/Search';
-import { Container, LogoBox, LogoImg, LogoTypography, MenuBox, MenuList, SearchInput } from './style';
+import { Container, MenuBox, MenuList } from './style';
 
 function DeskTop() {
   return (
     <Container>
-      <Link href="/">
-        <LogoBox>
-          <LogoImg />
-          <LogoTypography>TOJAEUNG</LogoTypography>
-        </LogoBox>
-      </Link>
-
+      <Logo />
       <Search />
 
       <MenuBox>

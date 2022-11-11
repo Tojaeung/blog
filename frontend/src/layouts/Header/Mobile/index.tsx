@@ -2,8 +2,10 @@ import Link from 'next/link';
 import React, { useState } from 'react';
 import { GiHamburgerMenu } from 'react-icons/gi';
 
-import { Container, LogoBox, LogoImg, LogoTypography, Background, Nav, MenuBox, MenuList, CloseIcon } from './style';
 import Search from 'components/Search';
+import Logo from 'components/Logo';
+
+import { Container, Background, Nav, MenuBox, MenuList, CloseIcon } from './style';
 
 function Mobile() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -14,12 +16,7 @@ function Mobile() {
 
   return (
     <Container>
-      <Link href="/">
-        <LogoBox>
-          <LogoImg />
-          <LogoTypography>TOJAEUNG</LogoTypography>
-        </LogoBox>
-      </Link>
+      <Logo />
       <GiHamburgerMenu size="30" onClick={onToggle} />
 
       <Background isOpen={isOpen}>

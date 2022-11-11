@@ -36,7 +36,7 @@ export const ImageBox = styled.div`
   border: 5px double;
   transition: all 0.5s;
   &:hover {
-    transform: skewX(10deg);
+    transform: skewX(5deg);
   }
 `;
 export const Profile = styled(Image)`
