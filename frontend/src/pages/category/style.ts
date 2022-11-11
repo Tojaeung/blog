@@ -27,7 +27,13 @@ export const PostCntBadge = styled(CommonBadgeStyle)`
 
 export const Title = styled(CommonTitleStyle)`
   font-size: 50px;
+  @media ${({ theme }) => theme.device.tablet} {
+    font-size: 30px;
+  }
 `;
 export const Detail = styled(CommonTextStyle)`
   font-size: 25px;
+  @media ${({ theme }) => theme.device.tablet} {
+    font-size: 20px;
+  }
 `;

@@ -11,8 +11,3 @@ export const Container = styled.div`
 export const Title = styled(CommonTitleStyle)``;
 
 export const Detail = styled(CommonTextStyle)``;
-
-export const ImageBox = styled.div`
-  width: 800px;
-  margin: 0 auto;
-`;

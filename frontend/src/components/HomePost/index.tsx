@@ -14,7 +14,14 @@ function HomePost({ postsTop5 }: IProp) {
           <Link href={`/post/${post.id}`} key={post.id}>
             <PostList>
               <ImageBox>
-                <Image src={post.thumbnail} width="200" height="200" alt="포스팅 썸네일" priority={true} />
+                <Image
+                  src={post.thumbnail}
+                  width="200"
+                  height="200"
+                  layout="responsive"
+                  alt="포스팅 썸네일"
+                  priority={true}
+                />
               </ImageBox>
               <TextBox>
                 <Title>{post.title}</Title>

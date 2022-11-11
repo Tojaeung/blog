@@ -2,7 +2,7 @@ import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import React from 'react';
 
-import { Container, Detail, ImageBox, Title } from './style';
+import { Container, Detail, Title } from './style';
 import { IProps } from './type';
 
 const Viewer = dynamic(() => import('components/EditorViewer'), { ssr: false });
@@ -14,9 +14,8 @@ function Posting({ auth, post }: IProps) {
       <Detail>
         {post.categoryName} | {post.createdAt} | 조회수 {post?.views}
       </Detail>
-      <ImageBox>
-        <Image src={post.thumbnail} width="800" height="400" alt="포스팅 사진" priority={true} />
-      </ImageBox>
+
+      <Image src={post.thumbnail} width={700} height={500} layout="responsive" alt="포스팅 사진" priority={true} />
 
       <Viewer content={post.content || ''} />
     </Container>

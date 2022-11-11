@@ -19,4 +19,7 @@ export const LogoTypography = styled.p`
 `;
 export const CopyRightText = styled.p`
   font-size: 17px;
+  @media ${({ theme }) => theme.device.mobile} {
+    font-size: 12px;
+  }
 `;

@@ -38,6 +38,10 @@ export const ImageBox = styled.div`
   &:hover {
     transform: skewX(5deg);
   }
+
+  @media ${({ theme }) => theme.device.tablet} {
+    display: none;
+  }
 `;
 export const Profile = styled(Image)`
   border-radius: 50%;

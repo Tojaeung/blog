@@ -79,6 +79,7 @@ export const CommonBadgeStyle = styled.li`
   cursor: pointer;
   background-color: ${({ theme }) => theme.palette.badgeColor};
   color: ${({ theme }) => theme.palette.black};
+  box-shadow: ${({ theme }) => theme.palette.boxShdow};
   transition: all 0.5s;
 
   &:hover {
@@ -86,7 +87,11 @@ export const CommonBadgeStyle = styled.li`
     color: ${({ theme }) => theme.palette.white};
   }
 
-  box-shadow: ${({ theme }) => theme.palette.boxShdow};
+  @media ${({ theme }) => theme.device.mobile} {
+    font-size: 12px;
+    font-weight: bold;
+    padding: 5px 10px;
+  }
 `;
 
 export const CommonCardStyle = styled.li`

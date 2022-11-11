@@ -56,6 +56,10 @@ const Box = styled.div`
   justify-content: space-between;
   align-items: center;
   gap: 30px;
+
+  @media ${({ theme }) => theme.device.laptop} {
+    flex-direction: column;
+  }
 `;
 
 const Title = styled(CommonTitleStyle)``;

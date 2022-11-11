@@ -7,6 +7,10 @@ export const CategoryBox = styled.ul`
   display: flex;
   flex-direction: column;
   gap: 15px;
+
+  @media ${({ theme }) => theme.device.laptop} {
+    width: 100%;
+  }
 `;
 
 export const Title = styled.h1`
@@ -19,4 +23,8 @@ export const Title = styled.h1`
 export const Badge = styled(CommonBadgeStyle)`
   font-weight: bold;
   text-align: left;
+
+  @media ${({ theme }) => theme.device.laptop} {
+    text-align: center;
+  }
 `;
