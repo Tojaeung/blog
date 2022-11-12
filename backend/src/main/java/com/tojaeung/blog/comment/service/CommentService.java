@@ -1,8 +1,8 @@
 package com.tojaeung.blog.comment.service;
 
 import com.tojaeung.blog.comment.domain.Comment;
-import com.tojaeung.blog.comment.dto.CreateDto;
-import com.tojaeung.blog.comment.dto.FindAllDto;
+import com.tojaeung.blog.comment.dto.CommentResDto;
+import com.tojaeung.blog.comment.dto.CreateReqDto;
 import com.tojaeung.blog.comment.repository.CommentRepository;
 import com.tojaeung.blog.exception.CustomException;
 import com.tojaeung.blog.exception.ExceptionCode;
@@ -23,38 +23,50 @@ public class CommentService {
 
     // 댓글 생성
     @Transactional
-    public CreateDto.Res create(Long postId, Long parentId, CreateDto.Req createReqDto) {
+    public CommentResDto create(Long postId, Long parentId, CreateReqDto createReqDto) {
         // 포스트가 존재 하는지
         Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new CustomException(ExceptionCode.NOT_FOUND_POST));
 
-        createReqDto.setPost(post);
-
         // 부모 댓글이 존재하는지
         if (parentId == null) {
-            createReqDto.setParent(null);
+            Comment comment = Comment.builder()
+                    .author(createReqDto.getAuthor())
+                    .content(createReqDto.getContent())
+                    .post(post)
+                    .parent(null)
+                    .build();
+
+            Comment newComment = commentRepository.save(comment);
+
+            return new CommentResDto(newComment);
+
         } else {
             Comment parentComment = commentRepository.findById(parentId)
                     .orElseThrow(() -> new CustomException(ExceptionCode.NOT_FOUND_PARENT_COMMENT));
 
-            createReqDto.setParent(parentComment);
+            Comment comment = Comment.builder()
+                    .author(createReqDto.getAuthor())
+                    .content(createReqDto.getContent())
+                    .post(post)
+                    .parent(parentComment)
+                    .build();
+
+            Comment newComment = commentRepository.save(comment);
+
+            return new CommentResDto(newComment);
         }
-
-        Comment comment = commentRepository.save(createReqDto.toEntity());
-
-        return new CreateDto.Res(comment);
     }
 
     // 포스팅의 댓글들 조회하기
     @Transactional(readOnly = true)
-    public List<FindAllDto.Res> findAllInPost(Long postId) {
-        if (!postRepository.existsById(postId)) {
-            throw new CustomException(ExceptionCode.NOT_FOUND_POST);
-        } else {
+    public List<CommentResDto> findAllInPost(Long postId) {
+        if (!postRepository.existsById(postId)) throw new CustomException(ExceptionCode.NOT_FOUND_POST);
+        else {
             List<Comment> comments = commentRepository.findAllInPost(postId);
-            
-            List<FindAllDto.Res> allCommentsInPost = comments.stream()
-                    .map(comment -> new FindAllDto.Res(comment))
+
+            List<CommentResDto> allCommentsInPost = comments.stream()
+                    .map(comment -> new CommentResDto(comment))
                     .collect(Collectors.toList());
 
             return allCommentsInPost;

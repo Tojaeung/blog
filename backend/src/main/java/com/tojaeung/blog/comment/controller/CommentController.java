@@ -1,7 +1,7 @@
 package com.tojaeung.blog.comment.controller;
 
-import com.tojaeung.blog.comment.dto.CreateDto;
-import com.tojaeung.blog.comment.dto.FindAllDto;
+import com.tojaeung.blog.comment.dto.CommentResDto;
+import com.tojaeung.blog.comment.dto.CreateReqDto;
 import com.tojaeung.blog.comment.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,19 +20,19 @@ public class CommentController {
 
     // 댓글 새로 생성
     @PostMapping(value = {"api/post/{postId}/comment", "api/post/{postId}/comment/{parentId}"})
-    public ResponseEntity<CreateDto.Res> create(
+    public ResponseEntity<CommentResDto> create(
             @PathVariable(value = "postId") Long postId,
             @PathVariable(value = "parentId", required = false) Long parentId,
-            @Valid @RequestBody CreateDto.Req createReqDto) {
+            @Valid @RequestBody CreateReqDto createReqDto) {
 
-        CreateDto.Res newComment = commentService.create(postId, parentId, createReqDto);
+        CommentResDto newComment = commentService.create(postId, parentId, createReqDto);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(newComment);
     }
 
     // 댓글 새로 생성
     @GetMapping("api/post/{postId}/comment")
-    public ResponseEntity<List<FindAllDto.Res>> findAllInPost(@PathVariable Long postId) {
+    public ResponseEntity<List<CommentResDto>> findAllInPost(@PathVariable Long postId) {
 
         return ResponseEntity.ok(commentService.findAllInPost(postId));
     }
