@@ -106,17 +106,16 @@ public class PostService {
 
     // 특정포스팅 가져오기 (부모 카테고리와 함께)
     @Transactional(readOnly = true)
-    public PostResDto findOneWithCategory(Long postId) {
-        if (!postRepository.existsById(postId)) {
-            throw new CustomException(ExceptionCode.NOT_FOUND_POST);
-        } else {
+    public PostingResDto findPosting(Long postId) {
+        if (!postRepository.existsById(postId)) throw new CustomException(ExceptionCode.NOT_FOUND_POST);
+        else {
             // 조회수 views 증가 
             postRepository.addView(postId);
 
-            Post post = postRepository.findOneWithCategory(postId)
+            Post findPost = postRepository.findOneWithCategory(postId)
                     .orElseThrow(() -> new CustomException(ExceptionCode.NOT_FOUND_POST));
 
-            return new PostResDto(post);
+            return new PostingResDto(findPost);
         }
     }
 

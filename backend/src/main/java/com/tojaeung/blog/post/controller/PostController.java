@@ -56,10 +56,10 @@ public class PostController {
         return ResponseEntity.ok(postService.findTop5());
     }
 
-    // 특정 포스팅 가져오기
+    // 특정 포스팅 가져오기 (댓글 + 태그 + 카테고리)
     @GetMapping("api/post/{postId}")
-    public ResponseEntity<PostResDto> findOneWithCategory(@PathVariable Long postId) {
-        return ResponseEntity.ok(postService.findOneWithCategory(postId));
+    public ResponseEntity<PostingResDto> findPosting(@PathVariable Long postId) {
+        return ResponseEntity.ok(postService.findPosting(postId));
     }
 
     // 특정 포스팅 업데이트
