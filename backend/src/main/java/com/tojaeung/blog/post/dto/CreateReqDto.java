@@ -3,9 +3,11 @@ package com.tojaeung.blog.post.dto;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -15,12 +17,7 @@ public class CreateReqDto {
     private String title;
     @NotBlank(message = "포스팅 내용을 입력해주세요.")
     private String content;
-    @NotBlank(message = "썸네일을 추가해주세요.")
-    private MultipartFile thumbnail;
-
-    public CreateReqDto(String title, String content, MultipartFile thumbnail) {
-        this.title = title;
-        this.content = content;
-        this.thumbnail = thumbnail;
-    }
+    @NotNull
+    @Size(min = 1)
+    private List<String> tags;
 }

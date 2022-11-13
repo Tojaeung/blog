@@ -1,6 +1,9 @@
 package com.tojaeung.blog.post.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.tojaeung.blog.category.domain.Category;
+import com.tojaeung.blog.comment.domain.Comment;
+import com.tojaeung.blog.tag.domain.Tag;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -8,6 +11,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 @Builder
 @Entity
@@ -45,6 +49,7 @@ public class Post {
         this.title = post.getTitle();
         this.content = post.getContent();
         this.thumbnail = post.getThumbnail();
+        this.category = post.getCategory();
     }
 
 }

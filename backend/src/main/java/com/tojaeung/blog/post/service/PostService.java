@@ -7,11 +7,10 @@ import com.tojaeung.blog.category.repository.CategoryRepository;
 import com.tojaeung.blog.exception.CustomException;
 import com.tojaeung.blog.exception.ExceptionCode;
 import com.tojaeung.blog.post.domain.Post;
-import com.tojaeung.blog.post.dto.CreateReqDto;
-import com.tojaeung.blog.post.dto.PageResDto;
-import com.tojaeung.blog.post.dto.PostResDto;
-import com.tojaeung.blog.post.dto.UpdateDto;
+import com.tojaeung.blog.post.dto.*;
 import com.tojaeung.blog.post.repository.PostRepository;
+import com.tojaeung.blog.tag.domain.Tag;
+import com.tojaeung.blog.tag.repository.TagRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -19,6 +18,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -122,14 +122,24 @@ public class PostService {
 
     // 포스팅 변경하기
     @Transactional
-    public UpdateDto.Res update(Long postId, UpdateDto.Req updateReqDto) {
-        Post post = postRepository.findOneWithCategory(postId)
+    public void update(Long postId, UpdateReqDto updateReqDto, MultipartFile updatedThumbnail) {
+        Post findPost = postRepository.findById(postId)
                 .orElseThrow(() -> new CustomException(ExceptionCode.NOT_FOUND_POST));
 
-        // 변경감지 사용
-        post.update(updateReqDto.toEntity());
+        Category updatedCategory = categoryRepository.findById(updateReqDto.getUpdatedCategoryId())
+                .orElseThrow(() -> new CustomException(ExceptionCode.NOT_FOUND_CATEGORY));
 
-        return new UpdateDto.Res(post);
+        File file = fileUtil.saveToAwsS3(updatedThumbnail);
+
+        Post updatedPost = Post.builder()
+                .title(updateReqDto.getUpdatedTitle())
+                .content(updateReqDto.getUpdatedContent())
+                .thumbnail(file.getSavedPath())
+                .category(updatedCategory)
+                .build();
+
+        // 변경감지 사용
+        findPost.update(updatedPost);
     }
 
     // 포스팅 제거

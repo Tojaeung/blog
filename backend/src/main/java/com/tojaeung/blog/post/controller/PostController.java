@@ -1,20 +1,18 @@
 package com.tojaeung.blog.post.controller;
 
-import com.tojaeung.blog.post.dto.CreateReqDto;
-import com.tojaeung.blog.post.dto.PageResDto;
-import com.tojaeung.blog.post.dto.PostResDto;
-import com.tojaeung.blog.post.dto.UpdateDto;
+import com.tojaeung.blog.post.domain.Post;
+import com.tojaeung.blog.post.dto.*;
 import com.tojaeung.blog.post.service.PostService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -66,13 +64,14 @@ public class PostController {
 
     // 특정 포스팅 업데이트
     @PutMapping("admin/post/{postId}")
-    public ResponseEntity<UpdateDto.Res> update(
+    public ResponseEntity update(
             @PathVariable Long postId,
-            @Valid @RequestBody UpdateDto.Req updateReqDto) {
+            @Valid @RequestPart UpdateReqDto updateReqDto,
+            @RequestPart MultipartFile updatedThumbnail) {
 
-        UpdateDto.Res updatedPost = postService.update(postId, updateReqDto);
+        postService.update(postId, updateReqDto, updatedThumbnail);
 
-        return ResponseEntity.ok(updatedPost);
+        return ResponseEntity.ok().build();
     }
 
     // 포스팅 삭제 관련된 자식 포스팅도 모두 삭제 유의 !!
