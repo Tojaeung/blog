@@ -73,7 +73,7 @@ public class PostService {
                 Sort.by("createdAt").descending()
         );
 
-        Page<Post> pages = postRepository.findAll(pageRequest);
+        Page<Post> pages = postRepository.findAllPosts(pageRequest);
 
         long totalCnt = pages.getTotalElements();
 

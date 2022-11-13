@@ -17,10 +17,9 @@ import java.util.Optional;
 @Repository
 public interface PostRepository extends JpaRepository<Post, Long> {
 
-    @Override
     @EntityGraph(attributePaths = {"category"})
     @Query("select p from Post p ")
-    Page<Post> findAll(Pageable pageable);
+    Page<Post> findAllPosts(Pageable pageable);
 
     @Query("select p from Post p " +
             "join fetch p.category " +

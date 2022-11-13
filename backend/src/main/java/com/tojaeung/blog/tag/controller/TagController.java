@@ -34,12 +34,12 @@ public class TagController {
     }
 
     // 해당하는 태그 디비내 전체 태그명 변경
-    @PutMapping("admin/tag")
+    @PutMapping("admin/tag/{tagId}")
     public ResponseEntity update(
-            @RequestBody String tagName,
+            @PathVariable Long tagId,
             @Valid @RequestBody UpdateReqDto updateReqDto) {
 
-        tagService.update(tagName, updateReqDto.getUpdatedTagName());
+        tagService.update(tagId, updateReqDto.getUpdatedTagName());
 
         return ResponseEntity.ok().build();
     }

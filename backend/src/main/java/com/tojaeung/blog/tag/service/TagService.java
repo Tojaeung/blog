@@ -4,6 +4,7 @@ import com.tojaeung.blog.exception.CustomException;
 import com.tojaeung.blog.exception.ExceptionCode;
 import com.tojaeung.blog.post.dto.PageResDto;
 import com.tojaeung.blog.post.dto.PostResDto;
+import com.tojaeung.blog.post.repository.PostRepository;
 import com.tojaeung.blog.tag.domain.Tag;
 import com.tojaeung.blog.tag.dto.TagResDto;
 import com.tojaeung.blog.tag.repository.TagRepository;
@@ -21,6 +22,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class TagService {
     private final TagRepository tagRepository;
+    private final PostRepository postRepository;
 
     @Transactional(readOnly = true)
     public List<TagResDto> search(String tagName) {
@@ -59,18 +61,21 @@ public class TagService {
     }
 
     @Transactional
-    public void update(String tagName, String updatedTagName) {
-        if (!tagRepository.existsByName(tagName)) throw new CustomException(ExceptionCode.NOT_FOUND_TAG);
+    public void update(Long tagId, String updatedTagName) {
+        Tag findTag = tagRepository.findById(tagId)
+                .orElseThrow(() -> new CustomException(ExceptionCode.NOT_FOUND_TAG));
+
         if (tagRepository.existsByName(updatedTagName)) throw new CustomException(ExceptionCode.ALREADY_EXISTING_TAG);
 
         // 벌크성 수정 쿼리    
-        tagRepository.updateTagName(tagName, updatedTagName);
+        tagRepository.updateTagName(findTag.getName(), updatedTagName);
     }
 
     @Transactional
     public void delete(Long postId, Long tagId) {
-        if (!tagRepository.existsById(postId)) throw new CustomException(ExceptionCode.NOT_FOUND_POST);
-
-        tagRepository.deleteById(postId);
+        if (!postRepository.existsById(postId)) throw new CustomException(ExceptionCode.NOT_FOUND_POST);
+        if (!tagRepository.existsById(tagId)) throw new CustomException(ExceptionCode.NOT_FOUND_TAG);
+        
+        tagRepository.deleteById(tagId);
     }
 }
