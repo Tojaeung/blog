@@ -23,23 +23,20 @@ public class PostController {
 
     // 포스팅 새로 생성
     @PostMapping("admin/category/{categoryId}/post")
-    public ResponseEntity<PostResDto> create(
+    public ResponseEntity create(
             @PathVariable Long categoryId,
-            @RequestParam("title") String title,
-            @RequestParam("content") String content,
-            @RequestParam("thumbnail") MultipartFile multipartFile) {
+            @Valid @RequestPart CreateReqDto createReqDto,
+            @RequestPart MultipartFile thumbnail) {
 
-        CreateReqDto createReqDto = new CreateReqDto(title, content, multipartFile);
+        Post newPost = postService.create(categoryId, createReqDto, thumbnail);
 
-        PostResDto newPost = postService.create(categoryId, createReqDto);
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(newPost);
+        return ResponseEntity.created(URI.create("/post/" + newPost.getId())).build();
     }
 
     // 모든 블로그 가져오기 (페이지네이션)
     @GetMapping("api/post")
-    public ResponseEntity<PageResDto> findAll(@PageableDefault(size = 10) Pageable pageable) {
-        return ResponseEntity.ok(postService.findAll(pageable));
+    public ResponseEntity<PageResDto> findAllPosts(@PageableDefault(size = 10) Pageable pageable) {
+        return ResponseEntity.ok(postService.findAllPosts(pageable));
     }
 
     // 카테고리에 해당하는 포스팅들 가져오기

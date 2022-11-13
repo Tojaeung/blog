@@ -37,6 +37,13 @@ public class Post {
     @JoinColumn(name = "category_id")
     private Category category;
 
+    @OneToMany(mappedBy = "post", orphanRemoval = true)
+    List<Comment> comments;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "post", orphanRemoval = true)
+    List<Tag> tags;
+
     @CreatedDate
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDate createdAt;

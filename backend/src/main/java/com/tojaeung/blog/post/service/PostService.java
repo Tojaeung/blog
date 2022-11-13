@@ -29,16 +29,17 @@ import java.util.stream.Collectors;
 public class PostService {
     private final PostRepository postRepository;
     private final CategoryRepository categoryRepository;
+    private final TagRepository tagRepository;
     private final FileUtil fileUtil;
 
     // 포스팅 생성
     @Transactional
-    public PostResDto create(Long categotyId, CreateReqDto createReqDto) {
+    public Post create(Long categotyId, CreateReqDto createReqDto, MultipartFile thumbnail) {
         Category category = categoryRepository.findById(categotyId)
                 .orElseThrow(() -> new CustomException(ExceptionCode.NOT_FOUND_CATEGORY));
 
         // 썸네일 aws s3저장
-        File file = fileUtil.saveToAwsS3(createReqDto.getThumbnail());
+        File file = fileUtil.saveToAwsS3(thumbnail);
 
         Post post = Post.builder()
                 .title(createReqDto.getTitle())
@@ -48,11 +49,23 @@ public class PostService {
                 .category(category)
                 .build();
 
-        return new PostResDto(postRepository.save(post));
+        Post newPost = postRepository.save(post);
+
+        // 태그 저장
+        List<String> tags = createReqDto.getTags();
+        for (String tagName : tags) {
+            Tag tag = Tag.builder()
+                    .name(tagName)
+                    .post(newPost)
+                    .build();
+            tagRepository.save(tag);
+        }
+
+        return newPost;
     }
 
     @Transactional(readOnly = true)
-    public PageResDto findAll(Pageable pageable) {
+    public PageResDto findAllPosts(Pageable pageable) {
         int pageNumber = pageable.getPageNumber();
         PageRequest pageRequest = PageRequest.of(
                 pageNumber - 1,
@@ -96,6 +109,7 @@ public class PostService {
 
     }
 
+    @Transactional(readOnly = true)
     public List<PostResDto> findTop5() {
         List<Post> posts = postRepository.findTop5ByOrderByViewsDesc();
         List<PostResDto> top5Posts = posts.stream()

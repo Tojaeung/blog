@@ -5,6 +5,7 @@ import com.tojaeung.blog.search.service.SearchService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,7 +21,7 @@ public class SearchController {
     @GetMapping("api/search")
     public ResponseEntity<PageResDto> searchAll(
             @RequestParam("keyword") String keyword,
-            Pageable pageable) {
+            @PageableDefault(size = 10) Pageable pageable) {
 
         return ResponseEntity.ok(searchService.searchAll(keyword, pageable));
     }

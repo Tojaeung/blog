@@ -32,9 +32,9 @@ public class CommentController {
 
     // 댓글 새로 생성
     @GetMapping("api/post/{postId}/comment")
-    public ResponseEntity<List<CommentResDto>> findAllInPost(@PathVariable Long postId) {
+    public ResponseEntity<List<CommentResDto>> findCommentsInPost(@PathVariable Long postId) {
 
-        return ResponseEntity.ok(commentService.findAllInPost(postId));
+        return ResponseEntity.ok(commentService.findCommentsInPost(postId));
     }
 
     // 댓글 삭제

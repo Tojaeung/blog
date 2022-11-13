@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,9 +21,8 @@ import java.util.stream.Collectors;
 public class SearchService {
     private final PostRepository postRepository;
 
-    // 포스팅의 댓글들 조회하기
     @Transactional(readOnly = true)
-    public PageResDto searchAll(String keyword, Pageable pageable) {
+    public PageResDto searchAll(String keyword, @PageableDefault(size = 10) Pageable pageable) {
         int pageNumber = pageable.getPageNumber();
         PageRequest pageRequest = PageRequest.of(
                 pageNumber - 1,

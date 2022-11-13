@@ -60,7 +60,7 @@ public class CommentService {
 
     // 포스팅의 댓글들 조회하기
     @Transactional(readOnly = true)
-    public List<CommentResDto> findAllInPost(Long postId) {
+    public List<CommentResDto> findCommentsInPost(Long postId) {
         if (!postRepository.existsById(postId)) throw new CustomException(ExceptionCode.NOT_FOUND_POST);
         else {
             List<Comment> comments = commentRepository.findAllInPost(postId);
