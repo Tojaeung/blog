@@ -7,7 +7,10 @@ import com.tojaeung.blog.category.repository.CategoryRepository;
 import com.tojaeung.blog.exception.CustomException;
 import com.tojaeung.blog.exception.ExceptionCode;
 import com.tojaeung.blog.post.domain.Post;
-import com.tojaeung.blog.post.dto.*;
+import com.tojaeung.blog.post.dto.CreateReqDto;
+import com.tojaeung.blog.post.dto.PageResDto;
+import com.tojaeung.blog.post.dto.PostResDto;
+import com.tojaeung.blog.post.dto.UpdateReqDto;
 import com.tojaeung.blog.post.repository.PostRepository;
 import com.tojaeung.blog.tag.domain.Tag;
 import com.tojaeung.blog.tag.repository.TagRepository;
@@ -86,7 +89,7 @@ public class PostService {
     }
 
     @Transactional(readOnly = true)
-    public PageResDto findAllInCategory(Long categoryId, Pageable pageable) {
+    public PageResDto findPostsInCategory(Long categoryId, Pageable pageable) {
         if (!categoryRepository.existsById(categoryId)) {
             throw new CustomException(ExceptionCode.NOT_FOUND_CATEGORY);
         } else {
@@ -97,7 +100,7 @@ public class PostService {
                     Sort.by("createdAt").descending()
             );
 
-            Page<Post> pages = postRepository.findAllInCategory(categoryId, pageRequest);
+            Page<Post> pages = postRepository.findPostsInCategory(categoryId, pageRequest);
             long totalCnt = pages.getTotalElements();
 
             List<PostResDto> allPostsInCategory = pages.stream()
@@ -120,16 +123,16 @@ public class PostService {
 
     // 특정포스팅 가져오기 (부모 카테고리와 함께)
     @Transactional(readOnly = true)
-    public PostingResDto findPosting(Long postId) {
+    public PostResDto findPost(Long postId) {
         if (!postRepository.existsById(postId)) throw new CustomException(ExceptionCode.NOT_FOUND_POST);
         else {
             // 조회수 views 증가 
             postRepository.addView(postId);
 
-            Post findPost = postRepository.findOneWithCategory(postId)
+            Post findPost = postRepository.findPost(postId)
                     .orElseThrow(() -> new CustomException(ExceptionCode.NOT_FOUND_POST));
 
-            return new PostingResDto(findPost);
+            return new PostResDto(findPost);
         }
     }
 

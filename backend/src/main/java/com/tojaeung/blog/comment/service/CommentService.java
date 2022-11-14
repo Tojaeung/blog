@@ -63,7 +63,7 @@ public class CommentService {
     public List<CommentResDto> findCommentsInPost(Long postId) {
         if (!postRepository.existsById(postId)) throw new CustomException(ExceptionCode.NOT_FOUND_POST);
         else {
-            List<Comment> comments = commentRepository.findAllInPost(postId);
+            List<Comment> comments = commentRepository.findCommentsInPost(postId);
 
             List<CommentResDto> allCommentsInPost = comments.stream()
                     .map(comment -> new CommentResDto(comment))

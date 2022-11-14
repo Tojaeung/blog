@@ -17,9 +17,4 @@ public class CreateReqDto {
     @NotBlank(message = "댓글을 입력해주세요.")
     @Size(max = 255, message = "최대 255자 입니다.")
     private String content;
-
-    public CreateReqDto(String author, String content) {
-        this.author = author;
-        this.content = content;
-    }
 }

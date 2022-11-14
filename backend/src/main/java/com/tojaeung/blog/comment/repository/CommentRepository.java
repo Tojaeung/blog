@@ -11,9 +11,11 @@ import java.util.List;
 @Repository
 public interface CommentRepository extends JpaRepository<Comment, Long> {
 
-    @Query("select c from Comment c " +
-            "join fetch c.post " +
+    @Query("select distinct c from Comment c " +
+            // 연관관계가 있는 300댓글와 자식댓글 302,303만이 조회된다.
+            // 연관관계가 없는 301댓글은 조회되지 않는다.
+            // "left join fetch c.children " +  
             "where c.post.id = :postId and c.parent.id is null ")
-    List<Comment> findAllInPost(@Param("postId") Long postId);
+    List<Comment> findCommentsInPost(@Param("postId") Long postId);
 
 }

@@ -13,6 +13,7 @@ public class CommentResDto {
     private Long id;
     private String author;
     private String content;
+    private Long parentId;
     private List<CommentResDto> children;
     private LocalDate createdAt, lastModifiedAt;
 
@@ -21,6 +22,9 @@ public class CommentResDto {
         this.author = comment.getAuthor();
         this.content = comment.getContent();
 
+        if (comment.getParent() == null) this.parentId = null;
+        else this.parentId = comment.getParent().getId();
+        
         if (comment.getChildren() == null) this.children = new ArrayList<>();
         else {
             List<CommentResDto> children = comment.getChildren().stream()

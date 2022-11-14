@@ -1,7 +1,10 @@
 package com.tojaeung.blog.post.controller;
 
 import com.tojaeung.blog.post.domain.Post;
-import com.tojaeung.blog.post.dto.*;
+import com.tojaeung.blog.post.dto.CreateReqDto;
+import com.tojaeung.blog.post.dto.PageResDto;
+import com.tojaeung.blog.post.dto.PostResDto;
+import com.tojaeung.blog.post.dto.UpdateReqDto;
 import com.tojaeung.blog.post.service.PostService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -41,10 +44,10 @@ public class PostController {
 
     // 카테고리에 해당하는 포스팅들 가져오기
     @GetMapping("api/category/{categoryId}/post")
-    public ResponseEntity<PageResDto> findAllInCategory(
+    public ResponseEntity<PageResDto> findPostsInCategory(
             @PathVariable Long categoryId,
             @PageableDefault(size = 10) Pageable pageable) {
-        return ResponseEntity.ok(postService.findAllInCategory(categoryId, pageable));
+        return ResponseEntity.ok(postService.findPostsInCategory(categoryId, pageable));
     }
 
     // 조회수가 많은 top5 가져오기
@@ -55,8 +58,8 @@ public class PostController {
 
     // 특정 포스팅 가져오기 (댓글 + 태그 + 카테고리)
     @GetMapping("api/post/{postId}")
-    public ResponseEntity<PostingResDto> findPosting(@PathVariable Long postId) {
-        return ResponseEntity.ok(postService.findPosting(postId));
+    public ResponseEntity<PostResDto> findPost(@PathVariable Long postId) {
+        return ResponseEntity.ok(postService.findPost(postId));
     }
 
     // 특정 포스팅 업데이트
