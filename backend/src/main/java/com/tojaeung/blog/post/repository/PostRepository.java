@@ -40,8 +40,8 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     @Query("select distinct p from Post p " +
             "join fetch p.category " +
             // "join fetch p.comments " +   // org.hibernate.loader.MultipleBagFetchException: cannot simultaneously fetch multiple bags
-            "join fetch p.tags " +
-            "where p.id = :postId")
+            "left join fetch p.tags " +
+            "where p.id = :postId ")
     Optional<Post> findPost(@Param("postId") Long postId);
 
     // 포스팅 검색

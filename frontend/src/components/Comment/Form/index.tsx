@@ -19,7 +19,6 @@ function Form({ commentsState, setComments, parentId }: IProp) {
       setComments([...commentsState, res.data]);
     } else {
       const res = await createComment(Number(router.query.id), author, content, parentId);
-      // 부모 댓글에 넣어줘야함...
 
       const idx = commentsState.findIndex((comment) => comment.id === parentId);
       commentsState[idx].children.push(res.data);

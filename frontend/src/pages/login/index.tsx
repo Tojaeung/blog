@@ -22,15 +22,14 @@ const Login: NextPage<AuthType> = (auth) => {
     }
   };
 
-  if (!auth.accessToken) {
-    return <p>이미 {auth.username}님은 로그인 하셨습니다.</p>;
-  } else {
+  if (auth.accessToken) return <p>이미 {auth.username}님은 로그인 하셨습니다.</p>;
+  else {
     return (
       <Container>
         <Title>관리자 로그인</Title>
         <LoginBox>
           <IdInput placeholder="관리자ID" onChange={(e) => setUsername(e.target.value)} />
-          <PwInput placeholder="비밀번호" onChange={(e) => setPassword(e.target.value)} />
+          <PwInput type="password" placeholder="비밀번호" onChange={(e) => setPassword(e.target.value)} />
           <LoginButton onClick={handleLogin}>로그인</LoginButton>
         </LoginBox>
       </Container>
@@ -40,15 +39,22 @@ const Login: NextPage<AuthType> = (auth) => {
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const { refreshToken } = ctx.req.cookies;
-  if (refreshToken) axios.defaults.headers.Cookie = refreshToken;
 
-  const auth = await getRefresh();
+  if (!refreshToken) {
+    return {
+      props: {},
+    };
+  } else {
+    axios.defaults.headers.Cookie = refreshToken;
 
-  return {
-    props: {
-      auth,
-    },
-  };
+    const auth = await getRefresh();
+
+    return {
+      props: {
+        auth,
+      },
+    };
+  }
 };
 
 export default Login;
