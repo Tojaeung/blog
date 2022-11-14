@@ -2,14 +2,17 @@ import styled from 'styled-components';
 import { CommonButtonStyle, CommonInputStyle, CommonTitleStyle } from 'styles/globalStyle';
 
 export const Container = styled.div`
-  width: 500px;
+  width: 100%;
+  height: calc(100vh - 170px);
   padding: 20px;
   margin: 0 auto;
-  border: 1px solid;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
   gap: 20px;
+
+  background-color: ${({ theme }) => theme.palette.white};
 `;
 export const Title = styled(CommonTitleStyle)``;
 

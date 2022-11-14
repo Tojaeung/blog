@@ -18,6 +18,6 @@ public class CreateReqDto {
     @NotBlank(message = "포스팅 내용을 입력해주세요.")
     private String content;
     @NotNull
-    @Size(min = 1)
+    @Size(min = 1, message = "적어도 1개이상 태그가 필요합니다.")
     private List<String> tags;
 }

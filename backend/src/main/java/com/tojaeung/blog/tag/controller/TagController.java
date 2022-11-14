@@ -1,7 +1,6 @@
 package com.tojaeung.blog.tag.controller;
 
 import com.tojaeung.blog.post.dto.PageResDto;
-import com.tojaeung.blog.tag.dto.TagResDto;
 import com.tojaeung.blog.tag.dto.UpdateReqDto;
 import com.tojaeung.blog.tag.service.TagService;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +21,7 @@ public class TagController {
 
     // 태그 검색
     @GetMapping("admin/search")
-    public ResponseEntity<List<TagResDto>> search(@RequestParam String tagName) {
+    public ResponseEntity<List<String>> search(@RequestParam String tagName) {
         return ResponseEntity.ok(tagService.search(tagName));
     }
 

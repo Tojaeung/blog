@@ -6,7 +6,6 @@ import com.tojaeung.blog.post.dto.PageResDto;
 import com.tojaeung.blog.post.dto.PostResDto;
 import com.tojaeung.blog.post.repository.PostRepository;
 import com.tojaeung.blog.tag.domain.Tag;
-import com.tojaeung.blog.tag.dto.TagResDto;
 import com.tojaeung.blog.tag.repository.TagRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -25,14 +24,8 @@ public class TagService {
     private final PostRepository postRepository;
 
     @Transactional(readOnly = true)
-    public List<TagResDto> search(String tagName) {
-        List<Tag> tags = tagRepository.search(tagName);
-
-        List<TagResDto> tagResDtos = tags.stream()
-                .map((tag -> new TagResDto(tag)))
-                .collect(Collectors.toList());
-
-        return tagResDtos;
+    public List<String> search(String tagName) {
+        return tagRepository.search(tagName);
     }
 
     @Transactional(readOnly = true)
@@ -75,7 +68,7 @@ public class TagService {
     public void delete(Long postId, Long tagId) {
         if (!postRepository.existsById(postId)) throw new CustomException(ExceptionCode.NOT_FOUND_POST);
         if (!tagRepository.existsById(tagId)) throw new CustomException(ExceptionCode.NOT_FOUND_TAG);
-        
+
         tagRepository.deleteById(tagId);
     }
 }

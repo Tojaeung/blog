@@ -7,6 +7,12 @@ export const Container = styled.div`
   flex-direction: column;
   gap: 20px;
   margin: 0 auto;
+  background-color: ${({ theme }) => theme.palette.white};
+  padding: 20px;
+
+  @media ${({ theme }) => theme.device.mobile} {
+    padding: 10px;
+  }
 `;
 export const Selector = styled(CommonSelectStyle)``;
 export const Option = styled(CommonOptionStyle)``;
@@ -14,10 +20,21 @@ export const Option = styled(CommonOptionStyle)``;
 export const TitleInput = styled(CommonInputStyle)``;
 export const ThumbnailInput = styled.input``;
 
-export const EditorBox = styled.div`
-  width: 100%;
-  height: 500px;
-  border: 1px solid;
+export const TagSearchBox = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
 `;
+export const SearchTagInput = styled(CommonInputStyle)``;
+export const SearchButton = styled(CommonButtonStyle)``;
+
+export const TagBox = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+`;
+export const TagInput = styled(CommonInputStyle)``;
+export const AddTagButton = styled(CommonButtonStyle)``;
+export const InitButton = styled(CommonButtonStyle)``;
 
 export const SubmitButton = styled(CommonButtonStyle)``;
