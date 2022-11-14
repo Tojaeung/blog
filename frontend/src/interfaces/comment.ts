@@ -1,8 +1,9 @@
 export type CommentType = {
   id: number;
+  author: string;
   content: string;
-  postId: number;
-  children: CommentType;
+  parentId: number;
+  children: CommentType[];
   createdAt: string;
   lastModifiedAt: string;
 };

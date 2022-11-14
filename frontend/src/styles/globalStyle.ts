@@ -40,7 +40,8 @@ export const CommonInputStyle = styled.input`
 `;
 export const CommonButtonStyle = styled.button`
   outline: none;
-  padding: 10px 15px;
+  padding: 7px 15px;
+  white-space: nowrap;
   border: none;
   border-radius: 5px;
   font-size: 14px;
@@ -105,4 +106,14 @@ export const CommonCardStyle = styled.li`
   &:hover {
     transform: scale(1.05, 1.05);
   }
+`;
+
+export const CommonCommentStyle = styled.textarea`
+  outline: none;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 14px;
+  border: none;
+  background-color: ${({ theme }) => theme.palette.inputColor};
+  color: ${({ theme }) => theme.palette.black};
 `;

@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export const createComment = async (postId: number, author: string, content: string, parentId: number) => {
+export const createComment = async (postId: number, author: string, content: string, parentId: number | undefined) => {
   const res = await axios.post(
     `${process.env.NEXT_PUBLIC_API_URL}/admin/post/${postId}/comment/${parentId}`,
     { author, content },

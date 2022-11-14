@@ -8,15 +8,18 @@ import { getPost } from 'apis/post';
 
 import BlogCategory from 'components/BlogCategory';
 import Posting from 'components/Posting';
+import Comment from 'components/Comment';
 
 import { Container } from './style';
 import { IProps } from './type';
+import { getComments } from 'apis/comment';
 
-const Post: NextPage<IProps> = ({ auth, categories, post }) => {
+const Post: NextPage<IProps> = ({ auth, categories, post, comments }) => {
   return (
     <Container>
       <BlogCategory categories={categories} />
       <Posting auth={auth} post={post} />
+      <Comment comments={comments} />
     </Container>
   );
 };
@@ -40,7 +43,9 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     };
   }
 
-  return { props: { auth, categories, post } };
+  const comments = await getComments(Number(ctx.query.id));
+
+  return { props: { auth, categories, post, comments } };
 };
 
 export default Post;
