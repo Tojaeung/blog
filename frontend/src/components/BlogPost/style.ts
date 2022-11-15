@@ -30,14 +30,7 @@ export const Title = styled.h1`
   font-family: Noto Sans KR;
   font-weight: bold;
 `;
-export const ViewBox = styled.div`
-  overflow: hidden;
-  text-overflow: ellipsis;
-  word-wrap: break-word;
-  display: -webkit-box;
-  -webkit-line-clamp: 5;
-  -webkit-box-orient: vertical;
-`;
+
 export const Detailed = styled(CommonTextStyle)`
   margin-top: 10px;
 `;
