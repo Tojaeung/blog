@@ -19,9 +19,8 @@ const Blog: NextPage<IProps> = ({ categories, page1Posts }) => {
   const [blockNum, setBlockNum] = useState(0); // 한 페이지에 보여 줄 페이지네이션의 개수를 block으로 지정하는 state. 초기 값은 0
 
   useEffect(() => {
-    getAllPosts(Number(page)).then(({ posts }) => {
-      setPosts(posts);
-    });
+    // 중복렌더링 방지
+    if (page > 1) getAllPosts(Number(page)).then(({ posts }) => setPosts(posts));
   }, [page]);
 
   return (

@@ -31,7 +31,7 @@ const Category: NextPage<IProps> = ({ categories, page1Posts }) => {
 
   // 페이지 이동시
   useEffect(() => {
-    getPostsInCategory(Number(router.query.id), page).then(({ posts }) => setPosts(posts));
+    if (page > 1) getPostsInCategory(Number(router.query.id), page).then(({ posts }) => setPosts(posts));
   }, [page]);
 
   return (

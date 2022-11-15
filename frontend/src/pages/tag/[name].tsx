@@ -25,7 +25,8 @@ const Tag: NextPage<IProps> = ({ categories, page1Posts }) => {
 
   // 페이지 이동시
   useEffect(() => {
-    getPostsInTag(router.query.name as string, page).then(({ posts }) => setPosts(posts));
+    // 중복렌더링 방지
+    if (page > 1) getPostsInTag(router.query.name as string, page).then(({ posts }) => setPosts(posts));
   }, [page]);
 
   return (
@@ -38,7 +39,7 @@ const Tag: NextPage<IProps> = ({ categories, page1Posts }) => {
       </S.TitleBox>
       <S.Detail>"#{router.query.name}" 관련된 포스팅을 모아놓았습니다.</S.Detail>
 
-      <BlogPost posts={page1Posts.posts} />
+      <BlogPost posts={posts} />
 
       <Pagination
         page={page}
