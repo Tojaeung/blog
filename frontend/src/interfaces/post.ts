@@ -7,7 +7,7 @@ export type PostType = {
   views: number;
   thumbnail: string;
   categoryName: string;
-  tagNames: TagType[];
+  tags: TagType[];
   createdAt: string;
   lastModifiedAt: string;
 };

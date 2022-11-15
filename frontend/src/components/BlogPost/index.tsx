@@ -5,6 +5,8 @@ import React from 'react';
 import * as S from './style';
 import { IProp } from './type';
 
+import TagBadges from 'components/TagBadges';
+
 const Viewer = dynamic(() => import('components/EditorViewer'), { ssr: false });
 
 function BlogPost({ posts }: IProp) {
@@ -18,6 +20,8 @@ function BlogPost({ posts }: IProp) {
               <S.Title>{post.title}</S.Title>
 
               <Viewer content={post.content} />
+
+              {post.tags.length !== 0 && <TagBadges tags={post.tags} />}
 
               <S.Detailed>
                 {post.createdAt} | 조회수 {post.views}

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { CommonCardStyle, CommonTextStyle } from 'styles/globalStyle';
+import { CommonBadgeStyle, CommonCardStyle, CommonTextStyle } from 'styles/globalStyle';
 
 export const PostBox = styled.ul`
   width: 100%;
@@ -21,6 +21,7 @@ export const PostList = styled(CommonCardStyle)`
   /* width: 32.22%; */
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   gap: 10px;
 `;
 
@@ -31,6 +32,10 @@ export const Title = styled.h1`
   font-weight: bold;
 `;
 
-export const Detailed = styled(CommonTextStyle)`
-  margin-top: 10px;
+export const TagBox = styled.div`
+  display: flex;
+  gap: 5px;
 `;
+export const TagBadge = styled(CommonBadgeStyle)``;
+
+export const Detailed = styled(CommonTextStyle)``;
