@@ -1,6 +1,7 @@
 package com.tojaeung.blog.tag.controller;
 
 import com.tojaeung.blog.post.dto.PageResDto;
+import com.tojaeung.blog.tag.dto.AllTagResDto;
 import com.tojaeung.blog.tag.dto.UpdateReqDto;
 import com.tojaeung.blog.tag.service.TagService;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +24,12 @@ public class TagController {
     @GetMapping("admin/search")
     public ResponseEntity<List<String>> searchTagName(@RequestParam String tagName) {
         return ResponseEntity.ok(tagService.searchTagName(tagName));
+    }
+
+    // 태그 조회 (태그 네임으로 해당하는 모든 포스트 조회) return findPostwithCategory (페이징) 
+    @GetMapping("api/tags")
+    public ResponseEntity<List<AllTagResDto>> findAllTags() {
+        return ResponseEntity.ok(tagService.findAllTags());
     }
 
     // 태그 조회 (태그 네임으로 해당하는 모든 포스트 조회) return findPostwithCategory (페이징) 

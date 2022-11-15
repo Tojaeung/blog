@@ -6,6 +6,7 @@ import com.tojaeung.blog.post.dto.PageResDto;
 import com.tojaeung.blog.post.dto.PostResDto;
 import com.tojaeung.blog.post.repository.PostRepository;
 import com.tojaeung.blog.tag.domain.Tag;
+import com.tojaeung.blog.tag.dto.AllTagResDto;
 import com.tojaeung.blog.tag.repository.TagRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -26,6 +28,19 @@ public class TagService {
     @Transactional(readOnly = true)
     public List<String> searchTagName(String tagName) {
         return tagRepository.searchTagName(tagName);
+    }
+
+    @Transactional(readOnly = true)
+    public List<AllTagResDto> findAllTags() {
+        // 중복된 태그이름을 제거하기 위해 모든 태그이름들만 가져왔다.
+        List<String> allTagNames = tagRepository.findAllTags();
+
+        // 프론트에서 list key에 id를 집어넣기 위해 UUID를 id에 인위적으로 넣어준다.
+        List<AllTagResDto> allTagResDtos = allTagNames.stream()
+                .map(tagName -> new AllTagResDto(UUID.randomUUID(), tagName))
+                .collect(Collectors.toList());
+
+        return allTagResDtos;
     }
 
     @Transactional(readOnly = true)
