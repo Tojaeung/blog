@@ -9,6 +9,9 @@ export const Container = styled.div`
   background-color: ${({ theme }) => theme.palette.white};
   padding: 20px;
   border-radius: 5px;
+  @media ${({ theme }) => theme.device.mobile} {
+    padding: 10px;
+  }
 `;
 
 export const Title = styled(CommonTitleStyle)``;
@@ -40,6 +43,7 @@ export const Author = styled(CommonTextStyle)`
 
 export const Content = styled(CommonTextStyle)``;
 export const ReplyButton = styled(CommonButtonStyle)`
-  /* width: 50px; */
+  width: 10%;
+  min-width: 55px;
   align-items: flex-start;
 `;

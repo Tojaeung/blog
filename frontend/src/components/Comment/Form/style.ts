@@ -15,7 +15,10 @@ export const AuthorInput = styled(CommonInputStyle)`
   width: 50%;
 `;
 export const ContentInput = styled(CommonCommentStyle)`
-  width: 70%;
+  width: 100%;
   min-height: 100px;
 `;
-export const SubmitButton = styled(CommonButtonStyle)``;
+export const SubmitButton = styled(CommonButtonStyle)`
+  width: 10%;
+  min-width: 80px;
+`;

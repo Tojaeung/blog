@@ -9,7 +9,7 @@ function Pagination({ page, setPage, blockNum, setBlockNum, totalCnt }: IProps) 
     return iArr;
   };
 
-  const pageLimit = 10;
+  const pageLimit = 5;
   const totalPage: number = Math.ceil(totalCnt / 10);
   const blockArea: number = Number(blockNum * pageLimit);
   const nArr = createArr(Number(totalPage));

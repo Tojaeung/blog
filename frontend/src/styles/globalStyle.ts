@@ -13,16 +13,6 @@ export const GlobalStyles = createGlobalStyle`
   }
 `;
 
-const button = keyframes`
-  from {
-    background: linear-gradient(120deg, #4a90e2, #bd10e0);
-  }
-
-  to {
-    background: linear-gradient(120deg, #bd10e0,#4a90e2);
-  }
-`;
-
 export const CommonTitleStyle = styled.h1`
   font-size: 30px;
   color: ${({ theme }) => theme.palette.titleColor};
@@ -40,7 +30,7 @@ export const CommonInputStyle = styled.input`
 `;
 export const CommonButtonStyle = styled.button`
   outline: none;
-  padding: 7px 15px;
+  padding: 7px 13px;
   white-space: nowrap;
   border: none;
   border-radius: 5px;
@@ -48,10 +38,13 @@ export const CommonButtonStyle = styled.button`
   cursor: pointer;
   background: ${({ theme }) => theme.palette.gradationColor};
   color: ${({ theme }) => theme.palette.white};
-  font-family: Roboto;
+  font-family: ${({ theme }) => theme.font.en};
+  box-shadow: ${({ theme }) => theme.palette.boxShdow};
 
-  &:hover {
-    animation: ${button} 1s ease infinite;
+  @media ${({ theme }) => theme.device.tablet} {
+    font-size: 12px;
+    font-weight: bold;
+    padding: 7px 10px;
   }
 `;
 
@@ -75,7 +68,7 @@ export const CommonBadgeStyle = styled.li`
   font-size: 14px;
   font-weight: bold;
   border-radius: 5px;
-  padding: 10px 15px;
+  padding: 7px 14px;
   list-style: none;
   cursor: pointer;
   background-color: ${({ theme }) => theme.palette.badgeColor};

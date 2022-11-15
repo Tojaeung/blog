@@ -7,6 +7,7 @@ export const Container = styled.div`
   justify-content: center;
   gap: 10px;
   margin: 50px 0;
+  flex-wrap: wrap;
 `;
 
 export const PageNumberBox = styled.div`
@@ -26,6 +27,12 @@ export const PageButton = styled(CommonButtonStyle)<{ currentPage: boolean }>`
     background: ${(props) => (props.currentPage ? props.theme.palette.textColor : props.theme.palette.mainColor)};
     color: ${({ theme }) => theme.palette.white};
   }
+
+  @media ${({ theme }) => theme.device.tablet} {
+    font-size: 12px;
+    font-weight: bold;
+    padding: 7px 10px;
+  }
 `;
 
 export const ArrowButton = styled(CommonButtonStyle)`
@@ -36,5 +43,11 @@ export const ArrowButton = styled(CommonButtonStyle)`
   &:hover {
     background: ${({ theme }) => theme.palette.mainColor};
     color: ${({ theme }) => theme.palette.white};
+  }
+
+  @media ${({ theme }) => theme.device.tablet} {
+    font-size: 12px;
+    font-weight: bold;
+    padding: 7px 10px;
   }
 `;
