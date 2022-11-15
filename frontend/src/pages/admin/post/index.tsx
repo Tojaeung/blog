@@ -11,21 +11,20 @@ import { getCategories } from 'apis/category';
 import * as S from './style';
 import { IProps } from './type';
 import { searchTagName } from 'apis/tag';
-import { TagType } from 'interfaces/tag';
 
 const Editor = dynamic(() => import('components/Editor'), { ssr: false }); // client 사이드에서만 동작되기 때문에 ssr false로 설정
 
 const Post: NextPage<IProps> = ({ auth, categories }) => {
   const router = useRouter();
 
-  const [categoryId, setCategoryId] = useState<number>(1);
+  const [categoryId, setCategoryId] = useState<number>(categories[0].id);
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [thumbnail, setThumbnail] = useState<File>();
 
   // 태그검색
   const [keyword, setKeyword] = useState('');
-  const [searchedTags, setSearchedTags] = useState<TagType[]>([]);
+  const [searchedTags, setSearchedTags] = useState<string[]>([]);
 
   // 태그추가
   const [tagName, setTagName] = useState<string>('');
@@ -48,15 +47,16 @@ const Post: NextPage<IProps> = ({ auth, categories }) => {
   };
 
   const handleSubmit = async () => {
-    const req = { title: title, content: content, tags: tags };
+    const body = { title, content, tags };
 
     const formData = new FormData();
     formData.append('thumbnail', thumbnail!);
+    formData.append('createReqDto', new Blob([JSON.stringify(body)], { type: 'application/json' }));
 
     try {
-      const newPost = await createPost(categoryId, formData, auth.accessToken);
+      const newPostId = await createPost(categoryId, formData, auth.accessToken);
       alert('포스팅 되었습니다.');
-      router.push(`/post/${newPost.id}`);
+      router.push(`/post/${newPostId}`);
     } catch (e: any) {
       alert(e.message);
     }

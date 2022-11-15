@@ -5,6 +5,8 @@ export const createPost = async (categoryId: number, formData: FormData, accessT
   const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/admin/category/${categoryId}/post`, formData, {
     headers: {
       Authorization: `Bearer ${accessToken}`,
+      // 'Content-Type': 'application/json',
+      'Content-Type': 'multipart/form-data',
     },
     withCredentials: true,
   });
