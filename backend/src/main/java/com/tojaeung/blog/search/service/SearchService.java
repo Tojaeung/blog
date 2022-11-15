@@ -22,7 +22,7 @@ public class SearchService {
     private final PostRepository postRepository;
 
     @Transactional(readOnly = true)
-    public PageResDto searchAll(String keyword, @PageableDefault(size = 10) Pageable pageable) {
+    public PageResDto searchKeyword(String keyword, @PageableDefault(size = 10) Pageable pageable) {
         int pageNumber = pageable.getPageNumber();
         PageRequest pageRequest = PageRequest.of(
                 pageNumber - 1,
@@ -30,7 +30,7 @@ public class SearchService {
                 Sort.by("createdAt").descending()
         );
 
-        Page<Post> pages = postRepository.search(keyword, pageRequest);
+        Page<Post> pages = postRepository.searchKeyword(keyword, pageRequest);
         long totalCnt = pages.getTotalElements();
 
         List<PostResDto> allPostsInCategory = pages.stream()

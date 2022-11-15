@@ -22,7 +22,7 @@ public class SearchController {
     public ResponseEntity<PageResDto> searchAll(
             @RequestParam("keyword") String keyword,
             @PageableDefault(size = 10) Pageable pageable) {
-
-        return ResponseEntity.ok(searchService.searchAll(keyword, pageable));
+        
+        return ResponseEntity.ok(searchService.searchKeyword(keyword, pageable));
     }
 }

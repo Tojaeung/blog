@@ -24,8 +24,8 @@ public class TagService {
     private final PostRepository postRepository;
 
     @Transactional(readOnly = true)
-    public List<String> search(String tagName) {
-        return tagRepository.search(tagName);
+    public List<String> searchTagName(String tagName) {
+        return tagRepository.searchTagName(tagName);
     }
 
     @Transactional(readOnly = true)

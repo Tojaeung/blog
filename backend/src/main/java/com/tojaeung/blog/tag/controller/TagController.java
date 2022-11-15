@@ -21,8 +21,8 @@ public class TagController {
 
     // 태그 검색
     @GetMapping("admin/search")
-    public ResponseEntity<List<String>> search(@RequestParam String tagName) {
-        return ResponseEntity.ok(tagService.search(tagName));
+    public ResponseEntity<List<String>> searchTagName(@RequestParam String tagName) {
+        return ResponseEntity.ok(tagService.searchTagName(tagName));
     }
 
     // 태그 조회 (태그 네임으로 해당하는 모든 포스트 조회) return findPostwithCategory (페이징) 

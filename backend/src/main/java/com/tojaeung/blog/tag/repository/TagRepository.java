@@ -19,7 +19,7 @@ public interface TagRepository extends JpaRepository<Tag, Long> {
 
     @Query("select distinct t.name from Tag t " +
             "where t.name like %:tagName% ")
-    List<String> search(@Param("tagName") String tagName);
+    List<String> searchTagName(@Param("tagName") String tagName);
 
     @EntityGraph(attributePaths = {"post"})
     @Query("select t from Tag t " +
