@@ -10,12 +10,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
-import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -25,15 +25,15 @@ public class PostController {
     private final PostService postService;
 
     // 포스팅 새로 생성
-    @PostMapping("admin/category/{categoryId}/post")
-    public ResponseEntity create(
+    @PostMapping(value = "admin/category/{categoryId}/post")
+    public ResponseEntity<Long> create(
             @PathVariable Long categoryId,
-            @Valid @RequestPart CreateReqDto createReqDto,
-            @RequestPart MultipartFile thumbnail) {
+            @Valid @RequestPart("createReqDto") CreateReqDto createReqDto,
+            @RequestPart("thumbnail") MultipartFile thumbnail) {
 
         Post newPost = postService.create(categoryId, createReqDto, thumbnail);
 
-        return ResponseEntity.created(URI.create("/post/" + newPost.getId())).build();
+        return ResponseEntity.status(HttpStatus.CREATED).body(newPost.getId());
     }
 
     // 모든 블로그 가져오기 (페이지네이션)
