@@ -29,9 +29,8 @@ public class TagService {
     }
 
     @Transactional(readOnly = true)
-    public PageResDto findPostsInTag(Long tagId, Pageable pageable) {
-        Tag findTag = tagRepository.findById(tagId)
-                .orElseThrow((() -> new CustomException(ExceptionCode.NOT_FOUND_TAG)));
+    public PageResDto findPostsInTag(String tagName, Pageable pageable) {
+        if (!tagRepository.existsByName(tagName)) throw new CustomException(ExceptionCode.NOT_FOUND_TAG);
 
         int pageNumber = pageable.getPageNumber();
         PageRequest pageRequest = PageRequest.of(
@@ -40,7 +39,7 @@ public class TagService {
                 // Sort.by("createdAt").descending()
         );
 
-        Page<Tag> pages = tagRepository.findPostsInTag(findTag.getName(), pageRequest);
+        Page<Tag> pages = tagRepository.findPostsInTag(tagName, pageRequest);
 
         long totalCnt = pages.getTotalElements();
 

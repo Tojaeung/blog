@@ -16,7 +16,7 @@ public class PostResDto {
     private int views;
     private String thumbnail;
     private String categoryName;
-    private List<TagResDto> tagNames;
+    private List<TagResDto> tags;
     private LocalDate createdAt, lastModifiedAt;
 
     public PostResDto(Post post) {
@@ -30,8 +30,8 @@ public class PostResDto {
         List<TagResDto> tagResDtos = post.getTags().stream()
                 .map((tag -> new TagResDto(tag)))
                 .collect(Collectors.toList());
-        this.tagNames = tagResDtos;
-        
+        this.tags = tagResDtos;
+
         this.createdAt = post.getCreatedAt();
         this.lastModifiedAt = post.getLastModifiedAt();
     }
