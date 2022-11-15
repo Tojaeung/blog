@@ -1,39 +1,60 @@
-import styled from 'styled-components';
-import { CommonBadgeStyle, CommonTextStyle, CommonTitleStyle } from 'styles/globalStyle';
+import styled, { keyframes } from 'styled-components';
+import { CommonBadgeStyle, CommonTitleStyle } from 'styles/globalStyle';
 
-export const Container = styled.div`
-  width: 100%;
+const jittery = keyframes`
+  5%,
+  50% {
+    transform: scale(1);
+  }
+
+  10% {
+    transform: scale(0.9);
+  }
+
+  15% {
+    transform: scale(1.15);
+  }
+
+  20% {
+    transform: scale(1.15) rotate(-5deg);
+  }
+
+  25% {
+    transform: scale(1.15) rotate(5deg);
+  }
+
+  30% {
+    transform: scale(1.15) rotate(-3deg);
+  }
+
+  35% {
+    transform: scale(1.15) rotate(2deg);
+  }
+
+  40% {
+    transform: scale(1.15) rotate(0);
+  }
+`;
+
+export const Container = styled.ul`
   display: flex;
   flex-direction: column;
   gap: 20px;
   margin-top: 30px;
 `;
 
-export const TitleBox = styled.div`
+export const Title = styled(CommonTitleStyle)``;
+export const TagBox = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+`;
+
+export const TagBadge = styled(CommonBadgeStyle)`
   display: flex;
   align-items: center;
-  gap: 10px;
-`;
-export const PostCntBadge = styled(CommonBadgeStyle)`
-  background-color: ${({ theme }) => theme.palette.white};
-  color: ${({ theme }) => theme.palette.mainColor};
-  font-size: 20px;
-
-  &:hover {
-    background-color: ${({ theme }) => theme.palette.mainColor};
-    color: ${({ theme }) => theme.palette.white};
-  }
+  gap: 3px;
+  animation: ${jittery} 7s infinite;
 `;
 
-export const Title = styled(CommonTitleStyle)`
-  font-size: 50px;
-  @media ${({ theme }) => theme.device.tablet} {
-    font-size: 30px;
-  }
-`;
-export const Detail = styled(CommonTextStyle)`
-  font-size: 25px;
-  @media ${({ theme }) => theme.device.tablet} {
-    font-size: 20px;
-  }
-`;
+export const TagName = styled.span``;

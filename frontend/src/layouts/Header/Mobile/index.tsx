@@ -30,6 +30,9 @@ function Mobile() {
             <Link href="/blog">
               <MenuList>Blog</MenuList>
             </Link>
+            <Link href="/tag">
+              <MenuList>Tags</MenuList>
+            </Link>
             <Link href="/contact">
               <MenuList>Contact</MenuList>
             </Link>

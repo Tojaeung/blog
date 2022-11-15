@@ -1,7 +1,5 @@
-import { CategoryType } from 'interfaces/category';
-import { PagePostType } from 'interfaces/post';
+import { AllTagsType } from 'interfaces/tag';
 
-export type IProps = {
-  categories: CategoryType[];
-  page1Posts: PagePostType;
+export type IProp = {
+  allTags: AllTagsType[];
 };

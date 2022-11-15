@@ -88,10 +88,10 @@ export const CommonBadgeStyle = styled.li`
     color: ${({ theme }) => theme.palette.white};
   }
 
-  @media ${({ theme }) => theme.device.mobile} {
+  @media ${({ theme }) => theme.device.tablet} {
     font-size: 12px;
     font-weight: bold;
-    padding: 5px 10px;
+    padding: 7px 10px;
   }
 `;
 

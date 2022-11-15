@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import React, { useState } from 'react';
+import React from 'react';
 import Logo from 'components/Logo';
 import Search from 'components/Search';
 import { Container, MenuBox, MenuList } from './style';
@@ -16,6 +16,9 @@ function DeskTop() {
         </Link>
         <Link href="/blog">
           <MenuList>Blog</MenuList>
+        </Link>
+        <Link href="/tag">
+          <MenuList>Tags</MenuList>
         </Link>
         <Link href="/contact">
           <MenuList>Contact</MenuList>

@@ -16,8 +16,6 @@ import { IProps } from './type';
 import { PostType } from 'interfaces/post';
 
 const Search: NextPage<IProps> = ({ categories, page1Posts }) => {
-  console.log(page1Posts);
-
   const router = useRouter();
 
   const [posts, setPosts] = useState<PostType[]>(page1Posts.posts);
