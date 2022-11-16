@@ -18,9 +18,11 @@ function Comment({ comments }: IProp) {
         <S.CommentBox>
           {commentsState.map((comment) => (
             <S.CommentList key={comment.id}>
-              <S.Author>
-                {comment.author} ({comment.createdAt})
-              </S.Author>
+              <S.AuthorBox>
+                <S.Author>{comment.author}</S.Author>
+                <S.DateTime>({comment.createdAt})</S.DateTime>
+              </S.AuthorBox>
+
               <S.Content>{comment.content}</S.Content>
               <S.ReplyButton onClick={(e) => setReply(comment.id)}>답글</S.ReplyButton>
 

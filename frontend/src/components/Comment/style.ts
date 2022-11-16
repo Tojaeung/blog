@@ -36,9 +36,19 @@ export const ContentBox = styled.div`
   gap: 10px;
 `;
 
+export const AuthorBox = styled.div`
+  display: flex;
+  gap: 5px;
+  align-items: center;
+`;
+
 export const Author = styled(CommonTextStyle)`
   font-weight: bold;
   align-self: flex-start;
+`;
+export const DateTime = styled(CommonTextStyle)`
+  font-weight: normal;
+  font-size: 12px;
 `;
 
 export const Content = styled(CommonTextStyle)``;

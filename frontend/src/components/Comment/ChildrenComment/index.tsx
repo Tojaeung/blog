@@ -10,9 +10,10 @@ function ChildrenComment({ children }: IProp) {
       <S.ListBox>
         {children.map((child) => (
           <S.CommentList key={child.id}>
-            <S.Author>
-              ↳ {child.author} ({child.createdAt})
-            </S.Author>
+            <S.AuthorBox>
+              <S.Author>↳{child.author}</S.Author>
+              <S.DateTime>({child.createdAt})</S.DateTime>
+            </S.AuthorBox>
             <S.Content>{child.content}</S.Content>
           </S.CommentList>
         ))}
