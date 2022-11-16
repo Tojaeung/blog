@@ -30,7 +30,7 @@ public class CommentController {
         return ResponseEntity.status(HttpStatus.CREATED).body(newComment);
     }
 
-    // 댓글 새로 생성
+    // 댓글 가져오기
     @GetMapping("api/post/{postId}/comment")
     public ResponseEntity<List<CommentResDto>> findCommentsInPost(@PathVariable Long postId) {
 
