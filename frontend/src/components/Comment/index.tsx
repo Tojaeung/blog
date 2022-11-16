@@ -13,10 +13,10 @@ function Comment({ comments }: IProp) {
 
   return (
     <S.Container>
-      <S.Title>댓글 {comments.length}개</S.Title>
-      {comments.length && (
+      <S.Title>댓글 {commentsState.length}개</S.Title>
+      {commentsState.length && (
         <S.CommentBox>
-          {comments.map((comment) => (
+          {commentsState.map((comment) => (
             <S.CommentList key={comment.id}>
               <S.Author>
                 {comment.author} ({comment.createdAt})
@@ -27,7 +27,7 @@ function Comment({ comments }: IProp) {
               {comment.children.length > 0 && <ChildrenComment children={comment.children} />}
 
               {comment.id === reply && (
-                <Form commentsState={commentsState} setComments={setComments} parentId={comment.parentId} />
+                <Form commentsState={commentsState} setComments={setComments} parentId={comment.id} />
               )}
             </S.CommentList>
           ))}

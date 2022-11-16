@@ -1,12 +1,27 @@
 import axios from 'axios';
+import { CommentType } from 'interfaces/comment';
 
-export const createComment = async (postId: number, author: string, content: string, parentId: number | undefined) => {
-  const res = await axios.post(
-    `${process.env.NEXT_PUBLIC_API_URL}/admin/post/${postId}/comment/${parentId}`,
-    { author, content },
-    { withCredentials: true },
-  );
-  return res.data;
+export const createComment = async (
+  postId: number,
+  author: string,
+  content: string,
+  parentId?: number,
+): Promise<CommentType> => {
+  if (!parentId) {
+    const res = await axios.post(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/post/${postId}/comment`,
+      { author, content },
+      { withCredentials: true },
+    );
+    return res.data;
+  } else {
+    const res = await axios.post(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/post/${postId}/comment/${parentId}`,
+      { author, content },
+      { withCredentials: true },
+    );
+    return res.data;
+  }
 };
 
 export const getComments = async (postId: number) => {
