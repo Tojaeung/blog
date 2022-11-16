@@ -62,6 +62,15 @@ public class PostController {
         return ResponseEntity.ok(postService.findPost(postId));
     }
 
+    // 포스팅 검색 (포스팅, 태그)
+    @GetMapping("api/post/search")
+    public ResponseEntity<PageResDto> searchPosts(
+            @RequestParam("keyword") String keyword,
+            @PageableDefault(size = 10) Pageable pageable) {
+
+        return ResponseEntity.ok(postService.searchPosts(keyword, pageable));
+    }
+
     // 특정 포스팅 업데이트
     @PutMapping("admin/post/{postId}")
     public ResponseEntity update(

@@ -19,6 +19,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -134,6 +135,25 @@ public class PostService {
 
             return new PostResDto(findPost);
         }
+    }
+
+    @Transactional(readOnly = true)
+    public PageResDto searchPosts(String keyword, @PageableDefault(size = 10) Pageable pageable) {
+        int pageNumber = pageable.getPageNumber();
+        PageRequest pageRequest = PageRequest.of(
+                pageNumber - 1,
+                pageable.getPageSize(),
+                Sort.by("createdAt").descending()
+        );
+
+        Page<Post> pages = postRepository.searchPosts(keyword, pageRequest);
+        long totalCnt = pages.getTotalElements();
+
+        List<PostResDto> searchedPosts = pages.stream()
+                .map(post -> new PostResDto(post))
+                .collect(Collectors.toList());
+
+        return new PageResDto(totalCnt, searchedPosts);
     }
 
     // 포스팅 변경하기

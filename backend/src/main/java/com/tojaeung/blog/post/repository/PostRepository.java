@@ -49,5 +49,5 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     @Query("select p from Post p " +
             // "join fetch p.category " +   // 페이징시 페치조인 안되기떄문에 @EntityGraph를 사용해줬다. 
             "where p.title like %:keyword% or p.content like %:keyword% ")
-    Page<Post> searchKeyword(@Param("keyword") String keyword, Pageable pageable);
+    Page<Post> searchPosts(@Param("keyword") String keyword, Pageable pageable);
 }
