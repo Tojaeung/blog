@@ -33,7 +33,7 @@ export const Slogan = styled(CommonTextStyle)`
 
 export const ImageBox = styled.div`
   border-radius: 50%;
-  border: 5px double;
+  border: 3px solid;
   transition: all 0.5s;
   &:hover {
     transform: skewX(5deg);

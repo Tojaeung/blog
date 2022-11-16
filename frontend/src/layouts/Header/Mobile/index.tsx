@@ -25,7 +25,7 @@ function Mobile() {
           <Search />
           <MenuBox>
             <Link href="/about">
-              <MenuList>About Me</MenuList>
+              <MenuList>About</MenuList>
             </Link>
             <Link href="/blog">
               <MenuList>Blog</MenuList>

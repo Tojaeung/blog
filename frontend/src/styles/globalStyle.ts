@@ -30,7 +30,7 @@ export const CommonInputStyle = styled.input`
 `;
 export const CommonButtonStyle = styled.button`
   outline: none;
-  padding: 7px 13px;
+  padding: 10px 15px;
   white-space: nowrap;
   border: none;
   border-radius: 5px;
@@ -68,7 +68,7 @@ export const CommonBadgeStyle = styled.li`
   font-size: 14px;
   font-weight: bold;
   border-radius: 5px;
-  padding: 7px 14px;
+  padding: 10px 14px;
   list-style: none;
   cursor: pointer;
   background-color: ${({ theme }) => theme.palette.badgeColor};
@@ -84,7 +84,7 @@ export const CommonBadgeStyle = styled.li`
   @media ${({ theme }) => theme.device.tablet} {
     font-size: 12px;
     font-weight: bold;
-    padding: 7px 10px;
+    padding: 9px 10px;
   }
 `;
 
