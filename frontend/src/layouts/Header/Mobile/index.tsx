@@ -5,7 +5,7 @@ import { GiHamburgerMenu } from 'react-icons/gi';
 import Search from 'components/Search';
 import Logo from 'components/Logo';
 
-import { Container, Background, Nav, MenuBox, MenuList, CloseIcon } from './style';
+import * as S from './style';
 
 function Mobile() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -15,31 +15,31 @@ function Mobile() {
   };
 
   return (
-    <Container>
+    <S.Container>
       <Logo />
       <GiHamburgerMenu size="30" onClick={onToggle} />
 
-      <Background isOpen={isOpen}>
-        <Nav isOpen={isOpen}>
-          <CloseIcon size="30" onClick={onToggle} />
+      <S.Background isOpen={isOpen}>
+        <S.Nav isOpen={isOpen}>
+          <S.CloseIcon size="30" onClick={onToggle} />
           <Search />
-          <MenuBox>
+          <S.MenuBox>
             <Link href="/about">
-              <MenuList>About</MenuList>
+              <S.MenuList>About</S.MenuList>
             </Link>
             <Link href="/blog">
-              <MenuList>Blog</MenuList>
+              <S.MenuList>Blog</S.MenuList>
             </Link>
             <Link href="/tag">
-              <MenuList>Tags</MenuList>
+              <S.MenuList>Tags</S.MenuList>
             </Link>
             <Link href="/contact">
-              <MenuList>Contact</MenuList>
+              <S.MenuList>Contact</S.MenuList>
             </Link>
-          </MenuBox>
-        </Nav>
-      </Background>
-    </Container>
+          </S.MenuBox>
+        </S.Nav>
+      </S.Background>
+    </S.Container>
   );
 }
 

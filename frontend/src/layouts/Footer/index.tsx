@@ -10,16 +10,24 @@ const Footer = () => {
 
       <S.IconBox>
         <Link href="https://github.com/Tojaeung">
-          <S.GithubIcon size={25} />
+          <a>
+            <S.GithubIcon size={25} color="black" />
+          </a>
         </Link>
         <Link href="https://www.instagram.com/tojaeung1027">
-          <S.InstaIcon size={25} />
+          <a>
+            <S.InstaIcon size={25} color="black" />
+          </a>
         </Link>
         <Link href="https://solved.ac/tojaeung">
-          <S.BrainIcon size={25} />
+          <a>
+            <S.BrainIcon size={25} color="black" />
+          </a>
         </Link>
         <Link href="https://soundcloud.com/tojaeung">
-          <S.SoundcloudIcon size={25} />
+          <a>
+            <S.SoundcloudIcon size={25} color="black" />
+          </a>
         </Link>
       </S.IconBox>
 

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { CommonTextStyle } from 'styles/globalStyle';
-import { AiFillGithub, AiFillInstagram, AiOutlineInstagram } from 'react-icons/ai';
+import { AiFillGithub, AiOutlineInstagram } from 'react-icons/ai';
 import { GrSoundcloud } from 'react-icons/gr';
 import { GiBrain } from 'react-icons/gi';
 
