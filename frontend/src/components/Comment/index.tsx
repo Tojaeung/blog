@@ -33,7 +33,7 @@ function Comment({ auth, comments }: IProps) {
           {commentsState.map((comment) => (
             <S.CommentList key={comment.id}>
               <S.AuthorBox>
-                <S.Author>{comment.author}</S.Author>
+                <S.Author>{!comment.isAdmin ? comment.author : `👑${comment.author}`}</S.Author>
                 <S.DateTime>({comment.createdAt})</S.DateTime>
                 {auth?.accessToken && (
                   <S.DeleteButton onClick={(e) => handleDeleteComment(comment.id)}>삭제</S.DeleteButton>

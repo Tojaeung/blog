@@ -11,7 +11,7 @@ function ChildrenComment({ children }: IProp) {
         {children.map((child) => (
           <S.CommentList key={child.id}>
             <S.AuthorBox>
-              <S.Author>↳{child.author}</S.Author>
+              <S.Author>↳{!child.isAdmin ? child.author : `👑${child.author}`}</S.Author>
               <S.DateTime>({child.createdAt})</S.DateTime>
             </S.AuthorBox>
             <S.Content>{child.content}</S.Content>
