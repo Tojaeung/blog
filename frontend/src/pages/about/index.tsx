@@ -48,6 +48,28 @@ const About: NextPage<IProp> = ({ categories }) => {
           ✅ 1일 1커밋, 1일 1PS(problem solve), 1일 1포스팅 개발에 진심인 개발자 <br />
         </S.CV>
 
+        <S.CertificateBox>
+          <S.CertificateTitle>자격증</S.CertificateTitle>
+          <S.CertificateImages>
+            <Image src="/images/sqld자격증.png" width="200" height="300" alt="sqld자격증" />
+            <S.CertificatePlan>
+              정보처리기사 <br />
+              2023.1 도전예정
+            </S.CertificatePlan>
+          </S.CertificateImages>
+        </S.CertificateBox>
+
+        <S.DevBooksBox>
+          <S.DevBooksTitle>개발서적</S.DevBooksTitle>
+          <S.DevBooksImages>
+            <Image src="/images/sql레벨업.png" width="200" height="300" alt="sql레벨업" />
+            <Image src="/images/테스트주도개발시작하기.png" width="200" height="300" alt="테스트주도개발시작하기" />
+            <Image src="/images/이코테.png" width="200" height="300" alt="이코테" />
+            <Image src="/images/이펙티브자바.png" width="200" height="300" alt="이펙티브자바" />
+            <Image src="/images/객체지향사실과오해.png" width="200" height="300" alt="객체지향사실과오해" />
+          </S.DevBooksImages>
+        </S.DevBooksBox>
+
         <Link href="https://github.com/Tojaeung">
           <S.GitHubImage src="https://ghchart.rshah.org/Tojaeung" alt="깃허브 커밋 그래프" />
         </Link>

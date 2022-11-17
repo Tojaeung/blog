@@ -1,5 +1,8 @@
 import styled from 'styled-components';
 import { CommonTextStyle } from 'styles/globalStyle';
+import { AiFillGithub, AiFillInstagram, AiOutlineInstagram } from 'react-icons/ai';
+import { GrSoundcloud } from 'react-icons/gr';
+import { GiBrain } from 'react-icons/gi';
 
 export const Container = styled.div`
   width: 100%;
@@ -23,6 +26,19 @@ export const IconBox = styled.div`
   display: flex;
   align-items: center;
   gap: 10px;
+`;
+
+export const GithubIcon = styled(AiFillGithub)`
+  cursor: pointer;
+`;
+export const InstaIcon = styled(AiOutlineInstagram)`
+  cursor: pointer;
+`;
+export const SoundcloudIcon = styled(GrSoundcloud)`
+  cursor: pointer;
+`;
+export const BrainIcon = styled(GiBrain)`
+  cursor: pointer;
 `;
 
 export const CopyRightText = styled(CommonTextStyle)`

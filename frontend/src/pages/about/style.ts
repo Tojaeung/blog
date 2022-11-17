@@ -59,6 +59,51 @@ export const CV = styled(CommonTextStyle)`
   }
 `;
 
+export const CertificateBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+`;
+
+export const CertificateTitle = styled(CommonTitleStyle)``;
+export const CertificateImages = styled.div`
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+
+  @media ${({ theme }) => theme.device.tablet} {
+    gap: 5px;
+  }
+`;
+export const CertificatePlan = styled.div`
+  width: 200px;
+  background-color: ${({ theme }) => theme.palette.white};
+  border: 1px solid;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  text-align: center;
+  color: ${({ theme }) => theme.palette.textColor};
+`;
+
+export const DevBooksBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+`;
+
+export const DevBooksTitle = styled(CommonTitleStyle)``;
+export const DevBooksImages = styled.div`
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+
+  @media ${({ theme }) => theme.device.tablet} {
+    gap: 5px;
+  }
+`;
+
 export const GitHubImage = styled.img`
   cursor: pointer;
 `;

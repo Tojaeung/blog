@@ -1,7 +1,4 @@
 import React from 'react';
-import { AiFillGithub } from 'react-icons/ai';
-import { GrSoundcloud } from 'react-icons/gr';
-import { GiBrain } from 'react-icons/gi';
 
 import * as S from './style';
 import Link from 'next/link';
@@ -13,13 +10,16 @@ const Footer = () => {
 
       <S.IconBox>
         <Link href="https://github.com/Tojaeung">
-          <AiFillGithub size={25} />
+          <S.GithubIcon size={25} />
+        </Link>
+        <Link href="https://www.instagram.com/tojaeung1027">
+          <S.InstaIcon size={25} />
         </Link>
         <Link href="https://solved.ac/tojaeung">
-          <GiBrain size={25} />
+          <S.BrainIcon size={25} />
         </Link>
         <Link href="https://soundcloud.com/tojaeung">
-          <GrSoundcloud size={25} />
+          <S.SoundcloudIcon size={25} />
         </Link>
       </S.IconBox>
 
