@@ -19,7 +19,7 @@ const Post: NextPage<IProps> = ({ auth, categories, post, comments }) => {
     <Container>
       <BlogCategory categories={categories} />
       <Posting auth={auth} post={post} />
-      <Comment comments={comments} />
+      <Comment auth={auth} comments={comments} />
     </Container>
   );
 };

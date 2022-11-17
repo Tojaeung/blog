@@ -44,16 +44,18 @@ export const AuthorBox = styled.div`
 
 export const Author = styled(CommonTextStyle)`
   font-weight: bold;
-  align-self: flex-start;
 `;
 export const DateTime = styled(CommonTextStyle)`
   font-weight: normal;
   font-size: 12px;
 `;
+export const DeleteButton = styled.button`
+  cursor: pointer;
+`;
 
 export const Content = styled(CommonTextStyle)``;
 export const ReplyButton = styled(CommonButtonStyle)`
-  width: 10%;
-  min-width: 55px;
+  width: 7%;
+  min-width: 50px;
   align-items: flex-start;
 `;
