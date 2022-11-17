@@ -18,8 +18,8 @@ function Intro() {
           기본에 충실하자 !!
         </S.Slogan>
 
-        <Link href="/about">
-          <S.GoAboutMe>About Me</S.GoAboutMe>
+        <Link href="/guestbook">
+          <S.GuestbookButton>방명록 남기기</S.GuestbookButton>
         </Link>
       </S.TypographyBox>
       <S.ImageBox>

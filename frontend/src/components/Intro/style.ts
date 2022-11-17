@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import Image from 'next/image';
-import { CommonButtonStyle, CommonTextStyle } from 'styles/globalStyle';
+import { CommonButtonStyle, CommonTextStyle, jittery } from 'styles/globalStyle';
 
 export const Container = styled.div`
   width: 100%;
@@ -47,4 +47,7 @@ export const Profile = styled(Image)`
   border-radius: 50%;
 `;
 
-export const GoAboutMe = styled(CommonButtonStyle)``;
+export const GuestbookButton = styled(CommonButtonStyle)`
+  font-weight: bold;
+  animation: ${jittery} 3s infinite;
+`;
