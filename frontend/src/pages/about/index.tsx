@@ -10,10 +10,17 @@ import HomeCategory from 'components/HomeCategory';
 import * as S from './style';
 import { IProp } from './type';
 import Image from 'next/image';
+import HeadMeta from 'layouts/HeadMeta';
 
 const About: NextPage<IProp> = ({ categories }) => {
   return (
     <S.Container>
+      <HeadMeta
+        title="About - 토재웅님의 블로그"
+        description="안녕하세요!! 백엔드 개발자 토재웅입니다. 첫째도 기본!! 둘째도 기본!! 기본에 충실하자!!"
+        image="/images/profile.jpg"
+        url="https://tojaeung.com/about"
+      />
       <S.AboutBox>
         <S.Title>About Me</S.Title>
 

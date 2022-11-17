@@ -8,6 +8,7 @@ import { deleteGuestbook, getAllGuestbooks } from 'apis/guestbook';
 
 import HomeCategory from 'components/HomeCategory';
 import Form from './Form';
+import HeadMeta from 'layouts/HeadMeta';
 
 import * as S from './style';
 import { IProps } from './type';
@@ -31,6 +32,13 @@ const Guestbook: NextPage<IProps> = ({ auth, categories, guestbooks }) => {
 
   return (
     <S.Container>
+      <HeadMeta
+        title={`방명록 - 토재웅님의 블로그`}
+        description="안녕하세요!! 백엔드 개발자 토재웅입니다. 첫째도 기본!! 둘째도 기본!! 기본에 충실하자!!"
+        image="/images/profile.jpg"
+        url={`https://tojaeung.com/guestbook`}
+      />
+
       <S.GuestbookSection>
         <S.Title>방명록</S.Title>
 

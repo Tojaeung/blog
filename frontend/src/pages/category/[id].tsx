@@ -9,6 +9,7 @@ import { getPostsInCategory } from 'apis/post';
 import BlogPost from 'components/BlogPost';
 import BlogCategory from 'components/BlogCategory';
 import Pagination from 'components/Pagination';
+import HeadMeta from 'layouts/HeadMeta';
 
 import { PostType } from 'interfaces/post';
 
@@ -36,6 +37,12 @@ const Category: NextPage<IProps> = ({ categories, page1Posts }) => {
 
   return (
     <Container>
+      <HeadMeta
+        title={`Category - ${selectedCategory?.name}`}
+        description="안녕하세요!! 백엔드 개발자 토재웅입니다. 첫째도 기본!! 둘째도 기본!! 기본에 충실하자!!"
+        image="/images/profile.jpg"
+        url={`https://tojaeung.com/category/${selectedCategory?.id}`}
+      />
       <BlogCategory categories={categories} />
       <TitleBox>
         <Title>{selectedCategory?.name}</Title>

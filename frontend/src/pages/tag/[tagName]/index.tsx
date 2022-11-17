@@ -10,6 +10,7 @@ import { getPostsInTag } from 'apis/tag';
 import BlogCategory from 'components/BlogCategory';
 import BlogPost from 'components/BlogPost';
 import Pagination from 'components/Pagination';
+import HeadMeta from 'layouts/HeadMeta';
 
 import * as S from './style';
 import { IProps } from './type';
@@ -26,11 +27,17 @@ const Tag: NextPage<IProps> = ({ categories, page1Posts }) => {
   // 페이지 이동시
   useEffect(() => {
     // 중복렌더링 방지
-    if (page > 1) getPostsInTag(router.query.name as string, page).then(({ posts }) => setPosts(posts));
+    if (page > 1) getPostsInTag(router.query.tagName as string, page).then(({ posts }) => setPosts(posts));
   }, [page]);
 
   return (
     <S.Container>
+      <HeadMeta
+        title={`#${router.query.tagName} - 토재웅`}
+        description="안녕하세요!! 백엔드 개발자 토재웅입니다. 첫째도 기본!! 둘째도 기본!! 기본에 충실하자!!"
+        image="/images/profile.jpg"
+        url={`https://tojaeung.com/tag/${router.query.tagName}`}
+      />
       <BlogCategory categories={categories} />
 
       <S.TitleBox>
@@ -61,7 +68,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
   let page1Posts;
   try {
-    page1Posts = await getPostsInTag(ctx.query.name as string, 1);
+    page1Posts = await getPostsInTag(ctx.query.tagName as string, 1);
   } catch (e) {
     return {
       redirect: {

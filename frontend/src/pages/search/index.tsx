@@ -10,6 +10,7 @@ import { searchKeyword } from 'apis/search';
 import BlogCategory from 'components/BlogCategory';
 import BlogPost from 'components/BlogPost';
 import Pagination from 'components/Pagination';
+import HeadMeta from 'layouts/HeadMeta';
 
 import * as S from './style';
 import { IProps } from './type';
@@ -31,6 +32,12 @@ const Search: NextPage<IProps> = ({ categories, page1Posts }) => {
 
   return (
     <S.Container>
+      <HeadMeta
+        title={`${router.query.keyword}의 검색결과 - 토재웅`}
+        description="안녕하세요!! 백엔드 개발자 토재웅입니다. 첫째도 기본!! 둘째도 기본!! 기본에 충실하자!!"
+        image="/images/profile.jpg"
+        url={`https://tojaeung.com/search`}
+      />
       <BlogCategory categories={categories} />
 
       <S.TitleBox>

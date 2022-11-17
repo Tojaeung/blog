@@ -7,6 +7,7 @@ import { getAllPosts } from 'apis/post';
 import BlogCategory from 'components/BlogCategory';
 import BlogPost from 'components/BlogPost';
 import Pagination from 'components/Pagination';
+import HeadMeta from 'layouts/HeadMeta';
 
 import { AllPostsCnt, Container, Title, TitleBox } from './style';
 import { IProps } from './type';
@@ -25,6 +26,12 @@ const Blog: NextPage<IProps> = ({ categories, page1Posts }) => {
 
   return (
     <Container>
+      <HeadMeta
+        title="Blog - 토재웅님의 블로그"
+        description="안녕하세요!! 백엔드 개발자 토재웅입니다. 첫째도 기본!! 둘째도 기본!! 기본에 충실하자!!"
+        image="/images/profile.jpg"
+        url="https://tojaeung.com/blog"
+      />
       <BlogCategory categories={categories} />
       <TitleBox>
         <Title>Blog</Title>

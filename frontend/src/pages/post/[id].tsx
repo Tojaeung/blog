@@ -13,10 +13,17 @@ import Comment from 'components/Comment';
 import { Container } from './style';
 import { IProps } from './type';
 import { getComments } from 'apis/comment';
+import HeadMeta from 'layouts/HeadMeta';
 
 const Post: NextPage<IProps> = ({ auth, categories, post, comments }) => {
   return (
     <Container>
+      <HeadMeta
+        title={`${post.title} - 토재웅`}
+        description={post.content}
+        image={post.thumbnail}
+        url={`https://tojaeung.com/post/${post.id}`}
+      />
       <BlogCategory categories={categories} />
       <Posting auth={auth} post={post} />
       <Comment auth={auth} comments={comments} />

@@ -16,6 +16,12 @@ interface IProps {
 const Home: NextPage<IProps> = ({ categories, postsTop5 }) => {
   return (
     <Container>
+      <HeadMeta
+        title="토재웅님의 블로그"
+        description="안녕하세요!! 백엔드 개발자 토재웅입니다. 첫째도 기본!! 둘째도 기본!! 기본에 충실하자!!"
+        image="/images/profile.jpg"
+        url="https://tojaeung.com"
+      />
       <Intro />
 
       <Title>가장 인기있는 포스팅 Top5</Title>
@@ -41,6 +47,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
 import styled from 'styled-components';
 import { CommonTitleStyle } from 'styles/globalStyle';
+import HeadMeta from 'layouts/HeadMeta';
 
 const Container = styled.div`
   width: 100%;
