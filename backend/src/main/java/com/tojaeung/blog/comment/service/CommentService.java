@@ -33,6 +33,7 @@ public class CommentService {
             Comment comment = Comment.builder()
                     .author(createReqDto.getAuthor())
                     .content(createReqDto.getContent())
+                    .isAdmin(createReqDto.getIsAdmin())
                     .post(post)
                     .parent(null)
                     .build();
@@ -48,6 +49,7 @@ public class CommentService {
             Comment comment = Comment.builder()
                     .author(createReqDto.getAuthor())
                     .content(createReqDto.getContent())
+                    .isAdmin(createReqDto.getIsAdmin())
                     .post(post)
                     .parent(parentComment)
                     .build();
@@ -76,6 +78,10 @@ public class CommentService {
 
     @Transactional
     public void delete(Long commentId) {
+        if (!commentRepository.existsById(commentId)) {
+            throw new CustomException(ExceptionCode.NOT_FOUND_COMMENT);
+        }
+
         commentRepository.deleteById(commentId);
     }
 }

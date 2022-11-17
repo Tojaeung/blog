@@ -30,6 +30,9 @@ public class Comment {
     @Column
     private String content;
 
+    @Column
+    private Boolean isAdmin;
+
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id")

@@ -25,7 +25,7 @@ public class GuestbookService {
         Guestbook guestbook = Guestbook.builder()
                 .author(createReqDto.getAuthor())
                 .content(createReqDto.getContent())
-                .isAdmin(!createReqDto.getIsAdmin())
+                .isAdmin(createReqDto.getIsAdmin())
                 .build();
 
         Guestbook savedGuestbook = guestbookRepository.save(guestbook);
