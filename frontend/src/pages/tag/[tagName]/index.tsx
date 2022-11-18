@@ -41,10 +41,10 @@ const Tag: NextPage<IProps> = ({ categories, page1Posts }) => {
       <BlogCategory categories={categories} />
 
       <S.TitleBox>
-        <S.Title># {router.query.name}</S.Title>
+        <S.Title>#{router.query.tagName}</S.Title>
         <S.PostCntBadge>{page1Posts.totalCnt}</S.PostCntBadge>
       </S.TitleBox>
-      <S.Detail>"#{router.query.name}" 관련된 포스팅을 모아놓았습니다.</S.Detail>
+      <S.Detail>"#{router.query.tagName}" 관련된 포스팅을 모아놓았습니다.</S.Detail>
 
       <BlogPost posts={posts} />
 
