@@ -4,22 +4,7 @@ import axios from 'axios';
 import { getRefresh } from 'apis/auth';
 import { getCategories, createCategory, deleteCategory, updateCategory } from 'apis/category';
 
-import {
-  CategoryBox,
-  CategoryList,
-  Container,
-  Count,
-  CreateBox,
-  CreateButton,
-  CreateInput,
-  DeleteButton,
-  InfoBox,
-  Name,
-  Title,
-  UpdateBox,
-  UpdateButton,
-  UpdateInput,
-} from './style';
+import * as S from './style';
 import { IProps } from './type';
 
 const Category: NextPage<IProps> = ({ auth, categories }) => {
@@ -60,48 +45,57 @@ const Category: NextPage<IProps> = ({ auth, categories }) => {
   };
 
   return (
-    <Container>
-      <Title>카테고리 편집</Title>
-      <CreateBox>
-        <CreateInput
+    <S.Container>
+      <S.Title>카테고리 편집</S.Title>
+      <S.CreateBox>
+        <S.CreateInput
           placeholder="새 카테고리 입력"
           onChange={(e) => {
             setNewCategoryName(e.target.value);
           }}
         />
-        <CreateButton onClick={handleCreate}>카테고리 생성</CreateButton>
-      </CreateBox>
+        <S.CreateButton onClick={handleCreate}>카테고리 생성</S.CreateButton>
+      </S.CreateBox>
 
-      <CategoryBox>
+      <S.CategoryBox>
         {categoriesState.map((category) => {
           return (
-            <CategoryList key={category.id}>
-              <InfoBox>
-                <Name>{category.name}</Name>
-                <Count>{category.postCnt}개</Count>
-                <DeleteButton onClick={(e) => handleDelete(category.id)}>삭제</DeleteButton>
-              </InfoBox>
+            <S.CategoryList key={category.id}>
+              <S.InfoBox>
+                <S.Name>{category.name}</S.Name>
+                <S.Count>{category.postCnt}개</S.Count>
+                <S.DeleteButton onClick={(e) => handleDelete(category.id)}>삭제</S.DeleteButton>
+              </S.InfoBox>
 
-              <UpdateBox>
-                <UpdateInput placeholder="카테고리 이름 변경" onChange={(e) => setUpdatedName(e.target.value)} />
-                <UpdateButton onClick={(e) => handleUpdate(category.id)}>업데이트</UpdateButton>
-              </UpdateBox>
-            </CategoryList>
+              <S.UpdateBox>
+                <S.UpdateInput placeholder="카테고리 이름 변경" onChange={(e) => setUpdatedName(e.target.value)} />
+                <S.UpdateButton onClick={(e) => handleUpdate(category.id)}>업데이트</S.UpdateButton>
+              </S.UpdateBox>
+            </S.CategoryList>
           );
         })}
-      </CategoryBox>
-    </Container>
+      </S.CategoryBox>
+    </S.Container>
   );
 };
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const { refreshToken } = ctx.req.cookies;
-  if (refreshToken) axios.defaults.headers.Cookie = refreshToken;
+  // 인증정보 없다면 접근불가
+  if (!refreshToken) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: '/login',
+      },
+    };
+  }
 
-  let auth;
-  try {
-    auth = await getRefresh();
-  } catch (err) {
+  axios.defaults.headers.Cookie = refreshToken;
+  const auth = await getRefresh();
+
+  // 엑세스 토큰을 응답받지 못하면 접근불가
+  if (!auth) {
     return {
       redirect: {
         permanent: false,

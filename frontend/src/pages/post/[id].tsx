@@ -33,9 +33,13 @@ const Post: NextPage<IProps> = ({ auth, categories, post, comments }) => {
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const { refreshToken } = ctx.req.cookies;
-  if (refreshToken) axios.defaults.headers.Cookie = refreshToken;
 
-  const auth = await getRefresh();
+  let auth = null;
+  if (refreshToken) {
+    axios.defaults.headers.Cookie = refreshToken;
+    auth = await getRefresh();
+  }
+
   const categories = await getCategories();
 
   let post;

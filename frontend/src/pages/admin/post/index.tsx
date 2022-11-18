@@ -98,12 +98,21 @@ const Post: NextPage<IProps> = ({ auth, categories }) => {
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const { refreshToken } = ctx.req.cookies;
-  if (refreshToken) axios.defaults.headers.Cookie = refreshToken;
+  // 인증정보 없다면 접근불가
+  if (!refreshToken) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: '/login',
+      },
+    };
+  }
 
-  let auth;
-  try {
-    auth = await getRefresh();
-  } catch (err) {
+  axios.defaults.headers.Cookie = refreshToken;
+  const auth = await getRefresh();
+
+  // 엑세스 토큰을 응답받지 못하면 접근불가
+  if (!auth) {
     return {
       redirect: {
         permanent: false,
