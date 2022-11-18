@@ -1,9 +1,7 @@
 import { useRouter } from 'next/router';
 import { GetServerSideProps, NextPage } from 'next';
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 
-import { getRefresh } from 'apis/auth';
 import { getCategories } from 'apis/category';
 import { searchKeyword } from 'apis/search';
 
@@ -23,6 +21,10 @@ const Search: NextPage<IProps> = ({ categories, page1Posts }) => {
 
   const [page, setPage] = useState(1);
   const [blockNum, setBlockNum] = useState(0); // 한 페이지에 보여 줄 페이지네이션의 개수를 block으로 지정하는 state. 초기 값은 0
+
+  useEffect(() => {
+    searchKeyword(router.query.keyword as string, 1).then((res) => setPosts(res.posts));
+  }, [router.query.keyword]);
 
   // 페이지 이동시
   useEffect(() => {
@@ -65,10 +67,6 @@ const Search: NextPage<IProps> = ({ categories, page1Posts }) => {
 };
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const { refreshToken } = ctx.req.cookies;
-  if (refreshToken) axios.defaults.headers.Cookie = refreshToken;
-
-  await getRefresh();
   const categories = await getCategories();
   const page1Posts = await searchKeyword(ctx.query.keyword as string, 1);
 
