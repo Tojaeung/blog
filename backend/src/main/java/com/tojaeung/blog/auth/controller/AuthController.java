@@ -42,6 +42,9 @@ public class AuthController {
     @GetMapping("/refresh")
     public ResponseEntity<RefreshResponseDto> refresh(HttpServletRequest request) {
         Cookie[] cookies = request.getCookies();
+        // 리프레쉬 토큰이 없을때 null포인터 에러 방지..
+        if (cookies == null) return null;
+
         String token = cookies[0].getName();
 
         return ResponseEntity.ok(authService.refresh(token));
