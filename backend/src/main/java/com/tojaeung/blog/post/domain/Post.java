@@ -26,7 +26,8 @@ public class Post {
     private Long id;
     @Column
     private String title;
-    @Column(length = 50000)
+    @Lob
+    @Column
     private String content;
     @Column
     private int views;
