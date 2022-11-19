@@ -7,7 +7,7 @@ import { IProp } from './type';
 
 import TagBadges from 'components/TagBadges';
 
-const Viewer = dynamic(() => import('components/EditorViewer'), { ssr: false });
+const Viewer = dynamic(() => import('components/Editor/CardViewer'), { ssr: false });
 
 function BlogPost({ posts }: IProp) {
   return (
@@ -16,7 +16,14 @@ function BlogPost({ posts }: IProp) {
         return (
           <Link href={`/post/${post.id}`} key={post.id}>
             <S.PostList>
-              <Image src="/images/profile.jpg" width="300" height="300" alt="포스팅 썸네일" priority={true} />
+              <Image
+                src={post.thumbnail}
+                width="300"
+                height="300"
+                layout="responsive"
+                alt="포스팅 썸네일"
+                priority={true}
+              />
               <S.Title>{post.title}</S.Title>
 
               <Viewer content={post.content} />

@@ -10,7 +10,7 @@ import TagBadges from 'components/TagBadges';
 import * as S from './style';
 import { IProps } from './type';
 
-const Viewer = dynamic(() => import('components/EditorViewer'), { ssr: false });
+const PostingViewer = dynamic(() => import('components/Editor/PostingViewer'), { ssr: false });
 
 function Posting({ auth, post }: IProps) {
   const router = useRouter();
@@ -45,8 +45,7 @@ function Posting({ auth, post }: IProps) {
       </S.Header>
 
       <Image src={post.thumbnail} width={700} height={500} layout="responsive" alt="포스팅 사진" priority={true} />
-
-      <Viewer content={post.content || ''} />
+      {post.content && <PostingViewer content={post.content || ''} />}
 
       <S.Line />
       <S.Title>Tags</S.Title>

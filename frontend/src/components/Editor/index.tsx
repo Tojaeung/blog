@@ -5,6 +5,7 @@ import { IEditor } from './type';
 
 import { Editor as ToastEditor } from '@toast-ui/react-editor';
 import '@toast-ui/editor/dist/toastui-editor.css';
+import '@toast-ui/editor/dist/i18n/ko-kr';
 
 import colorSyntax from '@toast-ui/editor-plugin-color-syntax';
 import 'tui-color-picker/dist/tui-color-picker.css';
@@ -13,6 +14,7 @@ import '@toast-ui/editor-plugin-color-syntax/dist/toastui-editor-plugin-color-sy
 import 'prismjs/themes/prism.css';
 import '@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin-code-syntax-highlight.css';
 import codeSyntaxHighlight from '@toast-ui/editor-plugin-code-syntax-highlight';
+import Prism from 'prismjs';
 
 import '@toast-ui/editor-plugin-table-merged-cell/dist/toastui-editor-plugin-table-merged-cell.css';
 import tableMergedCell from '@toast-ui/editor-plugin-table-merged-cell';
@@ -52,23 +54,17 @@ const Editor: NextPage<IEditor> = ({ htmlStr, setHtmlStr }) => {
     }
   }, []);
 
-  // Editor에 사용되는 plugin 추가
-  const plugins = [
-    colorSyntax, // 글자 색상 추가
-    codeSyntaxHighlight, // 코드 하이라이팅
-    tableMergedCell, // 테이블 셀 합치는거
-  ];
-
   return (
     <ToastEditor
       initialValue=""
       previewStyle="vertical"
       initialEditType="wysiwyg"
-      useCommandShortcut={true}
+      useCommandShortcut={false}
       ref={editorRef}
       height="500px"
-      plugins={plugins}
+      language="ko-kr"
       onChange={onChangeEditor}
+      plugins={[colorSyntax, [codeSyntaxHighlight, { highlighter: Prism }], tableMergedCell]}
     />
   );
 };

@@ -4,7 +4,7 @@ import Link from 'next/link';
 import * as S from './style';
 import { IProp } from './type';
 
-const Viewer = dynamic(() => import('components/EditorViewer'), { ssr: false });
+const Viewer = dynamic(() => import('components/Editor/CardViewer'), { ssr: false });
 
 function HomePost({ postsTop5 }: IProp) {
   return (
