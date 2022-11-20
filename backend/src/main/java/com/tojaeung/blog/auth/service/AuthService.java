@@ -37,7 +37,7 @@ public class AuthService {
             String username = jwtTokenProvider.getUsername(token);
 
             Admin findAdmin = authRepository.findByUsername(username)
-                    .orElseThrow(() -> new CustomException(ExceptionCode.INVALID_RT_COOKIE));
+                    .orElseThrow(() -> new CustomException(ExceptionCode.NOT_FOUND_ADMIN));
 
             // 엑세스토큰 유저정보 응답
             RefreshResponseDto refreshResponseDto = RefreshResponseDto.builder()
