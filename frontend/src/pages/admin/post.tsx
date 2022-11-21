@@ -7,10 +7,15 @@ import axios from 'axios';
 import { getRefresh } from 'apis/auth';
 import { createPost } from 'apis/post';
 import { getCategories } from 'apis/category';
-
-import * as S from './style';
-import { IProps } from './type';
 import { searchTagName } from 'apis/tag';
+
+import { AuthType } from 'interfaces/auth';
+import { CategoryType } from 'interfaces/category';
+
+interface IProps {
+  auth: AuthType;
+  categories: CategoryType[];
+}
 
 const Editor = dynamic(() => import('components/Editor'), { ssr: false }); // client 사이드에서만 동작되기 때문에 ssr false로 설정
 
@@ -63,36 +68,36 @@ const Post: NextPage<IProps> = ({ auth, categories }) => {
   };
 
   return (
-    <S.Container>
-      <S.Selector onChange={(e) => setCategoryId(Number(e.target.value))} value={categoryId}>
+    <Container>
+      <Selector onChange={(e) => setCategoryId(Number(e.target.value))} value={categoryId}>
         {categories.map((category) => (
-          <S.Option value={category.id} key={category.id}>
+          <Option value={category.id} key={category.id}>
             {category.name} {category.postCnt}개
-          </S.Option>
+          </Option>
         ))}
-      </S.Selector>
+      </Selector>
 
-      <S.TitleInput placeholder="포스팅 제목" onChange={(e) => setTitle(e.target.value)} />
+      <TitleInput placeholder="포스팅 제목" onChange={(e) => setTitle(e.target.value)} />
 
       <Editor htmlStr={content} setHtmlStr={setContent} />
 
-      <S.ThumbnailInput type="file" accept="image/*" onChange={onUploadImage} />
+      <ThumbnailInput type="file" accept="image/*" onChange={onUploadImage} />
 
-      <S.TagSearchBox>
-        <S.SearchTagInput placeholder="태그검색.." onChange={(e) => setKeyword(e.target.value)} />
-        <S.SearchButton onClick={handleSearchTagName}>검색</S.SearchButton>
+      <TagSearchBox>
+        <SearchTagInput placeholder="태그검색.." onChange={(e) => setKeyword(e.target.value)} />
+        <SearchButton onClick={handleSearchTagName}>검색</SearchButton>
         {!searchedTags.length ? <p>검색된 태그가 없습니다.</p> : <p>{JSON.stringify(searchedTags)}</p>}
-      </S.TagSearchBox>
+      </TagSearchBox>
 
-      <S.TagBox>
-        <S.TagInput placeholder="태그추가.." onChange={(e) => setTagName(e.target.value)} />
-        <S.AddTagButton onClick={(e) => setTags([...tags, tagName])}>추가</S.AddTagButton>
-        <S.InitButton onClick={(e) => setTags([])}>초기화</S.InitButton>
+      <TagBox>
+        <TagInput placeholder="태그추가.." onChange={(e) => setTagName(e.target.value)} />
+        <AddTagButton onClick={(e) => setTags([...tags, tagName])}>추가</AddTagButton>
+        <InitButton onClick={(e) => setTags([])}>초기화</InitButton>
         {!tags.length ? <p>추가된 태그가 없습니다.</p> : <p>{JSON.stringify(tags)}</p>}
-      </S.TagBox>
+      </TagBox>
 
-      <S.SubmitButton onClick={handleSubmit}>포스팅하기</S.SubmitButton>
-    </S.Container>
+      <SubmitButton onClick={handleSubmit}>포스팅하기</SubmitButton>
+    </Container>
   );
 };
 
@@ -125,5 +130,46 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
   return { props: { auth, categories } };
 };
+
+import styled from 'styled-components';
+import { CommonButtonStyle, CommonInputStyle, CommonSelectStyle, CommonOptionStyle } from 'styles/globalStyle';
+
+const Container = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin: 0 auto;
+  background-color: ${({ theme }) => theme.palette.white};
+  padding: 20px;
+
+  @media ${({ theme }) => theme.device.mobile} {
+    padding: 10px;
+  }
+`;
+const Selector = styled(CommonSelectStyle)``;
+const Option = styled(CommonOptionStyle)``;
+
+const TitleInput = styled(CommonInputStyle)``;
+const ThumbnailInput = styled.input``;
+
+const TagSearchBox = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+`;
+const SearchTagInput = styled(CommonInputStyle)``;
+const SearchButton = styled(CommonButtonStyle)``;
+
+const TagBox = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+`;
+const TagInput = styled(CommonInputStyle)``;
+const AddTagButton = styled(CommonButtonStyle)``;
+const InitButton = styled(CommonButtonStyle)``;
+
+const SubmitButton = styled(CommonButtonStyle)``;
 
 export default Post;

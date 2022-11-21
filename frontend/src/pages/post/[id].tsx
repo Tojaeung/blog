@@ -5,15 +5,24 @@ import { GetServerSideProps, NextPage } from 'next';
 import { getRefresh } from 'apis/auth';
 import { getCategories } from 'apis/category';
 import { getPost } from 'apis/post';
+import { getComments } from 'apis/comment';
 
 import BlogCategory from 'components/BlogCategory';
 import Posting from 'components/Posting';
 import Comment from 'components/Comment';
 
-import { Container } from './style';
-import { IProps } from './type';
-import { getComments } from 'apis/comment';
 import HeadMeta from 'layouts/HeadMeta';
+import { AuthType } from 'interfaces/auth';
+import { CategoryType } from 'interfaces/category';
+import { CommentType } from 'interfaces/comment';
+import { PostType } from 'interfaces/post';
+
+interface IProps {
+  auth: AuthType | null;
+  categories: CategoryType[];
+  post: PostType;
+  comments: CommentType[];
+}
 
 const Post: NextPage<IProps> = ({ auth, categories, post, comments }) => {
   return (
@@ -58,5 +67,16 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
   return { props: { auth, categories, post, comments } };
 };
+
+import styled from 'styled-components';
+
+const Container = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  margin-top: 30px;
+`;
 
 export default Post;

@@ -4,8 +4,6 @@ import React from 'react';
 import axios from 'axios';
 import { getRefresh } from 'apis/auth';
 
-import { Container, GoCategory, GoPost } from './style';
-
 const Admin: NextPage = () => {
   const router = useRouter();
 
@@ -43,5 +41,17 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
   return { props: {} };
 };
+
+import styled from 'styled-components';
+import { CommonButtonStyle } from 'styles/globalStyle';
+
+const Container = styled.div`
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  gap: 20px;
+`;
+const GoCategory = styled(CommonButtonStyle)``;
+const GoPost = styled(CommonButtonStyle)``;
 
 export default Admin;

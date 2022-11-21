@@ -4,8 +4,13 @@ import axios from 'axios';
 import { getRefresh } from 'apis/auth';
 import { getCategories, createCategory, deleteCategory, updateCategory } from 'apis/category';
 
-import * as S from './style';
-import { IProps } from './type';
+import { AuthType } from 'interfaces/auth';
+import { CategoryType } from 'interfaces/category';
+
+interface IProps {
+  auth: AuthType;
+  categories: CategoryType[];
+}
 
 const Category: NextPage<IProps> = ({ auth, categories }) => {
   const [categoriesState, setCategoriesState] = useState(categories);
@@ -45,37 +50,37 @@ const Category: NextPage<IProps> = ({ auth, categories }) => {
   };
 
   return (
-    <S.Container>
-      <S.Title>카테고리 편집</S.Title>
-      <S.CreateBox>
-        <S.CreateInput
+    <Container>
+      <Title>카테고리 편집</Title>
+      <CreateBox>
+        <CreateInput
           placeholder="새 카테고리 입력"
           onChange={(e) => {
             setNewCategoryName(e.target.value);
           }}
         />
-        <S.CreateButton onClick={handleCreate}>카테고리 생성</S.CreateButton>
-      </S.CreateBox>
+        <CreateButton onClick={handleCreate}>카테고리 생성</CreateButton>
+      </CreateBox>
 
-      <S.CategoryBox>
+      <CategoryBox>
         {categoriesState.map((category) => {
           return (
-            <S.CategoryList key={category.id}>
-              <S.InfoBox>
-                <S.Name>{category.name}</S.Name>
-                <S.Count>{category.postCnt}개</S.Count>
-                <S.DeleteButton onClick={(e) => handleDelete(category.id)}>삭제</S.DeleteButton>
-              </S.InfoBox>
+            <CategoryList key={category.id}>
+              <InfoBox>
+                <Name>{category.name}</Name>
+                <Count>{category.postCnt}개</Count>
+                <DeleteButton onClick={(e) => handleDelete(category.id)}>삭제</DeleteButton>
+              </InfoBox>
 
-              <S.UpdateBox>
-                <S.UpdateInput placeholder="카테고리 이름 변경" onChange={(e) => setUpdatedName(e.target.value)} />
-                <S.UpdateButton onClick={(e) => handleUpdate(category.id)}>업데이트</S.UpdateButton>
-              </S.UpdateBox>
-            </S.CategoryList>
+              <UpdateBox>
+                <UpdateInput placeholder="카테고리 이름 변경" onChange={(e) => setUpdatedName(e.target.value)} />
+                <UpdateButton onClick={(e) => handleUpdate(category.id)}>업데이트</UpdateButton>
+              </UpdateBox>
+            </CategoryList>
           );
         })}
-      </S.CategoryBox>
-    </S.Container>
+      </CategoryBox>
+    </Container>
   );
 };
 
@@ -108,5 +113,51 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
   return { props: { auth, categories } };
 };
+
+import styled from 'styled-components';
+import { CommonTitleStyle, CommonButtonStyle, CommonInputStyle, CommonTextStyle } from 'styles/globalStyle';
+
+const Container = styled.div`
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+`;
+
+const Title = styled(CommonTitleStyle)``;
+
+const CreateBox = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 20px;
+`;
+const CreateInput = styled(CommonInputStyle)``;
+const CreateButton = styled(CommonButtonStyle)``;
+
+const CategoryBox = styled.ul``;
+const CategoryList = styled.li`
+  margin: 20px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+`;
+
+const InfoBox = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 20px;
+`;
+const Name = styled(CommonTextStyle)``;
+const Count = styled(CommonTextStyle)``;
+const DeleteButton = styled(CommonButtonStyle)``;
+
+const UpdateBox = styled.div`
+  display: flex;
+  gap: 10px;
+`;
+
+const UpdateInput = styled(CommonInputStyle)``;
+const UpdateButton = styled(CommonButtonStyle)``;
 
 export default Category;

@@ -8,13 +8,15 @@ import { getRefresh } from 'apis/auth';
 import { getAllTags } from 'apis/tag';
 
 import HeadMeta from 'layouts/HeadMeta';
+import { AllTagsType } from 'interfaces/tag';
 
-import * as S from './style';
-import { IProp } from './type';
+interface IProp {
+  allTags: AllTagsType[];
+}
 
 function Tags({ allTags }: IProp) {
   return (
-    <S.Container>
+    <Container>
       <HeadMeta
         title={`모든 #태그 모음 - 토재웅`}
         description="안녕하세요!! 백엔드 개발자 토재웅입니다. 첫째도 기본!! 둘째도 기본!! 기본에 충실하자!!"
@@ -22,19 +24,19 @@ function Tags({ allTags }: IProp) {
         url={`https://tojaeung.com/tag`}
       />
 
-      <S.Title># 태그모음</S.Title>
+      <Title># 태그모음</Title>
 
-      <S.TagBox>
+      <TagBox>
         {allTags.map((tag) => (
           <Link href={`/tag/${tag.tagName}`} key={tag.id}>
-            <S.TagBadge>
+            <TagBadge>
               <AiOutlineTag size={15} />
-              <S.TagName>{tag.tagName}</S.TagName>
-            </S.TagBadge>
+              <TagName>{tag.tagName}</TagName>
+            </TagBadge>
           </Link>
         ))}
-      </S.TagBox>
-    </S.Container>
+      </TagBox>
+    </Container>
   );
 }
 
@@ -47,5 +49,31 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
   return { props: { allTags } };
 };
+
+import styled from 'styled-components';
+import { CommonBadgeStyle, CommonTitleStyle, jittery } from 'styles/globalStyle';
+
+const Container = styled.ul`
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: 30px;
+`;
+
+const Title = styled(CommonTitleStyle)``;
+const TagBox = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+`;
+
+const TagBadge = styled(CommonBadgeStyle)`
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  animation: ${jittery} 5s infinite;
+`;
+
+const TagName = styled.span``;
 
 export default Tags;

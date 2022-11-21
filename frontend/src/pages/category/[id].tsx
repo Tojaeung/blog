@@ -12,9 +12,13 @@ import Pagination from 'components/Pagination';
 import HeadMeta from 'layouts/HeadMeta';
 
 import { PostType } from 'interfaces/post';
+import { CategoryType } from 'interfaces/category';
+import { PagePostType } from 'interfaces/post';
 
-import { Container, Detail, PostCntBadge, Title, TitleBox } from './style';
-import { IProps } from './type';
+interface IProps {
+  categories: CategoryType[];
+  page1Posts: PagePostType;
+}
 
 const Category: NextPage<IProps> = ({ categories, page1Posts }) => {
   const router = useRouter();
@@ -81,5 +85,45 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
   return { props: { categories, page1Posts } };
 };
+
+import styled from 'styled-components';
+import { CommonBadgeStyle, CommonTextStyle, CommonTitleStyle } from 'styles/globalStyle';
+
+const Container = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: 30px;
+`;
+
+const TitleBox = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+`;
+const PostCntBadge = styled(CommonBadgeStyle)`
+  background-color: ${({ theme }) => theme.palette.white};
+  color: ${({ theme }) => theme.palette.mainColor};
+  font-size: 20px;
+
+  &:hover {
+    background-color: ${({ theme }) => theme.palette.mainColor};
+    color: ${({ theme }) => theme.palette.white};
+  }
+`;
+
+const Title = styled(CommonTitleStyle)`
+  font-size: 50px;
+  @media ${({ theme }) => theme.device.tablet} {
+    font-size: 30px;
+  }
+`;
+const Detail = styled(CommonTextStyle)`
+  font-size: 25px;
+  @media ${({ theme }) => theme.device.tablet} {
+    font-size: 20px;
+  }
+`;
 
 export default Category;

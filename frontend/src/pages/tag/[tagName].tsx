@@ -12,9 +12,14 @@ import BlogPost from 'components/BlogPost';
 import Pagination from 'components/Pagination';
 import HeadMeta from 'layouts/HeadMeta';
 
-import * as S from './style';
-import { IProps } from './type';
 import { PostType } from 'interfaces/post';
+import { CategoryType } from 'interfaces/category';
+import { PagePostType } from 'interfaces/post';
+
+interface IProps {
+  categories: CategoryType[];
+  page1Posts: PagePostType;
+}
 
 const Tag: NextPage<IProps> = ({ categories, page1Posts }) => {
   const router = useRouter();
@@ -31,7 +36,7 @@ const Tag: NextPage<IProps> = ({ categories, page1Posts }) => {
   }, [page]);
 
   return (
-    <S.Container>
+    <Container>
       <HeadMeta
         title={`#${router.query.tagName} - 토재웅`}
         description="안녕하세요!! 백엔드 개발자 토재웅입니다. 첫째도 기본!! 둘째도 기본!! 기본에 충실하자!!"
@@ -40,11 +45,11 @@ const Tag: NextPage<IProps> = ({ categories, page1Posts }) => {
       />
       <BlogCategory categories={categories} />
 
-      <S.TitleBox>
-        <S.Title>#{router.query.tagName}</S.Title>
-        <S.PostCntBadge>{page1Posts.totalCnt}</S.PostCntBadge>
-      </S.TitleBox>
-      <S.Detail>"#{router.query.tagName}" 관련된 포스팅을 모아놓았습니다.</S.Detail>
+      <TitleBox>
+        <Title>#{router.query.tagName}</Title>
+        <PostCntBadge>{page1Posts.totalCnt}</PostCntBadge>
+      </TitleBox>
+      <Detail>"#{router.query.tagName}" 관련된 포스팅을 모아놓았습니다.</Detail>
 
       <BlogPost posts={posts} />
 
@@ -55,7 +60,7 @@ const Tag: NextPage<IProps> = ({ categories, page1Posts }) => {
         setBlockNum={setBlockNum}
         totalCnt={page1Posts.totalCnt}
       />
-    </S.Container>
+    </Container>
   );
 };
 
@@ -80,5 +85,45 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
   return { props: { categories, page1Posts } };
 };
+
+import styled from 'styled-components';
+import { CommonBadgeStyle, CommonTextStyle, CommonTitleStyle } from 'styles/globalStyle';
+
+const Container = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: 30px;
+`;
+
+const TitleBox = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+`;
+const PostCntBadge = styled(CommonBadgeStyle)`
+  background-color: ${({ theme }) => theme.palette.white};
+  color: ${({ theme }) => theme.palette.mainColor};
+  font-size: 20px;
+
+  &:hover {
+    background-color: ${({ theme }) => theme.palette.mainColor};
+    color: ${({ theme }) => theme.palette.white};
+  }
+`;
+
+const Title = styled(CommonTitleStyle)`
+  font-size: 50px;
+  @media ${({ theme }) => theme.device.tablet} {
+    font-size: 30px;
+  }
+`;
+const Detail = styled(CommonTextStyle)`
+  font-size: 25px;
+  @media ${({ theme }) => theme.device.tablet} {
+    font-size: 20px;
+  }
+`;
 
 export default Tag;

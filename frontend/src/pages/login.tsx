@@ -5,7 +5,6 @@ import axios from 'axios';
 
 import { getRefresh, login } from 'apis/auth';
 
-import { Container, IdInput, LoginBox, LoginButton, PwInput, Title } from './style';
 import { AuthType } from 'interfaces/auth';
 
 const Login: NextPage<AuthType> = (auth) => {
@@ -56,5 +55,33 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     };
   }
 };
+
+import styled from 'styled-components';
+import { CommonButtonStyle, CommonInputStyle, CommonTitleStyle } from 'styles/globalStyle';
+
+const Container = styled.div`
+  width: 100%;
+  height: calc(100vh - 170px);
+  padding: 20px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+
+  background-color: ${({ theme }) => theme.palette.white};
+`;
+const Title = styled(CommonTitleStyle)``;
+
+const LoginBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+`;
+const IdInput = styled(CommonInputStyle)``;
+const PwInput = styled(CommonInputStyle)``;
+const LoginButton = styled(CommonButtonStyle)``;
 
 export default Login;
