@@ -15,7 +15,7 @@ export const createCategory = async (newCategoryName: string, accessToken: strin
   return res.data;
 };
 
-export const getCategories = async () => {
+export const getCategories = async (): Promise<CategoryType[]> => {
   const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/category`, {
     withCredentials: true,
   });

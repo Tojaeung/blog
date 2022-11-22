@@ -127,6 +127,15 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   }
 
   const categories = await getCategories();
+  // 카테고리가 없을때 뒤로가기..
+  if (categories.length === 0) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: '/admin',
+      },
+    };
+  }
 
   return { props: { auth, categories } };
 };
