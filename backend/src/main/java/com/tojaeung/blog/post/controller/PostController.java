@@ -25,7 +25,7 @@ public class PostController {
     private final PostService postService;
 
     // 포스팅 새로 생성
-    @PostMapping(value = "admin/category/{categoryId}/post")
+    @PostMapping(value = "api/admin/category/{categoryId}/post")
     public ResponseEntity<Long> create(
             @PathVariable Long categoryId,
             @Valid @RequestPart("createReqDto") CreateReqDto createReqDto,
@@ -72,7 +72,7 @@ public class PostController {
     }
 
     // 특정 포스팅 업데이트
-    @PutMapping("admin/post/{postId}")
+    @PutMapping("api/admin/post/{postId}")
     public ResponseEntity update(
             @PathVariable Long postId,
             @Valid @RequestPart UpdateReqDto updateReqDto,
@@ -84,7 +84,7 @@ public class PostController {
     }
 
     // 포스팅 삭제 관련된 자식 포스팅도 모두 삭제 유의 !!
-    @DeleteMapping("admin/post/{postId}")
+    @DeleteMapping("api/admin/post/{postId}")
     public ResponseEntity<Long> delete(@PathVariable Long postId) {
         postService.delete(postId);
 

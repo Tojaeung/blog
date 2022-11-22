@@ -21,7 +21,7 @@ public class TagController {
     private final TagService tagService;
 
     // 태그 검색
-    @GetMapping("admin/search")
+    @GetMapping("api/admin/search")
     public ResponseEntity<List<String>> searchTagName(@RequestParam String tagName) {
         return ResponseEntity.ok(tagService.searchTagName(tagName));
     }
@@ -40,7 +40,7 @@ public class TagController {
     }
 
     // 해당하는 태그 디비내 전체 태그명 변경
-    @PutMapping("admin/tag/{tagId}")
+    @PutMapping("api/admin/tag/{tagId}")
     public ResponseEntity update(
             @PathVariable Long tagId,
             @Valid @RequestBody UpdateReqDto updateReqDto) {
@@ -51,7 +51,7 @@ public class TagController {
     }
 
     // 포스팅에 해당하는 태그 제거
-    @DeleteMapping("admin/post/{postId}/tag/{tagId}")
+    @DeleteMapping("api/admin/post/{postId}/tag/{tagId}")
     public ResponseEntity<Long> delete(@PathVariable Long postId, @PathVariable Long tagId) {
         tagService.delete(postId, tagId);
 

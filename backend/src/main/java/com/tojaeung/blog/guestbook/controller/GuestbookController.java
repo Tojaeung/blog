@@ -36,7 +36,7 @@ public class GuestbookController {
     }
 
     // 방명록 삭제
-    @DeleteMapping("admin/guestbook/{guestbookId}")
+    @DeleteMapping("api/admin/guestbook/{guestbookId}")
     public ResponseEntity<Long> delete(@PathVariable Long guestbookId) {
         guestbookService.delete(guestbookId);
 

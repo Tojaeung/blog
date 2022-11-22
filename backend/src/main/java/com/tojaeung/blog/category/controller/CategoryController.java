@@ -20,7 +20,7 @@ public class CategoryController {
     private final CategoryService categoryService;
 
     // 카테고리 새로 생성
-    @PostMapping("admin/category")
+    @PostMapping("api/admin/category")
     public ResponseEntity<PostCntResDto> create(@Valid @RequestBody CreateReqDto createReqDto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(categoryService.create(createReqDto));
     }
@@ -38,7 +38,7 @@ public class CategoryController {
     // }
 
     // 카테고리 수정
-    @PutMapping("admin/category/{categoryId}")
+    @PutMapping("api/admin/category/{categoryId}")
     public ResponseEntity<PostCntResDto> update(@PathVariable Long categoryId, @Valid @RequestBody UpdateReqDto updateReqDto) {
         PostCntResDto updatedCategory = categoryService.update(categoryId, updateReqDto);
 
@@ -47,7 +47,7 @@ public class CategoryController {
 
 
     // 카테고리 삭제 관련된 자식 포스팅도 모두 삭제 유의 !!
-    @DeleteMapping("admin/category/{categoryId}")
+    @DeleteMapping("api/admin/category/{categoryId}")
     public ResponseEntity<Long> delete(@PathVariable Long categoryId) {
         categoryService.delete(categoryId);
 

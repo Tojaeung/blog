@@ -22,7 +22,6 @@ public class CorsConfig {
         config.addAllowedMethod("*");   // 요청받을 메서드
 
         source.registerCorsConfiguration("/api/**", config);
-        source.registerCorsConfiguration("/admin/**", config);
         return new CorsFilter(source);
     }
 }
