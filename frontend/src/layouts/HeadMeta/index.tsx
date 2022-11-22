@@ -7,7 +7,7 @@ const HeadMeta = ({ title, description, image, url }: IProps) => {
     <Head>
       <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       <meta name="google-site-verification" content="ZSiYp6PtodevA_s2JD1HYW7y8lsACUA6LQNERxCbtZI" />
-      <meta name="google-site-verification" content="ZSiYp6PtodevA_s2JD1HYW7y8lsACUA6LQNERxCbtZI" />
+      <meta name="naver-site-verification" content="0bfa8ed521005fc93fbd7e84e6c3b60e5d3ea80f" />
       <link rel="canonical" href={url}></link>
       <title>{title}</title>
       <meta name="description" content={description} />
