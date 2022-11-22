@@ -2,7 +2,7 @@ import axios from 'axios';
 import { PagePostType, PostType } from 'interfaces/post';
 
 export const createPost = async (categoryId: number, formData: FormData, accessToken: string): Promise<PostType> => {
-  const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/admin/category/${categoryId}/post`, formData, {
+  const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/category/${categoryId}/post`, formData, {
     headers: {
       Authorization: `Bearer ${accessToken}`,
       // 'Content-Type': 'application/json',
@@ -45,7 +45,7 @@ export const getPost = async (postId: number) => {
 };
 
 export const updatePost = async (postId: number, formData: FormData, accessToken: string) => {
-  const res = await axios.patch(`${process.env.NEXT_PUBLIC_API_URL}/admin/post/${postId}`, formData, {
+  const res = await axios.patch(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/post/${postId}`, formData, {
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },
@@ -55,7 +55,7 @@ export const updatePost = async (postId: number, formData: FormData, accessToken
 };
 
 export const deletePost = async (postId: number, accessToken: string) => {
-  const res = await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/admin/post/${postId}`, {
+  const res = await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/post/${postId}`, {
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },

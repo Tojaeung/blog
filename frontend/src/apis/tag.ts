@@ -3,7 +3,7 @@ import { PagePostType } from 'interfaces/post';
 import { AllTagsType } from 'interfaces/tag';
 
 export const searchTagName = async (keyword: string, accessToken: string): Promise<string[]> => {
-  const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/admin/search?tagName=${keyword}`, {
+  const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/search?tagName=${keyword}`, {
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },

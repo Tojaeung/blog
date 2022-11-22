@@ -3,7 +3,7 @@ import { CategoryType } from 'interfaces/category';
 
 export const createCategory = async (newCategoryName: string, accessToken: string): Promise<CategoryType> => {
   const res = await axios.post(
-    `${process.env.NEXT_PUBLIC_API_URL}/admin/category`,
+    `${process.env.NEXT_PUBLIC_API_URL}/api/admin/category`,
     { name: newCategoryName },
     {
       headers: {
@@ -28,8 +28,8 @@ export const updateCategory = async (
   updatedName: string,
   accessToken: string,
 ): Promise<CategoryType> => {
-  const res = await axios.patch(
-    `/admin/category/${categoryId}`,
+  const res = await axios.put(
+    `${process.env.NEXT_PUBLIC_API_URL}/api/admin/category/${categoryId}`,
     { updatedName },
     {
       headers: {
@@ -42,7 +42,7 @@ export const updateCategory = async (
 };
 
 export const deleteCategory = async (categoryId: number, accessToken: string): Promise<number> => {
-  const res = await axios.delete(`/admin/category/${categoryId}`, {
+  const res = await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/category/${categoryId}`, {
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },

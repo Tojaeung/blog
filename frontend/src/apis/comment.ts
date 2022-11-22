@@ -32,7 +32,7 @@ export const getComments = async (postId: number) => {
 };
 
 export const deleteComment = async (commentId: number, accessToken: string): Promise<number> => {
-  const res = await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/admin/comment/${commentId}`, {
+  const res = await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/comment/${commentId}`, {
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },

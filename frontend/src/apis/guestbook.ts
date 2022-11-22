@@ -22,7 +22,7 @@ export const getAllGuestbooks = async (): Promise<GuestbookType[]> => {
 };
 
 export const deleteGuestbook = async (guestbookId: number, accessToken: string): Promise<number> => {
-  const res = await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/admin/guestbook/${guestbookId}`, {
+  const res = await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/guestbook/${guestbookId}`, {
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },
