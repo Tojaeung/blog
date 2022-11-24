@@ -123,7 +123,7 @@ public class PostService {
     }
 
     // 특정포스팅 가져오기 (부모 카테고리와 함께)
-    @Transactional(readOnly = true)
+    @Transactional
     public PostResDto findPost(Long postId) {
         if (!postRepository.existsById(postId)) throw new CustomException(ExceptionCode.NOT_FOUND_POST);
         else {
