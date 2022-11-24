@@ -14,6 +14,7 @@ export const PostBox = styled.ul`
 
 export const PostList = styled(CommonCardStyle)`
   width: 100%;
+  height: 180px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -22,6 +23,7 @@ export const PostList = styled(CommonCardStyle)`
 
 export const ImageBox = styled.div`
   width: 20%;
+
   @media ${({ theme }) => theme.device.tablet} {
     display: none;
   }
@@ -29,9 +31,10 @@ export const ImageBox = styled.div`
 
 export const TextBox = styled.div`
   width: 80%;
-  /* height: 100%; */
+  height: 100%;
   display: flex;
   flex-direction: column;
+
   justify-content: space-between;
   @media ${({ theme }) => theme.device.tablet} {
     width: 100%;
@@ -43,6 +46,4 @@ export const Title = styled.h1`
   font-weight: bold;
 `;
 
-export const Detailed = styled(CommonTextStyle)`
-  margin-top: 10px;
-`;
+export const Detailed = styled(CommonTextStyle)``;

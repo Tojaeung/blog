@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
-import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import React from 'react';
+import 'highlight.js/styles/github.css';
 
 import { deletePost } from 'apis/post';
 
@@ -9,8 +9,6 @@ import TagBadges from 'components/TagBadges';
 
 import * as S from './style';
 import { IProps } from './type';
-
-const PostingViewer = dynamic(() => import('components/Editor/PostingViewer'), { ssr: false });
 
 function Posting({ auth, post }: IProps) {
   const router = useRouter();
@@ -45,7 +43,8 @@ function Posting({ auth, post }: IProps) {
       </S.Header>
 
       <Image src={post.thumbnail} width={700} height={500} layout="responsive" alt="포스팅 사진" priority={true} />
-      {post.content && <PostingViewer content={post.content || ''} />}
+
+      {post.content && <S.Content dangerouslySetInnerHTML={{ __html: post.content || '' }} />}
 
       <S.Line />
       <S.Title>Tags</S.Title>

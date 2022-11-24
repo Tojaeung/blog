@@ -40,3 +40,58 @@ export const Detail = styled(CommonTextStyle)``;
 export const Line = styled.hr`
   width: 100%;
 `;
+
+export const Content = styled.div`
+  line-height: 20px;
+  word-wrap: break-word;
+  h1 {
+    font-size: 32px;
+    font-weight: bold;
+  }
+  h2 {
+    font-size: 24px;
+    font-weight: bold;
+  }
+  h3 {
+    font-size: 19px;
+    font-weight: bold;
+  }
+  h4 {
+    font-size: 16px;
+    font-weight: bold;
+  }
+  h5 {
+    font-size: 12px;
+    font-weight: bold;
+  }
+  h6 {
+    font-size: 10px;
+    font-weight: bold;
+  }
+
+  p {
+    font-size: 14px;
+  }
+
+  strong {
+    font-weight: bold;
+  }
+  em {
+    font-style: italic;
+  }
+  u {
+    text-decoration: underline;
+  }
+  s {
+    text-decoration: line-through;
+  }
+  i {
+    font-weight: bold;
+  }
+
+  .ql-syntax {
+    font-size: 14px;
+    padding: 20px;
+    background-color: ${({ theme }) => theme.palette.bgColor};
+  }
+`;

@@ -1,4 +1,3 @@
-import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import Image from 'next/image';
 import React from 'react';
@@ -6,8 +5,7 @@ import * as S from './style';
 import { IProp } from './type';
 
 import TagBadges from 'components/TagBadges';
-
-const Viewer = dynamic(() => import('components/Editor/CardViewer'), { ssr: false });
+import Viewer from 'components/Viewer';
 
 function BlogPost({ posts }: IProp) {
   return (

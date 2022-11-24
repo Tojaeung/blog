@@ -17,7 +17,7 @@ interface IProps {
   categories: CategoryType[];
 }
 
-const Editor = dynamic(() => import('components/Editor'), { ssr: false }); // client 사이드에서만 동작되기 때문에 ssr false로 설정
+const QuillEditor = dynamic(() => import('components/QuillEditor'), { ssr: false }); // client 사이드에서만 동작되기 때문에 ssr false로 설정
 
 const Post: NextPage<IProps> = ({ auth, categories }) => {
   const router = useRouter();
@@ -79,7 +79,7 @@ const Post: NextPage<IProps> = ({ auth, categories }) => {
 
       <TitleInput placeholder="포스팅 제목" onChange={(e) => setTitle(e.target.value)} />
 
-      <Editor htmlStr={content} setHtmlStr={setContent} />
+      <QuillEditor content={content} setContent={setContent} />
 
       <ThumbnailInput type="file" accept="image/*" onChange={onUploadImage} />
 
@@ -160,7 +160,9 @@ const Selector = styled(CommonSelectStyle)``;
 const Option = styled(CommonOptionStyle)``;
 
 const TitleInput = styled(CommonInputStyle)``;
-const ThumbnailInput = styled.input``;
+const ThumbnailInput = styled.input`
+  margin-top: 40px;
+`;
 
 const TagSearchBox = styled.div`
   display: flex;

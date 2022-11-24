@@ -18,7 +18,6 @@ export const PostBox = styled.ul`
 `;
 
 export const PostList = styled(CommonCardStyle)`
-  /* width: 32.22%; */
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -31,6 +30,8 @@ export const Title = styled.h1`
   font-family: Noto Sans KR;
   font-weight: bold;
 `;
+
+export const Content = styled.div``;
 
 export const TagBox = styled.div`
   display: flex;

@@ -1,10 +1,10 @@
-import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import Link from 'next/link';
+
+import Viewer from 'components/Viewer';
+
 import * as S from './style';
 import { IProp } from './type';
-
-const Viewer = dynamic(() => import('components/Editor/CardViewer'), { ssr: false });
 
 function HomePost({ postsTop5 }: IProp) {
   return (
