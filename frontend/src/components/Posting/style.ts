@@ -45,32 +45,33 @@ export const Content = styled.div`
   line-height: 20px;
   word-wrap: break-word;
   h1 {
-    font-size: 32px;
     font-weight: bold;
+    font-family: ${({ theme }) => theme.font.text};
   }
   h2 {
-    font-size: 24px;
     font-weight: bold;
+    font-family: ${({ theme }) => theme.font.text};
   }
   h3 {
-    font-size: 19px;
     font-weight: bold;
+    font-family: ${({ theme }) => theme.font.text};
   }
   h4 {
-    font-size: 16px;
     font-weight: bold;
+    font-family: ${({ theme }) => theme.font.text};
   }
   h5 {
-    font-size: 12px;
     font-weight: bold;
+    font-family: ${({ theme }) => theme.font.text};
   }
   h6 {
-    font-size: 10px;
     font-weight: bold;
+    font-family: ${({ theme }) => theme.font.text};
   }
 
   p {
     font-size: 14px;
+    font-family: ${({ theme }) => theme.font.text};
   }
 
   strong {
@@ -89,7 +90,20 @@ export const Content = styled.div`
     font-weight: bold;
   }
 
+  blockquote {
+    font-family: ${({ theme }) => theme.font.text};
+    font-style: italic;
+    font-weight: bold;
+    background-color: ${({ theme }) => theme.palette.cardBgColor};
+    color: ${({ theme }) => theme.palette.textColor};
+  }
+
+  img {
+    width: 100%;
+  }
+
   .ql-syntax {
+    font-family: ${({ theme }) => theme.font.en};
     font-size: 14px;
     padding: 20px;
     background-color: ${({ theme }) => theme.palette.bgColor};
