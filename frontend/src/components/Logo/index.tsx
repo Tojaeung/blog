@@ -1,10 +1,10 @@
-import Link from 'next/link';
-import React from 'react';
+import { Link } from 'react-router-dom';
+
 import { Typography } from './style';
 
 function Logo() {
   return (
-    <Link href="/">
+    <Link to='/'>
       <Typography>TOJAEUNG</Typography>
     </Link>
   );

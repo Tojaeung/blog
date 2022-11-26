@@ -1,26 +1,27 @@
-import { useRouter } from 'next/router';
 import React, { useState, KeyboardEvent } from 'react';
-import { Container, SearchIcon, SearchInput } from './style';
+import { useNavigate } from 'react-router-dom';
+
+import * as S from './style';
 
 function Search() {
-  const router = useRouter();
+  const navigate = useNavigate();
 
   const [keyword, setKeyword] = useState('');
 
   const handleOnKeyPress = (e: KeyboardEvent<HTMLInputElement>) => {
     if (keyword === '') return;
 
-    if (e.key === 'Enter') router.push(`/search?keyword=${keyword}`);
+    if (e.key === 'Enter') navigate(`/search?keyword=${keyword}`);
   };
   return (
-    <Container>
-      <SearchIcon size={20} />
-      <SearchInput
-        placeholder="포스팅을 찾아보세요 !!"
+    <S.Container>
+      <S.SearchIcon size={20} />
+      <S.SearchInput
+        placeholder='포스팅을 찾아보세요 !!'
         onChange={(e) => setKeyword(e.target.value)}
         onKeyDown={handleOnKeyPress}
       />
-    </Container>
+    </S.Container>
   );
 }
 

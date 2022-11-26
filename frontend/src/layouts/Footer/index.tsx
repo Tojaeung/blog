@@ -1,7 +1,7 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import * as S from './style';
-import Link from 'next/link';
 
 const Footer = () => {
   return (
@@ -9,25 +9,17 @@ const Footer = () => {
       <S.Logo>Tojaeung</S.Logo>
 
       <S.IconBox>
-        <Link href="https://github.com/Tojaeung">
-          <a>
-            <S.GithubIcon size={25} color="black" />
-          </a>
+        <Link to='https://github.com/Tojaeung'>
+          <S.GithubIcon size={25} color='black' />
         </Link>
-        <Link href="https://www.instagram.com/tojaeung1027">
-          <a>
-            <S.InstaIcon size={25} color="black" />
-          </a>
+        <Link to='https://www.instagram.com/tojaeung1027'>
+          <S.InstaIcon size={25} color='black' />
         </Link>
-        <Link href="https://solved.ac/tojaeung">
-          <a>
-            <S.BrainIcon size={25} color="black" />
-          </a>
+        <Link to='https://solved.ac/tojaeung'>
+          <S.BrainIcon size={25} color='black' />
         </Link>
-        <Link href="https://soundcloud.com/tojaeung">
-          <a>
-            <S.SoundcloudIcon size={25} color="black" />
-          </a>
+        <Link to='https://soundcloud.com/tojaeung'>
+          <S.SoundcloudIcon size={25} color='black' />
         </Link>
       </S.IconBox>
 

@@ -1,66 +1,38 @@
-import axios from 'axios';
+import { adminApi, clientApi } from 'utils/axios';
 import { PagePostType, PostType } from 'interfaces/post';
 
-export const createPost = async (categoryId: number, formData: FormData, accessToken: string): Promise<PostType> => {
-  const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/category/${categoryId}/post`, formData, {
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-      // 'Content-Type': 'application/json',
-      'Content-Type': 'multipart/form-data',
-    },
-    withCredentials: true,
-  });
-
-  return res.data;
+export const addPost = async (categoryId: number, formData: FormData): Promise<PostType> => {
+  const { data } = await adminApi.post(`/category/${categoryId}/post`, formData);
+  return data;
 };
 
-export const getPostsTop5 = async () => {
-  const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/post/top5`, {
-    withCredentials: true,
-  });
-
-  return res.data;
+export const fetchTop5 = async (): Promise<PostType> => {
+  const { data } = await clientApi.get('/post/top5');
+  return data;
 };
 
 // 페이지네이션이 있다.
-export const getAllPosts = async (pageNumber: number): Promise<PagePostType> => {
-  const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/post?page=${pageNumber}`, {
-    withCredentials: true,
-  });
-  return res.data;
+export const fetchAllPosts = async (pageNumber: number): Promise<PagePostType> => {
+  const { data } = await clientApi.get(`/post?page=${pageNumber}`);
+  return data;
 };
 
-export const getPostsInCategory = async (categoryId: number, pageNumber: number): Promise<PagePostType> => {
-  const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/category/${categoryId}/post?page=${pageNumber}`, {
-    withCredentials: true,
-  });
-  return res.data;
+export const fetchPostsInCategory = async (categoryId: number, pageNumber: number): Promise<PagePostType> => {
+  const { data } = await clientApi.get(`/category/${categoryId}/post?page=${pageNumber}`);
+  return data;
 };
 
-export const getPost = async (postId: number) => {
-  const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/post/${postId}`, {
-    withCredentials: true,
-  });
-  return res.data;
+export const fetchPost = async (postId: number) => {
+  const { data } = await clientApi.get(`/post/${postId}`);
+  return data;
 };
 
-export const updatePost = async (postId: number, formData: FormData, accessToken: string) => {
-  const res = await axios.patch(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/post/${postId}`, formData, {
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
-    withCredentials: true,
-  });
-  return res.data;
+export const updatePost = async (postId: number, formData: FormData) => {
+  const { data } = await adminApi.put(`/post/${postId}`, formData);
+  return data;
 };
 
-export const deletePost = async (postId: number, accessToken: string) => {
-  const res = await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/post/${postId}`, {
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
-    withCredentials: true,
-  });
-
-  return res.data;
+export const deletePost = async (postId: number) => {
+  const { data } = await adminApi.delete(`/post/${postId}`);
+  return data;
 };

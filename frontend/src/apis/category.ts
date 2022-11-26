@@ -1,52 +1,22 @@
-import axios from 'axios';
+import { adminApi, clientApi } from 'utils/axios';
 import { CategoryType } from 'interfaces/category';
 
-export const createCategory = async (newCategoryName: string, accessToken: string): Promise<CategoryType> => {
-  const res = await axios.post(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/admin/category`,
-    { name: newCategoryName },
-    {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-      withCredentials: true,
-    },
-  );
-  return res.data;
+export const addCategory = async (newCategoryName: string): Promise<CategoryType> => {
+  const { data } = await adminApi.post('/category', { name: newCategoryName });
+  return data;
 };
 
-export const getCategories = async (): Promise<CategoryType[]> => {
-  const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/category`, {
-    withCredentials: true,
-  });
-
-  return res.data;
+export const fetchCategories = async (): Promise<CategoryType[]> => {
+  const { data } = await clientApi.get('/category');
+  return data;
 };
 
-export const updateCategory = async (
-  categoryId: number,
-  updatedName: string,
-  accessToken: string,
-): Promise<CategoryType> => {
-  const res = await axios.put(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/admin/category/${categoryId}`,
-    { updatedName },
-    {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-      withCredentials: true,
-    },
-  );
-  return res.data;
+export const updateCategory = async (categoryId: number, updatedName: string): Promise<CategoryType> => {
+  const { data } = await adminApi.put(`/category/${categoryId}`, { updatedName });
+  return data;
 };
 
-export const deleteCategory = async (categoryId: number, accessToken: string): Promise<number> => {
-  const res = await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/category/${categoryId}`, {
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
-    withCredentials: true,
-  });
-  return res.data;
+export const deleteCategory = async (categoryId: number): Promise<number> => {
+  const { data } = await adminApi.delete(`/category/${categoryId}`);
+  return data;
 };

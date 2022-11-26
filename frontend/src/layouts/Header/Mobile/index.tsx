@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import { Link } from 'react-router-dom';
 import React, { useState } from 'react';
 import { GiHamburgerMenu } from 'react-icons/gi';
 
@@ -17,23 +17,23 @@ function Mobile() {
   return (
     <S.Container>
       <Logo />
-      <GiHamburgerMenu size="30" onClick={onToggle} />
+      <GiHamburgerMenu size='30' onClick={onToggle} />
 
       <S.Background isOpen={isOpen}>
         <S.Nav isOpen={isOpen}>
-          <S.CloseIcon size="30" onClick={onToggle} />
+          <S.CloseIcon size='30' onClick={onToggle} />
           <Search />
           <S.MenuBox>
-            <Link href="/about">
+            <Link to='/about'>
               <S.MenuList>About</S.MenuList>
             </Link>
-            <Link href="/blog">
+            <Link to='/blog'>
               <S.MenuList>Blog</S.MenuList>
             </Link>
-            <Link href="/tag">
+            <Link to='/tag'>
               <S.MenuList>Tags</S.MenuList>
             </Link>
-            <Link href="/contact">
+            <Link to='/contact'>
               <S.MenuList>Contact</S.MenuList>
             </Link>
           </S.MenuBox>

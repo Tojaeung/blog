@@ -1,21 +1,20 @@
-import Link from 'next/link';
-import React from 'react';
+import { Link } from 'react-router-dom';
 
-import { Title, CategoryBox, Badge } from './style';
+import * as S from './style';
 import { IProp } from './type';
 
 function HomeCategory({ categories }: IProp) {
   return (
-    <CategoryBox>
-      <Title>Category</Title>
+    <S.CategoryBox>
+      <S.Title>Category</S.Title>
       {categories?.map((category) => (
-        <Link href={`category/${category.id}`} key={category.id}>
-          <Badge>
+        <Link to={`category/${category.id}`} key={category.id}>
+          <S.Badge>
             {category.name} ({category.postCnt})
-          </Badge>
+          </S.Badge>
         </Link>
       ))}
-    </CategoryBox>
+    </S.CategoryBox>
   );
 }
 

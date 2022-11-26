@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import Image from 'next/image';
 import { CommonButtonStyle, CommonTextStyle, jittery } from 'styles/globalStyle';
 
 export const Container = styled.div`
@@ -43,7 +42,7 @@ export const ImageBox = styled.div`
     display: none;
   }
 `;
-export const Profile = styled(Image)`
+export const Profile = styled.img`
   border-radius: 50%;
 `;
 

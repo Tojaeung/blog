@@ -1,8 +1,8 @@
 import styled, { createGlobalStyle, keyframes } from 'styled-components';
-import { reset } from 'styled-reset';
+import { normalize } from 'styled-normalize';
 
 export const GlobalStyles = createGlobalStyle`
-  ${reset}
+  ${normalize}
   * {
     box-sizing: border-box;
     text-decoration: none;

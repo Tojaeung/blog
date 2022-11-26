@@ -1,5 +1,4 @@
-import Image from 'next/image';
-import Link from 'next/link';
+import { Link } from 'react-router-dom';
 
 import Viewer from 'components/Viewer';
 
@@ -11,17 +10,10 @@ function HomePost({ postsTop5 }: IProp) {
     <S.PostBox>
       {postsTop5?.map((post) => {
         return (
-          <Link href={`/post/${post.id}`} key={post.id}>
+          <Link to={`/post/${post.id}`} key={post.id}>
             <S.PostList>
               <S.ImageBox>
-                <Image
-                  src={post.thumbnail}
-                  width="200"
-                  height="200"
-                  layout="responsive"
-                  alt="포스팅 썸네일"
-                  priority={true}
-                />
+                <img src={post.thumbnail} alt='포스팅 썸네일' />
               </S.ImageBox>
               <S.TextBox>
                 <S.Title>{post.title}</S.Title>

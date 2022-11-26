@@ -1,6 +1,5 @@
-import { useRouter } from 'next/router';
-import Image from 'next/image';
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import 'highlight.js/styles/github.css';
 
 import { deletePost } from 'apis/post';
@@ -11,7 +10,7 @@ import * as S from './style';
 import { IProps } from './type';
 
 function Posting({ auth, post }: IProps) {
-  const router = useRouter();
+  const navigate = useNavigate();
 
   const handleDeletePosting = async () => {
     if (!auth?.accessToken) return;
@@ -42,7 +41,7 @@ function Posting({ auth, post }: IProps) {
         )}
       </S.Header>
 
-      <Image src={post.thumbnail} width={700} height={500} layout="responsive" alt="포스팅 사진" priority={true} />
+      <img src={post.thumbnail} alt='포스팅 사진' />
 
       {post.content && <S.Content dangerouslySetInnerHTML={{ __html: post.content || '' }} />}
 

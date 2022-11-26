@@ -1,23 +1,22 @@
-import { useRouter } from 'next/router';
-import Link from 'next/link';
 import React from 'react';
+import { Link, useParams } from 'react-router-dom';
 
-import { Container, Badge } from './style';
+import * as S from './style';
 import { IProp } from './type';
 
 function BlogCategory({ categories }: IProp) {
-  const router = useRouter();
+  // const {} = useParams()
 
   return (
-    <Container>
+    <S.Container>
       {categories.map((category) => (
-        <Link href={`/category/${category.id}`} key={category.id}>
-          <Badge currentPage={category.id === Number(router.query.id)}>
+        <Link to={`/category/${category.id}`} key={category.id}>
+          <S.Badge currentPage={category.id === Number(router.query.id)}>
             {category.name} ({category.postCnt})
-          </Badge>
+          </S.Badge>
         </Link>
       ))}
-    </Container>
+    </S.Container>
   );
 }
 

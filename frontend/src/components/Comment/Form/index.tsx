@@ -1,4 +1,4 @@
-import { useRouter } from 'next/router';
+import { useParams } from 'react-router-dom';
 import React, { useState } from 'react';
 
 import { createComment } from 'apis/comment';
@@ -7,7 +7,7 @@ import * as S from './style';
 import { IProp } from './type';
 
 function Form({ commentsState, setComments, parentId }: IProp) {
-  const router = useRouter();
+  // const {} = useParams()
 
   const [author, setAuthor] = useState('');
   const [content, setContent] = useState('');
@@ -32,8 +32,8 @@ function Form({ commentsState, setComments, parentId }: IProp) {
   return (
     <S.Container>
       <S.Title>댓글쓰기</S.Title>
-      <S.AuthorInput placeholder="이름" value={author} onChange={(e) => setAuthor(e.target.value)} />
-      <S.ContentInput placeholder="댓글을 남겨주세요 !!" value={content} onChange={(e) => setContent(e.target.value)} />
+      <S.AuthorInput placeholder='이름' value={author} onChange={(e) => setAuthor(e.target.value)} />
+      <S.ContentInput placeholder='댓글을 남겨주세요 !!' value={content} onChange={(e) => setContent(e.target.value)} />
       <S.SubmitButton onClick={handleSubmit}>댓글쓰기</S.SubmitButton>
     </S.Container>
   );

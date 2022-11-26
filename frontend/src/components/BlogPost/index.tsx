@@ -1,27 +1,20 @@
-import Link from 'next/link';
-import Image from 'next/image';
 import React from 'react';
-import * as S from './style';
-import { IProp } from './type';
+import { Link } from 'react-router-dom';
 
 import TagBadges from 'components/TagBadges';
 import Viewer from 'components/Viewer';
+
+import * as S from './style';
+import { IProp } from './type';
 
 function BlogPost({ posts }: IProp) {
   return (
     <S.PostBox>
       {posts.map((post) => {
         return (
-          <Link href={`/post/${post.id}`} key={post.id}>
+          <Link to={`/post/${post.id}`} key={post.id}>
             <S.PostList>
-              <Image
-                src={post.thumbnail}
-                width="300"
-                height="300"
-                layout="responsive"
-                alt="포스팅 썸네일"
-                priority={true}
-              />
+              <img src={post.thumbnail} alt='포스팅 썸네일' />
               <S.Title>{post.title}</S.Title>
 
               <Viewer content={post.content} />

@@ -1,5 +1,5 @@
-import Link from 'next/link';
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Logo from 'components/Logo';
 import Search from 'components/Search';
 import { Container, MenuBox, MenuList } from './style';
@@ -11,16 +11,16 @@ function DeskTop() {
       <Search />
 
       <MenuBox>
-        <Link href="/about">
+        <Link to='/about'>
           <MenuList>About</MenuList>
         </Link>
-        <Link href="/blog">
+        <Link to='/blog'>
           <MenuList>Blog</MenuList>
         </Link>
-        <Link href="/tag">
+        <Link to='/tag'>
           <MenuList>Tags</MenuList>
         </Link>
-        <Link href="/contact">
+        <Link to='/contact'>
           <MenuList>Contact</MenuList>
         </Link>
       </MenuBox>

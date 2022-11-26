@@ -23,8 +23,8 @@ export const lightTheme: DefaultTheme = {
   },
 
   device: {
-    mobile: `screen and (max-width: 425px)`,
-    tablet: `screen and (max-width: 768px)`,
-    laptop: `screen and (max-width: 1024px)`,
+    mobile: 'screen and (max-width: 425px)',
+    tablet: 'screen and (max-width: 768px)',
+    laptop: 'screen and (max-width: 1024px)',
   },
 };

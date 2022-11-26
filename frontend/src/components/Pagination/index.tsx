@@ -11,9 +11,9 @@ function Pagination({ page, setPage, blockNum, setBlockNum, totalCnt }: IProps) 
 
   const pageLimit = 5;
   const totalPage: number = Math.ceil(totalCnt / 10);
-  const blockArea: number = Number(blockNum * pageLimit);
+  const blockArea = Number(blockNum * pageLimit);
   const nArr = createArr(Number(totalPage));
-  let pArr = nArr?.slice(blockArea, Number(pageLimit) + blockArea);
+  const pArr = nArr?.slice(blockArea, Number(pageLimit) + blockArea);
 
   const firstPage = () => {
     setPage(1);
