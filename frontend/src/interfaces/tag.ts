@@ -1,9 +1,4 @@
-export type TagType = {
+export type ITag = {
   id: number;
-  tagName: string;
-};
-
-export type AllTagsType = {
-  id: string;
   tagName: string;
 };

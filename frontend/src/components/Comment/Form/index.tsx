@@ -1,29 +1,29 @@
 import { useParams } from 'react-router-dom';
-import React, { useState } from 'react';
+import { useState } from 'react';
 
-import { createComment } from 'apis/comment';
+import useCommentQuery from 'hooks/useCommentQuery';
 
 import * as S from './style';
 import { IProp } from './type';
 
-function Form({ commentsState, setComments, parentId }: IProp) {
-  // const {} = useParams()
+function Form({ parentId }: IProp) {
+  const { postId } = useParams();
 
   const [author, setAuthor] = useState('');
   const [content, setContent] = useState('');
 
+  const { addCommentMutation, addChildCommentMutation } = useCommentQuery();
+
   // 부모 댓글이 있는지 없는지
   const handleSubmit = async () => {
     if (!parentId) {
-      const newComment = await createComment(Number(router.query.id), author, content, undefined);
-      setComments((commentsState) => [...commentsState, newComment]);
+      const newComment = { author, content, postId: Number(postId) };
+      addCommentMutation.mutate(newComment);
       setAuthor('');
       setContent('');
     } else {
-      const newComment = await createComment(Number(router.query.id), author, content, parentId);
-      const idx = commentsState.findIndex((comment) => comment.id === parentId);
-      commentsState[idx].children.push(newComment);
-      setComments([...commentsState]);
+      const newChildComment = { author, content, postId: Number(postId), parentId };
+      addChildCommentMutation.mutate(newChildComment);
       setAuthor('');
       setContent('');
     }

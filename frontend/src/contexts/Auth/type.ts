@@ -1,9 +1,9 @@
 import { ReactNode, Dispatch, SetStateAction } from 'react';
-import { AuthType } from 'interfaces/auth';
+import { IAuth } from 'interfaces/auth';
 
-export type AuthContextType = {
-  auth: AuthType | null;
-  setAuth: Dispatch<SetStateAction<AuthType | null>>;
+export type IAuthContext = {
+  auth: IAuth | null;
+  setAuth: Dispatch<SetStateAction<IAuth | null>>;
 };
 
 export type IProp = {

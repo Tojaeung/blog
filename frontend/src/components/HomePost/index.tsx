@@ -1,14 +1,24 @@
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+
+import { fetchTop5 } from 'apis/post';
 
 import Viewer from 'components/Viewer';
 
-import * as S from './style';
-import { IProp } from './type';
+import { IPost } from 'interfaces/post';
 
-function HomePost({ postsTop5 }: IProp) {
+import * as S from './style';
+
+function HomePost() {
+  const [top5, setTop5] = useState<IPost[]>([]);
+
+  useEffect(() => {
+    fetchTop5().then((res) => setTop5(res));
+  }, []);
+
   return (
     <S.PostBox>
-      {postsTop5?.map((post) => {
+      {top5?.map((post) => {
         return (
           <Link to={`/post/${post.id}`} key={post.id}>
             <S.PostList>

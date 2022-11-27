@@ -1,7 +1,7 @@
 export type IProps = {
-  page: number;
-  setPage: Function;
+  pageNum: number;
+  setPageNum: Function;
   blockNum: number;
   setBlockNum: Function;
-  totalCnt: number;
+  totalCnt?: number;
 };

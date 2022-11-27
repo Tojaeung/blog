@@ -1,17 +1,18 @@
 import { adminApi, clientApi } from 'utils/axios';
-import { CategoryType } from 'interfaces/category';
+import { ICategory, IUpdateCategory } from 'interfaces/category';
 
-export const addCategory = async (newCategoryName: string): Promise<CategoryType> => {
+export const addCategory = async (newCategoryName: string): Promise<ICategory> => {
   const { data } = await adminApi.post('/category', { name: newCategoryName });
   return data;
 };
 
-export const fetchCategories = async (): Promise<CategoryType[]> => {
+export const fetchCategories = async (): Promise<ICategory[]> => {
   const { data } = await clientApi.get('/category');
   return data;
 };
 
-export const updateCategory = async (categoryId: number, updatedName: string): Promise<CategoryType> => {
+export const updateCategory = async (updateCategory: IUpdateCategory): Promise<ICategory> => {
+  const { categoryId, updatedName } = updateCategory;
   const { data } = await adminApi.put(`/category/${categoryId}`, { updatedName });
   return data;
 };

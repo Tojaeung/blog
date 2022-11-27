@@ -1,17 +1,21 @@
-import React from 'react';
 import { Link, useParams } from 'react-router-dom';
 
-import * as S from './style';
-import { IProp } from './type';
+import useCategoryQuery from 'hooks/useCategoryQuery';
 
-function BlogCategory({ categories }: IProp) {
-  // const {} = useParams()
+import * as S from './style';
+
+function BlogCategory() {
+  const { id } = useParams();
+
+  const { fetchCategoriesQuery } = useCategoryQuery();
+
+  const { data: categories } = fetchCategoriesQuery();
 
   return (
     <S.Container>
-      {categories.map((category) => (
+      {categories?.map((category) => (
         <Link to={`/category/${category.id}`} key={category.id}>
-          <S.Badge currentPage={category.id === Number(router.query.id)}>
+          <S.Badge currentPage={category.id === Number(id)}>
             {category.name} ({category.postCnt})
           </S.Badge>
         </Link>

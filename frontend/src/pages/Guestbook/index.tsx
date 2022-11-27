@@ -1,51 +1,40 @@
-import React, { useState, useContext } from 'react';
-import axios from 'axios';
+import { useState, useContext } from 'react';
 
-import { AuthContext } from 'contexts/auth';
+import { AuthContext } from 'contexts/Auth';
+import { AuthContextType } from 'contexts/Auth/type';
 
-import { getRefresh } from 'apis/auth';
-import { getCategories } from 'apis/category';
-import { deleteGuestbook, getAllGuestbooks } from 'apis/guestbook';
-import { createGuestbook } from 'apis/guestbook';
+import useGuestbookQuery from 'hooks/useGuestbookQuery';
 
 import HomeCategory from 'components/HomeCategory';
 
-import { GuestbookType } from 'interfaces/guestbook';
-import { CategoryType } from 'interfaces/category';
+import { INewGuestbook } from 'interfaces/guestbook';
 
 import * as S from './style';
-import { IProps } from './type';
 
-function Guestbook({ categories, guestbooks }: IProps) {
-  const accessToken = useContext(AuthContext);
+function Guestbook() {
+  const { auth } = useContext(AuthContext) as AuthContextType;
 
-  const [guestbooksState, setGuestbooks] = useState<GuestbookType[]>(guestbooks);
   const [author, setAuthor] = useState('');
   const [content, setContent] = useState('');
 
+  const { addGuestbookMutation, deleteGuestbookMutation, fetchGuestbooksQuery } = useGuestbookQuery();
+
+  const { data: guestbooks } = fetchGuestbooksQuery();
+
   const handleSubmit = async () => {
-    if (!auth?.accessToken) {
-      console.log(auth?.accessToken);
-      const newGuestbook = await createGuestbook(author, content, false);
-      setGuestbooks((guestbooksState) => [...guestbooksState, newGuestbook]);
-      setAuthor('');
-      setContent('');
-    } else {
-      const newGuestbook = await createGuestbook(author, content, true);
-      setGuestbooks((guestbooksState) => [...guestbooksState, newGuestbook]);
-      setAuthor('');
-      setContent('');
-    }
+    const newGuestbook: INewGuestbook = { author, content, isAdmin: !!auth?.accessToken };
+    addGuestbookMutation.mutate(newGuestbook);
+    setAuthor('');
+    setContent('');
   };
 
-  const handleDeleteGuestbook = async (guestbookId: number) => {
+  const handleDelete = async (guestbookId: number) => {
     if (!auth?.accessToken) return;
 
     const confirm = prompt('정말로 삭제하시겠습니까?("삭제" 입력시, 실행된다.)', '');
     if (confirm === '삭제') {
-      const deletedId = await deleteGuestbook(guestbookId, auth.accessToken);
+      deleteGuestbookMutation.mutate(guestbookId);
       alert('삭제 되었습니다.');
-      setGuestbooks([...guestbooksState.filter((guestbook) => guestbook.id !== deletedId)]);
     } else {
       alert('삭제 되지 않았습니다.');
     }
@@ -67,15 +56,13 @@ function Guestbook({ categories, guestbooks }: IProps) {
         </S.FormBox>
 
         <S.GuestbookBox>
-          {guestbooksState.map((guestbook) => (
+          {guestbooks?.map((guestbook) => (
             <S.GuestbookList key={guestbook.id}>
               <S.AuthorBox>
                 {/* 관리자 방명록일 경우 스타일 추가 */}
                 <S.Author>{!guestbook.isAdmin ? guestbook.author : `👑${guestbook.author}`}</S.Author>
                 <S.DateTime>({guestbook.createdAt})</S.DateTime>
-                {accessToken && (
-                  <S.DeleteButton onClick={(e) => handleDeleteGuestbook(guestbook.id)}>삭제</S.DeleteButton>
-                )}
+                {auth?.accessToken && <S.DeleteButton onClick={() => handleDelete(guestbook.id)}>삭제</S.DeleteButton>}
               </S.AuthorBox>
 
               <S.Content>{guestbook.content}</S.Content>
@@ -83,7 +70,7 @@ function Guestbook({ categories, guestbooks }: IProps) {
           ))}
         </S.GuestbookBox>
       </S.GuestbookSection>
-      <HomeCategory categories={categories} />
+      <HomeCategory />
     </S.Container>
   );
 }

@@ -1,42 +1,24 @@
-import axios from 'axios';
-import { CommentType } from 'interfaces/comment';
+import { adminApi, clientApi } from 'utils/axios';
+import { IComment, INewChildComment, INewComment } from 'interfaces/comment';
 
-export const createComment = async (
-  postId: number,
-  author: string,
-  content: string,
-  parentId?: number,
-): Promise<CommentType> => {
-  if (!parentId) {
-    const res = await axios.post(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/post/${postId}/comment`,
-      { author, content },
-      { withCredentials: true },
-    );
-    return res.data;
-  } else {
-    const res = await axios.post(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/post/${postId}/comment/${parentId}`,
-      { author, content },
-      { withCredentials: true },
-    );
-    return res.data;
-  }
+export const addComment = async (newComment: INewComment): Promise<IComment> => {
+  const { author, content, postId } = newComment;
+  const { data } = await clientApi.post(`/post/${postId}/comment`, { author, content });
+  return data;
 };
 
-export const getComments = async (postId: number) => {
-  const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/post/${postId}/comment`, {
-    withCredentials: true,
-  });
-  return res.data;
+export const addChildComment = async (newChildComment: INewChildComment): Promise<IComment> => {
+  const { author, content, parentId, postId } = newChildComment;
+  const { data } = await clientApi.post(`/post/${postId}/comment/${parentId}`, { author, content });
+  return data;
 };
 
-export const deleteComment = async (commentId: number, accessToken: string): Promise<number> => {
-  const res = await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/comment/${commentId}`, {
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
-    withCredentials: true,
-  });
-  return res.data;
+export const fetchComments = async (postId: number): Promise<IComment[]> => {
+  const { data } = await clientApi.get(`/post/${postId}/comment`);
+  return data;
+};
+
+export const deleteComment = async (commentId: number): Promise<number> => {
+  const { data } = await adminApi.delete(`/comment/${commentId}`);
+  return data;
 };

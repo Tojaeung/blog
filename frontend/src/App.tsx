@@ -1,5 +1,7 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+
+import { getRefresh } from 'apis/auth';
 
 import { AuthContext } from 'contexts/Auth';
 import { AuthContextType } from 'contexts/Auth/type';
@@ -23,22 +25,23 @@ import TagName from 'pages/Tag/TagName';
 import Admin from 'pages/Admin';
 import AdminCategory from 'pages/Admin/Category';
 import AdminPost from 'pages/Admin/Post';
-
-import { useRefreshQuery } from 'hooks/useAuthQuery';
+import NotFound from 'pages/NotFound';
 
 function App() {
   const { setAuth } = useContext(AuthContext) as AuthContextType;
 
-  const { status, data } = useRefreshQuery();
-  if (status === 'success') {
-    setAuth(data);
-    localStorage.setItem('accessToken', data.accessToken);
-  }
-
-  if (status === 'error') {
-    setAuth(null);
-    localStorage.removeItem('accessToken');
-  }
+  useEffect(() => {
+    getRefresh()
+      .then((data) => {
+        setAuth(data);
+        localStorage.setItem('accessToken', data.accessToken);
+      })
+      .catch(() => {
+        alert('다시 로그인 해주세요.');
+        setAuth(null);
+        localStorage.removeItem('accessToken');
+      });
+  }, []);
 
   return (
     <BrowserRouter>

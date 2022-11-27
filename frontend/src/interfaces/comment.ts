@@ -1,10 +1,22 @@
-export type CommentType = {
+export type IComment = {
   id: number;
   author: string;
   content: string;
   isAdmin: boolean;
   parentId: number;
-  children: CommentType[];
+  children: IComment[];
   createdAt: string;
   lastModifiedAt: string;
+};
+
+export type INewComment = {
+  postId: number;
+  author: string;
+  content: string;
+};
+export type INewChildComment = {
+  postId: number;
+  author: string;
+  content: string;
+  parentId: number;
 };

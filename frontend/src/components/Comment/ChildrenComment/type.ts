@@ -1,5 +1,5 @@
-import { CommentType } from 'interfaces/comment';
+import { IComment } from 'interfaces/comment';
 
 export type IProp = {
-  children: CommentType[];
+  children: IComment[];
 };

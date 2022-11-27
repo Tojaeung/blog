@@ -1,25 +1,33 @@
-import React, { useState } from 'react';
+import { useContext, useState } from 'react';
+import { useParams } from 'react-router-dom';
 
 import Form from './Form';
 import ChildrenComment from './ChildrenComment';
 
-import * as S from './style';
-import { IProps } from './type';
-import { CommentType } from 'interfaces/comment';
-import { deleteComment } from 'apis/comment';
+import { AuthContext } from 'contexts/Auth';
+import { IAuthContext } from 'contexts/Auth/type';
 
-function Comment({ auth, comments }: IProps) {
-  const [commentsState, setComments] = useState<CommentType[]>(comments);
+import useCommentQuery from 'hooks/useCommentQuery';
+
+import * as S from './style';
+
+function Comment() {
+  const { postId } = useParams();
+  const { auth } = useContext(AuthContext) as IAuthContext;
+
   const [reply, setReply] = useState<number>(-1);
 
-  const handleDeleteComment = async (commentId: number) => {
+  const { deleteCommentMutation, fetchCommentsQuery } = useCommentQuery();
+
+  const { data: comments } = fetchCommentsQuery(Number(postId));
+
+  const handleDelete = async (commentId: number) => {
     if (!auth?.accessToken) return;
 
     const confirm = prompt('정말로 삭제하시겠습니까?("삭제" 입력시, 실행된다.)', '');
     if (confirm === '삭제') {
-      const deletedId = await deleteComment(commentId, auth.accessToken);
+      deleteCommentMutation.mutate(commentId);
       alert('삭제 되었습니다.');
-      setComments([...commentsState.filter((comment) => comment.id !== deletedId)]);
     } else {
       alert('삭제 되지 않았습니다.');
     }
@@ -27,17 +35,15 @@ function Comment({ auth, comments }: IProps) {
 
   return (
     <S.Container>
-      <S.Title>댓글 {commentsState.length}개</S.Title>
-      {commentsState.length > 0 && (
+      <S.Title>댓글 {comments?.length}개</S.Title>
+      {comments?.length > 0 && (
         <S.CommentBox>
-          {commentsState.map((comment) => (
+          {comments?.map((comment) => (
             <S.CommentList key={comment.id}>
               <S.AuthorBox>
                 <S.Author>{!comment.isAdmin ? comment.author : `👑${comment.author}`}</S.Author>
                 <S.DateTime>({comment.createdAt})</S.DateTime>
-                {auth?.accessToken && (
-                  <S.DeleteButton onClick={(e) => handleDeleteComment(comment.id)}>삭제</S.DeleteButton>
-                )}
+                {auth?.accessToken && <S.DeleteButton onClick={() => handleDelete(comment.id)}>삭제</S.DeleteButton>}
               </S.AuthorBox>
 
               <S.Content>{comment.content}</S.Content>
@@ -45,16 +51,14 @@ function Comment({ auth, comments }: IProps) {
 
               {comment.children.length > 0 && <ChildrenComment children={comment.children} />}
 
-              {comment.id === reply && (
-                <Form commentsState={commentsState} setComments={setComments} parentId={comment.id} />
-              )}
+              {comment.id === reply && <Form parentId={comment.id} />}
             </S.CommentList>
           ))}
         </S.CommentBox>
       )}
 
       {/* 부모댓글 생성 폼 */}
-      {reply === -1 && <Form commentsState={commentsState} setComments={setComments} parentId={undefined} />}
+      {reply === -1 && <Form parentId={undefined} />}
     </S.Container>
   );
 }

@@ -1,4 +1,3 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
 
 import TagBadges from 'components/TagBadges';
@@ -10,7 +9,7 @@ import { IProp } from './type';
 function BlogPost({ posts }: IProp) {
   return (
     <S.PostBox>
-      {posts.map((post) => {
+      {posts?.map((post) => {
         return (
           <Link to={`/post/${post.id}`} key={post.id}>
             <S.PostList>

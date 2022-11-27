@@ -1,25 +1,34 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useContext } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import 'highlight.js/styles/github.css';
 
-import { deletePost } from 'apis/post';
+import { AuthContext } from 'contexts/Auth';
+
+import usePostQuery from 'hooks/usePostQuery';
 
 import TagBadges from 'components/TagBadges';
 
 import * as S from './style';
-import { IProps } from './type';
+import { AuthContextType } from 'contexts/Auth/type';
 
-function Posting({ auth, post }: IProps) {
+function Posting() {
+  const { auth } = useContext(AuthContext) as AuthContextType;
+
   const navigate = useNavigate();
+  const { postId } = useParams();
 
-  const handleDeletePosting = async () => {
+  const { fetchPostQuery, deletePostMutation } = usePostQuery();
+
+  const { data: post } = fetchPostQuery(Number(postId));
+
+  const handleDelete = async (postId: number) => {
     if (!auth?.accessToken) return;
 
     const confirm = prompt('정말로 삭제하시겠습니까?("삭제" 입력시, 실행된다.)', '');
     if (confirm === '삭제') {
-      await deletePost(Number(router.query.id), auth?.accessToken);
+      deletePostMutation.mutate(postId);
       alert('삭제 되었습니다.');
-      router.push('/');
+      navigate('/');
     } else alert('삭제 되지 않았습니다.');
   };
 
@@ -35,8 +44,8 @@ function Posting({ auth, post }: IProps) {
 
         {auth?.accessToken && (
           <S.AdminButtonBox>
-            <S.CreateButton onClick={(e) => router.push('/admin/post')}>생성</S.CreateButton>
-            <S.DeleteButton onClick={handleDeletePosting}>제거</S.DeleteButton>
+            <S.CreateButton onClick={() => navigate('/admin/post')}>생성</S.CreateButton>
+            <S.DeleteButton onClick={() => handleDelete(post.id)}>제거</S.DeleteButton>
           </S.AdminButtonBox>
         )}
       </S.Header>

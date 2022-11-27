@@ -11,8 +11,8 @@ function Home() {
 
       <S.Title>가장 인기있는 포스팅 Top5</S.Title>
       <S.Box>
-        <HomePost postsTop5={postsTop5} />
-        <HomeCategory categories={categories} />
+        <HomePost />
+        <HomeCategory />
       </S.Box>
     </S.Container>
   );

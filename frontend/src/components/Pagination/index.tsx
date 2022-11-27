@@ -2,7 +2,7 @@ import React from 'react';
 import { Container, ArrowButton, PageButton, PageNumberBox } from './style';
 import { IProps } from './type';
 
-function Pagination({ page, setPage, blockNum, setBlockNum, totalCnt }: IProps) {
+function Pagination({ pageNum, setPageNum, blockNum, setBlockNum, totalCnt }: IProps) {
   const createArr = (n: number) => {
     const iArr: number[] = new Array(n);
     for (let i = 0; i < n; i++) iArr[i] = i + 1;
@@ -16,33 +16,33 @@ function Pagination({ page, setPage, blockNum, setBlockNum, totalCnt }: IProps) 
   const pArr = nArr?.slice(blockArea, Number(pageLimit) + blockArea);
 
   const firstPage = () => {
-    setPage(1);
+    setPageNum(1);
     setBlockNum(0);
   };
 
   const lastPage = () => {
-    setPage(totalPage);
+    setPageNum(totalPage);
     setBlockNum(Math.ceil(totalPage / pageLimit) - 1);
   };
 
   const prevPage = () => {
-    if (page <= 1) {
+    if (paegNum <= 1) {
       return;
     }
-    if (page - 1 <= pageLimit * blockNum) {
+    if (pageNum - 1 <= pageLimit * blockNum) {
       setBlockNum((n: number) => n - 1);
     }
-    setPage((n: number) => n - 1);
+    setPageNum((n: number) => n - 1);
   };
 
   const nextPage = () => {
-    if (page >= totalPage) {
+    if (pageNum >= totalPage) {
       return;
     }
-    if (pageLimit * Number(blockNum + 1) < Number(page + 1)) {
+    if (pageLimit * Number(blockNum + 1) < Number(pageNum + 1)) {
       setBlockNum((n: number) => n + 1);
     }
-    setPage((n: number) => n + 1);
+    setPageNum((n: number) => n + 1);
   };
 
   return (
@@ -59,7 +59,7 @@ function Pagination({ page, setPage, blockNum, setBlockNum, totalCnt }: IProps) 
         onClick={() => {
           prevPage();
         }}
-        disabled={page === 1}
+        disabled={pageNum === 1}
       >
         &lt;
       </ArrowButton>
@@ -69,9 +69,9 @@ function Pagination({ page, setPage, blockNum, setBlockNum, totalCnt }: IProps) 
           <PageButton
             key={n}
             onClick={() => {
-              setPage(n);
+              setPageNum(n);
             }}
-            currentPage={page === n ? true : false}
+            currentPage={pageNum === n ? true : false}
           >
             {n}
           </PageButton>
@@ -82,7 +82,7 @@ function Pagination({ page, setPage, blockNum, setBlockNum, totalCnt }: IProps) 
         onClick={() => {
           nextPage();
         }}
-        disabled={page === totalPage}
+        disabled={pageNum === totalPage}
       >
         &gt;
       </ArrowButton>

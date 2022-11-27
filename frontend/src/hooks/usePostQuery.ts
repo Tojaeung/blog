@@ -1,45 +1,48 @@
 import { useQuery, useMutation, useQueryClient } from 'react-query';
-import { addPost, deletePost, fetchAllPosts, fetchPost, fetchPostsInCategory, fetchTop5, updatePost } from 'apis/post';
-import { PostType } from 'interfaces/post';
+import { addPost, deletePost, fetchAllPosts, fetchPost, fetchPostsInCategory, updatePost } from 'apis/post';
 
-const { setQueryData, invalidateQueries } = useQueryClient();
+const usePostQuery = () => {
+  const { invalidateQueries } = useQueryClient();
 
-export const useAddPost = (categoryId: number, formData: FormData) => {
-  return useMutation('post', () => addPost(categoryId, formData), {
-    onSuccess: (newPost) => {
-      setQueryData<PostType>(['post', newPost.id], newPost);
-    },
-  });
-};
+  const addPostMutation = useMutation({ mutationFn: addPost });
 
-export const useFetchTop5 = () => {
-  return useQuery('Top5', () => fetchTop5(), { refetchOnMount: 'always' });
-};
+  const fetchAllPostsQuery = (pageNumber: number) => {
+    return useQuery({ queryKey: ['allPosts', pageNumber], queryFn: () => fetchAllPosts(pageNumber) });
+  };
 
-export const useFetchAllPosts = (pageNumber: number) => {
-  return useQuery(['allPosts', pageNumber], () => fetchAllPosts(pageNumber));
-};
+  const fetchPostsInCategoryQuery = (categoryId: number, pageNumber: number) => {
+    return useQuery({
+      queryKey: ['postsInCategory', pageNumber],
+      queryFn: () => fetchPostsInCategory(categoryId, pageNumber),
+    });
+  };
 
-export const useFetchPostsInCategory = (categoryId: number, pageNumber: number) => {
-  return useQuery(['postsInCategory', pageNumber], () => fetchPostsInCategory(categoryId, pageNumber));
-};
+  const fetchPostQuery = (postId: number) => {
+    return useQuery(['post', postId], () => fetchPost(postId));
+  };
 
-export const useFetchPost = (postId: number) => {
-  return useQuery(['post', postId], () => fetchPost(postId));
-};
-
-export const useUpdatePost = (postId: number, formData: FormData) => {
-  return useMutation('post', () => updatePost(postId, formData), {
+  const updatePostMutation = useMutation({
+    mutationFn: updatePost,
     onSuccess: (updatedPost) => {
-      setQueryData<PostType>(['post', updatedPost.id], updatedPost);
+      invalidateQueries({ queryKey: ['post', updatedPost.id] });
     },
   });
+
+  const deletePostMutation = useMutation({
+    mutationFn: deletePost,
+    onSuccess: (deletedId) => {
+      invalidateQueries({ queryKey: ['post', deletedId] });
+    },
+  });
+
+  return {
+    addPostMutation,
+    fetchAllPostsQuery,
+    fetchPostsInCategoryQuery,
+    fetchPostQuery,
+    updatePostMutation,
+    deletePostMutation,
+  };
 };
 
-export const useDeletePost = (postId: number) => {
-  return useMutation('post', () => deletePost(postId), {
-    onSuccess: (deletedId) => {
-      invalidateQueries(['post', deletedId]);
-    },
-  });
-};
+export default usePostQuery;

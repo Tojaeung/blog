@@ -1,9 +1,7 @@
-import axios from 'axios';
-import { PagePostType } from 'interfaces/post';
+import { clientApi } from 'utils/axios';
+import { IPagePost } from 'interfaces/post';
 
-export const searchKeyword = async (keyword: string, page: number): Promise<PagePostType> => {
-  const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/post/search?keyword=${keyword}&page=${page}`, {
-    withCredentials: true,
-  });
-  return res.data;
+export const searchKeyword = async (keyword: string, page: number): Promise<IPagePost> => {
+  const { data } = await clientApi.get(`/post/search?keyword=${keyword}&page=${page}`);
+  return data;
 };

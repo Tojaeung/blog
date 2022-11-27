@@ -3,9 +3,8 @@ import { Link } from 'react-router-dom';
 import HomeCategory from 'components/HomeCategory';
 
 import * as S from './style';
-import { IProp } from './type';
 
-function About({ categories }: IProp) {
+function About() {
   return (
     <S.Container>
       <S.Title>About Me</S.Title>
@@ -71,7 +70,7 @@ function About({ categories }: IProp) {
           <S.SolvedacImage src='http://mazassumnida.wtf/api/v2/generate_badge?boj=tojaeung' alt='깃허브 커밋 그래프' />
         </Link>
       </S.AboutBox>
-      <HomeCategory categories={categories} />
+      <HomeCategory />
     </S.Container>
   );
 }
