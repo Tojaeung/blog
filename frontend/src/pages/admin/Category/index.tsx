@@ -1,47 +1,25 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import { getRefresh } from 'apis/auth';
-import { getCategories, createCategory, deleteCategory, updateCategory } from 'apis/category';
+import { useState } from 'react';
 
-import { AuthType } from 'interfaces/auth';
-import { CategoryType } from 'interfaces/category';
+import useCategoryQuery from 'hooks/useCategoryQuery';
 
 import * as S from './style';
 
 function Category() {
-  const [categoriesState, setCategoriesState] = useState(categories);
   const [newCategoryName, setNewCategoryName] = useState('');
   const [updatedName, setUpdatedName] = useState('');
 
-  const handleCreate = async () => {
-    try {
-      const newCategory = await createCategory(newCategoryName, auth.accessToken);
-      setCategoriesState([...categories, newCategory]);
-    } catch (e: any) {
-      alert(e.message);
-    }
-  };
+  const { addCategoryMutation, deleteCategoryMutation, fetchCategoriesQuery, updateCategoryMutation } =
+    useCategoryQuery();
 
-  const handleDelete = async (categoryId: number) => {
-    try {
-      const deletedId = await deleteCategory(categoryId, auth.accessToken);
-      const idx = categoriesState.findIndex((category) => category.id === deletedId);
+  const { data: categories } = fetchCategoriesQuery();
 
-      setCategoriesState(categoriesState.splice(idx, 1));
-    } catch (e: any) {
-      alert(e.message);
-    }
-  };
+  const handleCreate = async () => addCategoryMutation.mutate(newCategoryName);
+
+  const handleDelete = async (categoryId: number) => deleteCategoryMutation.mutate(categoryId);
 
   const handleUpdate = async (categoryId: number) => {
-    try {
-      const updatedCategory = await updateCategory(categoryId, updatedName, auth.accessToken);
-      const idx = categoriesState.findIndex((category) => category.id === updatedCategory.id);
-
-      setCategoriesState(categoriesState.splice(idx, 1, updatedCategory));
-    } catch (e: any) {
-      alert(e.message);
-    }
+    const updateCategory = { categoryId, updatedName };
+    updateCategoryMutation.mutate(updateCategory);
   };
 
   return (
@@ -58,18 +36,18 @@ function Category() {
       </S.CreateBox>
 
       <S.CategoryBox>
-        {categoriesState.map((category) => {
+        {categories?.map((category) => {
           return (
             <S.CategoryList key={category.id}>
               <S.InfoBox>
                 <S.Name>{category.name}</S.Name>
                 <S.Count>{category.postCnt}개</S.Count>
-                <S.DeleteButton onClick={(e) => handleDelete(category.id)}>삭제</S.DeleteButton>
+                <S.DeleteButton onClick={() => handleDelete(category.id)}>삭제</S.DeleteButton>
               </S.InfoBox>
 
               <S.UpdateBox>
                 <S.UpdateInput placeholder='카테고리 이름 변경' onChange={(e) => setUpdatedName(e.target.value)} />
-                <S.UpdateButton onClick={(e) => handleUpdate(category.id)}>업데이트</S.UpdateButton>
+                <S.UpdateButton onClick={() => handleUpdate(category.id)}>업데이트</S.UpdateButton>
               </S.UpdateBox>
             </S.CategoryList>
           );

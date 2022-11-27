@@ -9,7 +9,7 @@ function Post() {
     <S.Container>
       <BlogCategory />
       <Posting />
-      <Comment comments={comments} />
+      <Comment />
     </S.Container>
   );
 }

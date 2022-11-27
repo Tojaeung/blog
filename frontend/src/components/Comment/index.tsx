@@ -36,7 +36,8 @@ function Comment() {
   return (
     <S.Container>
       <S.Title>댓글 {comments?.length}개</S.Title>
-      {comments?.length > 0 && (
+
+      {comments !== undefined && comments.length > 0 && (
         <S.CommentBox>
           {comments?.map((comment) => (
             <S.CommentList key={comment.id}>
@@ -47,9 +48,9 @@ function Comment() {
               </S.AuthorBox>
 
               <S.Content>{comment.content}</S.Content>
-              <S.ReplyButton onClick={(e) => setReply(comment.id)}>답글</S.ReplyButton>
+              <S.ReplyButton onClick={() => setReply(comment.id)}>답글</S.ReplyButton>
 
-              {comment.children.length > 0 && <ChildrenComment children={comment.children} />}
+              {comment.children.length > 0 && <ChildrenComment childrenComments={comment.children} />}
 
               {comment.id === reply && <Form parentId={comment.id} />}
             </S.CommentList>

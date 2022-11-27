@@ -1,12 +1,12 @@
 import * as S from './style';
 import { IProp } from './type';
 
-function ChildrenComment({ children }: IProp) {
+function ChildrenComment({ childrenComments }: IProp) {
   return (
     <S.CommentBox>
       <S.Depth />
       <S.ListBox>
-        {children.map((child) => (
+        {childrenComments.map((child) => (
           <S.CommentList key={child.id}>
             <S.AuthorBox>
               <S.Author>↳{!child.isAdmin ? child.author : `👑${child.author}`}</S.Author>

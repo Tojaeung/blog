@@ -4,7 +4,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { getRefresh } from 'apis/auth';
 
 import { AuthContext } from 'contexts/Auth';
-import { AuthContextType } from 'contexts/Auth/type';
+import { IAuthContext } from 'contexts/Auth/type';
 
 import PublicRouter from 'routes/PublicRouter';
 import PrivateRouter from 'routes/PrivateRouter';
@@ -28,7 +28,7 @@ import AdminPost from 'pages/Admin/Post';
 import NotFound from 'pages/NotFound';
 
 function App() {
-  const { setAuth } = useContext(AuthContext) as AuthContextType;
+  const { setAuth } = useContext(AuthContext) as IAuthContext;
 
   useEffect(() => {
     getRefresh()

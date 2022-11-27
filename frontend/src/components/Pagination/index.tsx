@@ -1,4 +1,3 @@
-import React from 'react';
 import { Container, ArrowButton, PageButton, PageNumberBox } from './style';
 import { IProps } from './type';
 
@@ -10,7 +9,7 @@ function Pagination({ pageNum, setPageNum, blockNum, setBlockNum, totalCnt }: IP
   };
 
   const pageLimit = 5;
-  const totalPage: number = Math.ceil(totalCnt / 10);
+  const totalPage: number = Math.ceil((totalCnt as number) / 10);
   const blockArea = Number(blockNum * pageLimit);
   const nArr = createArr(Number(totalPage));
   const pArr = nArr?.slice(blockArea, Number(pageLimit) + blockArea);
@@ -26,7 +25,7 @@ function Pagination({ pageNum, setPageNum, blockNum, setBlockNum, totalCnt }: IP
   };
 
   const prevPage = () => {
-    if (paegNum <= 1) {
+    if (pageNum <= 1) {
       return;
     }
     if (pageNum - 1 <= pageLimit * blockNum) {

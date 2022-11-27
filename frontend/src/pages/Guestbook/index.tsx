@@ -1,7 +1,7 @@
 import { useState, useContext } from 'react';
 
 import { AuthContext } from 'contexts/Auth';
-import { AuthContextType } from 'contexts/Auth/type';
+import { IAuthContext } from 'contexts/Auth/type';
 
 import useGuestbookQuery from 'hooks/useGuestbookQuery';
 
@@ -12,7 +12,7 @@ import { INewGuestbook } from 'interfaces/guestbook';
 import * as S from './style';
 
 function Guestbook() {
-  const { auth } = useContext(AuthContext) as AuthContextType;
+  const { auth } = useContext(AuthContext) as IAuthContext;
 
   const [author, setAuthor] = useState('');
   const [content, setContent] = useState('');

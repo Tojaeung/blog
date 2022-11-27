@@ -1,11 +1,12 @@
-import axios from 'axios';
-import React, { useRef, useMemo } from 'react';
+import { useRef, useMemo } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { RangeStatic } from 'quill';
 
 import hljs from 'highlight.js';
 import 'highlight.js/styles/github.css';
+
+import { adminApi } from 'utils/axios';
 
 import { Editor } from './style';
 import { IProps } from './type';
@@ -33,9 +34,7 @@ function QuillEditor({ content, setContent }: IProps) {
         formData.append('file', file[0]);
       }
 
-      const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/post/upload`, formData, {
-        withCredentials: true,
-      });
+      const res = await adminApi.post('/post/upload', formData);
 
       if (quillRef.current) {
         // 현재 Editor 커서 위치에 서버로부터 전달받은 이미지 불러오는 url을 이용하여 이미지 태그 추가
@@ -52,7 +51,7 @@ function QuillEditor({ content, setContent }: IProps) {
   const modules = useMemo(
     () => ({
       syntax: {
-        highlight: (text: any) => hljs.highlightAuto(text).value,
+        highlight: (text: string) => hljs.highlightAuto(text).value,
       },
       toolbar: {
         container: [

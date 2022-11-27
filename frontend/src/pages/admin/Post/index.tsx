@@ -1,21 +1,19 @@
-import { useState, useRef, useEffect, ChangeEvent } from 'react';
+import { useState, ChangeEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 
-import { getRefresh } from 'apis/auth';
-import { createPost } from 'apis/post';
-import { getCategories } from 'apis/category';
 import { searchTagName } from 'apis/tag';
 
-import { AuthType } from 'interfaces/auth';
-import { CategoryType } from 'interfaces/category';
+import QuillEditor from 'components/QuillEditor';
+
+import useCategoryQuery from 'hooks/useCategoryQuery';
+import usePostQuery from 'hooks/usePostQuery';
 
 import * as S from './style';
 
 function Post() {
   const navigate = useNavigate();
 
-  const [categoryId, setCategoryId] = useState<number>(categories[0].id);
+  const [categoryId, setCategoryId] = useState<number>(1);
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [thumbnail, setThumbnail] = useState<File>();
@@ -28,11 +26,10 @@ function Post() {
   const [tagName, setTagName] = useState<string>('');
   const [tags, setTags] = useState<string[]>([]);
 
-  const viewContainerRef = useRef<HTMLDivElement>(null);
+  const { fetchCategoriesQuery } = useCategoryQuery();
+  const { addPostMutation } = usePostQuery();
 
-  useEffect(() => {
-    if (viewContainerRef.current) viewContainerRef.current.innerHTML += content;
-  }, [content]);
+  const { data: categories } = fetchCategoriesQuery();
 
   const onUploadImage = (e: ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return;
@@ -40,7 +37,7 @@ function Post() {
   };
 
   const handleSearchTagName = async () => {
-    const tags = await searchTagName(keyword, auth.accessToken);
+    const tags = await searchTagName(keyword);
     setSearchedTags(tags);
   };
 
@@ -51,19 +48,19 @@ function Post() {
     formData.append('thumbnail', thumbnail!);
     formData.append('createReqDto', new Blob([JSON.stringify(body)], { type: 'application/json' }));
 
-    try {
-      const newPostId = await createPost(categoryId, formData, auth.accessToken);
-      alert('포스팅 되었습니다.');
-      navigate(`/post/${newPostId}`);
-    } catch (e: any) {
-      alert(e.message);
-    }
+    const newPost = { categoryId, formData };
+    addPostMutation.mutate(newPost, {
+      onSuccess: (newPost) => {
+        alert('포스팅 되었습니다.');
+        navigate(`/post/${newPost.id}`);
+      },
+    });
   };
 
   return (
     <S.Container>
       <S.Selector onChange={(e) => setCategoryId(Number(e.target.value))} value={categoryId}>
-        {categories.map((category) => (
+        {categories?.map((category) => (
           <S.Option value={category.id} key={category.id}>
             {category.name} {category.postCnt}개
           </S.Option>
@@ -84,8 +81,8 @@ function Post() {
 
       <S.TagBox>
         <S.TagInput placeholder='태그추가..' onChange={(e) => setTagName(e.target.value)} />
-        <S.AddTagButton onClick={(e) => setTags([...tags, tagName])}>추가</S.AddTagButton>
-        <S.InitButton onClick={(e) => setTags([])}>초기화</S.InitButton>
+        <S.AddTagButton onClick={() => setTags([...tags, tagName])}>추가</S.AddTagButton>
+        <S.InitButton onClick={() => setTags([])}>초기화</S.InitButton>
         {!tags.length ? <p>추가된 태그가 없습니다.</p> : <p>{JSON.stringify(tags)}</p>}
       </S.TagBox>
 

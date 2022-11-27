@@ -5,7 +5,7 @@ import useCategoryQuery from 'hooks/useCategoryQuery';
 import * as S from './style';
 
 function BlogCategory() {
-  const { id } = useParams();
+  const { categoryId } = useParams();
 
   const { fetchCategoriesQuery } = useCategoryQuery();
 
@@ -15,7 +15,7 @@ function BlogCategory() {
     <S.Container>
       {categories?.map((category) => (
         <Link to={`/category/${category.id}`} key={category.id}>
-          <S.Badge currentPage={category.id === Number(id)}>
+          <S.Badge currentPage={category.id === Number(categoryId)}>
             {category.name} ({category.postCnt})
           </S.Badge>
         </Link>

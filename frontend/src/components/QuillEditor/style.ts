@@ -7,7 +7,7 @@ export const Editor = styled(ReactQuill)`
   line-height: 20px;
   word-wrap: break-word;
 
-  h1 {
+  /* h1 {
     font-size: 26px;
     font-weight: bold;
     font-family: ${({ theme }) => theme.font.text};
@@ -70,5 +70,5 @@ export const Editor = styled(ReactQuill)`
     font-size: 14px;
     padding: 20px;
     background-color: ${({ theme }) => theme.palette.bgColor};
-  }
+  } */
 `;

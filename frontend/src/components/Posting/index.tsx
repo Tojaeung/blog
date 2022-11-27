@@ -9,10 +9,10 @@ import usePostQuery from 'hooks/usePostQuery';
 import TagBadges from 'components/TagBadges';
 
 import * as S from './style';
-import { AuthContextType } from 'contexts/Auth/type';
+import { IAuthContext } from 'contexts/Auth/type';
 
 function Posting() {
-  const { auth } = useContext(AuthContext) as AuthContextType;
+  const { auth } = useContext(AuthContext) as IAuthContext;
 
   const navigate = useNavigate();
   const { postId } = useParams();

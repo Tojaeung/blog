@@ -1,15 +1,17 @@
 import { Link } from 'react-router-dom';
-import React from 'react';
-
 import { AiOutlineTag } from 'react-icons/ai';
 
-import * as S from './style';
-import { IProp } from './type';
+import useTagQuery from 'hooks/useTagQuery';
 
-function TagBadges({ tags }: IProp) {
+import * as S from './style';
+
+function TagBadges() {
+  const { fetchAllTagsQuery } = useTagQuery();
+  const { data: tags } = fetchAllTagsQuery();
+
   return (
     <S.Container>
-      {tags.map((tag) => (
+      {tags?.map((tag) => (
         <Link to={`/tag/${tag.tagName}`} key={tag.id}>
           <S.TagBadge>
             <AiOutlineTag size={15} />
