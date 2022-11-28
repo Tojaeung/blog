@@ -19,16 +19,27 @@ public class CommentController {
     private final CommentService commentService;
 
     // 댓글 새로 생성
-    @PostMapping(value = {"api/post/{postId}/comment", "api/post/{postId}/comment/{parentId}"})
+    @PostMapping(value = {"api/post/{postId}/comment"})
     public ResponseEntity<CommentResDto> create(
+            @PathVariable(value = "postId") Long postId,
+            @Valid @RequestBody CreateReqDto createReqDto) {
+        CommentResDto newComment = commentService.create(postId, createReqDto);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(newComment);
+    }
+
+    // 자식댓글 새로 생성
+    @PostMapping(value = {"api/post/{postId}/comment/{parentId}"})
+    public ResponseEntity<CommentResDto> createChild(
             @PathVariable(value = "postId") Long postId,
             @PathVariable(value = "parentId", required = false) Long parentId,
             @Valid @RequestBody CreateReqDto createReqDto) {
 
-        CommentResDto newComment = commentService.create(postId, parentId, createReqDto);
+        CommentResDto newComment = commentService.createChild(postId, parentId, createReqDto);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(newComment);
     }
+
 
     // 댓글 가져오기
     @GetMapping("api/post/{postId}/comment")

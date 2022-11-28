@@ -23,41 +23,45 @@ public class CommentService {
 
     // 댓글 생성
     @Transactional
-    public CommentResDto create(Long postId, Long parentId, CreateReqDto createReqDto) {
+    public CommentResDto create(Long postId, CreateReqDto createReqDto) {
         // 포스트가 존재 하는지
         Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new CustomException(ExceptionCode.NOT_FOUND_POST));
 
-        // 부모 댓글이 존재하는지
-        if (parentId == null) {
-            Comment comment = Comment.builder()
-                    .author(createReqDto.getAuthor())
-                    .content(createReqDto.getContent())
-                    .isAdmin(createReqDto.getIsAdmin())
-                    .post(post)
-                    .parent(null)
-                    .build();
+        Comment comment = Comment.builder()
+                .author(createReqDto.getAuthor())
+                .content(createReqDto.getContent())
+                .isAdmin(createReqDto.getIsAdmin())
+                .post(post)
+                .parent(null)
+                .build();
 
-            Comment newComment = commentRepository.save(comment);
+        Comment newComment = commentRepository.save(comment);
 
-            return new CommentResDto(newComment);
+        return new CommentResDto(newComment);
+    }
 
-        } else {
-            Comment parentComment = commentRepository.findById(parentId)
-                    .orElseThrow(() -> new CustomException(ExceptionCode.NOT_FOUND_PARENT_COMMENT));
+    // 자식 댓글 생성
+    @Transactional
+    public CommentResDto createChild(Long postId, Long parentId, CreateReqDto createReqDto) {
+        // 포스트가 존재 하는지
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new CustomException(ExceptionCode.NOT_FOUND_POST));
 
-            Comment comment = Comment.builder()
-                    .author(createReqDto.getAuthor())
-                    .content(createReqDto.getContent())
-                    .isAdmin(createReqDto.getIsAdmin())
-                    .post(post)
-                    .parent(parentComment)
-                    .build();
+        Comment parentComment = commentRepository.findById(parentId)
+                .orElseThrow(() -> new CustomException(ExceptionCode.NOT_FOUND_PARENT_COMMENT));
 
-            Comment newComment = commentRepository.save(comment);
+        Comment comment = Comment.builder()
+                .author(createReqDto.getAuthor())
+                .content(createReqDto.getContent())
+                .isAdmin(createReqDto.getIsAdmin())
+                .post(post)
+                .parent(parentComment)
+                .build();
 
-            return new CommentResDto(newComment);
-        }
+        Comment newComment = commentRepository.save(comment);
+
+        return new CommentResDto(newComment);
     }
 
     // 포스팅의 댓글들 조회하기

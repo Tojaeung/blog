@@ -15,6 +15,7 @@ public class CommentResDto {
     private String author;
     private String content;
     private Boolean isAdmin;
+    private Long postId;
     private Long parentId;
     private List<CommentResDto> children;
     private LocalDate createdAt, lastModifiedAt;
@@ -24,6 +25,7 @@ public class CommentResDto {
         this.author = comment.getAuthor();
         this.content = comment.getContent();
         this.isAdmin = comment.getIsAdmin();
+        this.postId = comment.getPost().getId();
 
         if (comment.getParent() == null) this.parentId = null;
         else this.parentId = comment.getParent().getId();
