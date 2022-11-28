@@ -1,5 +1,5 @@
-import { PostType } from 'interfaces/post';
+import { IPost } from 'interfaces/post';
 
 export type IProp = {
-  posts?: PostType[];
+  posts?: IPost[];
 };

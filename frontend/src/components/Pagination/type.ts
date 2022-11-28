@@ -1,7 +1,7 @@
 export type IProps = {
   pageNum: number;
-  setPageNum: Function;
+  setPageNum: React.Dispatch<React.SetStateAction<number>>;
   blockNum: number;
-  setBlockNum: Function;
+  setBlockNum: React.Dispatch<React.SetStateAction<number>>;
   totalCnt?: number;
 };

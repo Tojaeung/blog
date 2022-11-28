@@ -1,9 +1,9 @@
 import { useQuery, useMutation, useQueryClient } from 'react-query';
 import { addComment, addChildComment, fetchComments, deleteComment } from 'apis/comment';
 
-const { invalidateQueries } = useQueryClient();
-
 const useCommentQuery = () => {
+  const { invalidateQueries } = useQueryClient();
+
   const addCommentMutation = useMutation({
     mutationFn: addComment,
     onSuccess: (newComment) => {
@@ -22,12 +22,14 @@ const useCommentQuery = () => {
     return useQuery({ queryKey: ['comment', postId], queryFn: () => fetchComments(postId) });
   };
 
-  const deleteCommentMutation = useMutation({
-    mutationFn: deleteComment,
-    onSuccess: (deletedId) => {
-      invalidateQueries({ queryKey: ['comment'] });
-    },
-  });
+  const deleteCommentMutation = (postId: number) => {
+    return useMutation({
+      mutationFn: deleteComment,
+      onSuccess: () => {
+        invalidateQueries({ queryKey: ['comment', postId] });
+      },
+    });
+  };
 
   return { addCommentMutation, addChildCommentMutation, fetchCommentsQuery, deleteCommentMutation };
 };

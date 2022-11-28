@@ -1,9 +1,9 @@
 import { useQuery, useMutation, useQueryClient } from 'react-query';
 import { addCategory, deleteCategory, fetchCategories, fetchCategory, updateCategory } from 'apis/category';
 
-const { invalidateQueries } = useQueryClient();
-
 const useCategoryQuery = () => {
+  const { invalidateQueries } = useQueryClient();
+
   const addCategoryMutation = useMutation({
     mutationFn: addCategory,
     onSuccess: () => {

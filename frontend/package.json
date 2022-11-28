@@ -8,7 +8,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview --port 3000",
+    "preview": "vite preview",
     "lint": "eslint ./src",
     "lint:fix": "eslint --fix ./src",
     "format": "prettier --write ./src --config ./.prettierrc"
@@ -41,6 +41,7 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "prettier": "^2.8.0",
     "typescript": "*",
-    "vite": "^3.2.3"
+    "vite": "^3.2.3",
+    "vite-tsconfig-paths": "^3.6.0"
   }
 }

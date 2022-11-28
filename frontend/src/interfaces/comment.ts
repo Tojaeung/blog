@@ -3,6 +3,7 @@ export type IComment = {
   author: string;
   content: string;
   isAdmin: boolean;
+  postId: number;
   parentId: number;
   children: IComment[];
   createdAt: string;

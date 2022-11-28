@@ -1,8 +1,8 @@
 import { createContext, useState } from 'react';
 import { IAuth } from 'interfaces/auth';
-import { AuthContextType, IProp } from './type';
+import { IAuthContext, IProp } from './type';
 
-export const AuthContext = createContext<AuthContextType | null>(null);
+export const AuthContext = createContext<IAuthContext | undefined>(undefined);
 
 function AuthProvider({ children }: IProp) {
   const [auth, setAuth] = useState<IAuth | null>(null);

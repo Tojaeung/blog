@@ -1,14 +1,10 @@
 import { Link } from 'react-router-dom';
 import { AiOutlineTag } from 'react-icons/ai';
 
-import useTagQuery from 'hooks/useTagQuery';
-
 import * as S from './style';
+import { IProp } from './type';
 
-function TagBadges() {
-  const { fetchAllTagsQuery } = useTagQuery();
-  const { data: tags } = fetchAllTagsQuery();
-
+function TagBadges({ tags }: IProp) {
   return (
     <S.Container>
       {tags?.map((tag) => (

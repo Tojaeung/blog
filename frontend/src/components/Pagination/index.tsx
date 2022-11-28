@@ -1,4 +1,4 @@
-import { Container, ArrowButton, PageButton, PageNumberBox } from './style';
+import * as S from './style';
 import { IProps } from './type';
 
 function Pagination({ pageNum, setPageNum, blockNum, setBlockNum, totalCnt }: IProps) {
@@ -45,27 +45,27 @@ function Pagination({ pageNum, setPageNum, blockNum, setBlockNum, totalCnt }: IP
   };
 
   return (
-    <Container>
-      <ArrowButton
+    <S.Container>
+      <S.ArrowButton
         onClick={() => {
           firstPage();
         }}
       >
         &lt;&lt;
-      </ArrowButton>
+      </S.ArrowButton>
 
-      <ArrowButton
+      <S.ArrowButton
         onClick={() => {
           prevPage();
         }}
         disabled={pageNum === 1}
       >
         &lt;
-      </ArrowButton>
+      </S.ArrowButton>
 
-      <PageNumberBox>
+      <S.PageNumberBox>
         {pArr.map((n: number) => (
-          <PageButton
+          <S.PageButton
             key={n}
             onClick={() => {
               setPageNum(n);
@@ -73,27 +73,27 @@ function Pagination({ pageNum, setPageNum, blockNum, setBlockNum, totalCnt }: IP
             currentPage={pageNum === n ? true : false}
           >
             {n}
-          </PageButton>
+          </S.PageButton>
         ))}
-      </PageNumberBox>
+      </S.PageNumberBox>
 
-      <ArrowButton
+      <S.ArrowButton
         onClick={() => {
           nextPage();
         }}
         disabled={pageNum === totalPage}
       >
         &gt;
-      </ArrowButton>
+      </S.ArrowButton>
 
-      <ArrowButton
+      <S.ArrowButton
         onClick={() => {
           lastPage();
         }}
       >
         &gt;&gt;
-      </ArrowButton>
-    </Container>
+      </S.ArrowButton>
+    </S.Container>
   );
 }
 

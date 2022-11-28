@@ -26,7 +26,7 @@ function Comment() {
 
     const confirm = prompt('정말로 삭제하시겠습니까?("삭제" 입력시, 실행된다.)', '');
     if (confirm === '삭제') {
-      deleteCommentMutation.mutate(commentId);
+      deleteCommentMutation(Number(postId)).mutate(commentId);
       alert('삭제 되었습니다.');
     } else {
       alert('삭제 되지 않았습니다.');
