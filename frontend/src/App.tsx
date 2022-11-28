@@ -1,31 +1,19 @@
 import { useContext, useEffect } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
+import styled, { ThemeProvider } from 'styled-components';
 
 import { getRefresh } from 'apis/auth';
 
 import { AuthContext } from 'contexts/Auth';
 import { IAuthContext } from 'contexts/Auth/type';
 
-import PublicRouter from 'routes/PublicRouter';
-import PrivateRouter from 'routes/PrivateRouter';
-
 import Header from 'layouts/Header';
 import Footer from 'layouts/Footer';
 
-import Home from 'pages/Home';
-import Login from 'pages/Login';
-import About from 'pages/About';
-import Contact from 'pages/Contact';
-import Guestbook from 'pages/Guestbook';
-import Search from 'pages/Search';
-import Category from 'pages/Category';
-import Post from 'pages/Post';
-import Tag from 'pages/Tag';
-import TagName from 'pages/Tag/TagName';
-import Admin from 'pages/Admin';
-import AdminCategory from 'pages/Admin/Category';
-import AdminPost from 'pages/Admin/Post';
-import NotFound from 'pages/NotFound';
+import Router from 'routes/Router';
+
+import { lightTheme } from 'styles/theme';
+import { GlobalStyles } from 'styles/globalStyle';
 
 function App() {
   const { setAuth } = useContext(AuthContext) as IAuthContext;
@@ -44,38 +32,22 @@ function App() {
   }, []);
 
   return (
-    <BrowserRouter>
-      <Header />
-      <Routes>
-        <Route path='/' element={<Home />} />
-        <Route path='/about' element={<About />} />
-        <Route path='/category/:categoryId' element={<Category />} />
-        <Route path='/post/:postId' element={<Post />} />
-        <Route path='/contact' element={<Contact />} />
-        <Route path='/Guestbook' element={<Guestbook />} />
-        <Route path='/search' element={<Search />} />
-
-        <Route path='/tag' element={<Tag />}>
-          <Route path=':tagName' element={<TagName />} />
-        </Route>
-
-        <Route path='/' element={<PublicRouter />}>
-          <Route path='login' element={<Login />} />
-        </Route>
-
-        <Route path='/' element={<PrivateRouter />}>
-          <Route path='admin' element={<Admin />}>
-            <Route path='category' element={<AdminCategory />} />
-            <Route path='post' element={<AdminPost />} />
-          </Route>
-        </Route>
-
-        <Route path='/not-found' element={<NotFound />} />
-        <Route path='*' element={<NotFound />} />
-      </Routes>
-      <Footer />
-    </BrowserRouter>
+    <ThemeProvider theme={lightTheme}>
+      <GlobalStyles />
+      <BrowserRouter>
+        <Header />
+        <Container>
+          <Router />
+        </Container>
+        <Footer />
+      </BrowserRouter>
+    </ThemeProvider>
   );
 }
+
+const Container = styled.div`
+  width: 100%;
+  max-width: 1000px;
+`;
 
 export default App;
