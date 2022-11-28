@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { CommonCardStyle, CommonTextStyle } from 'styles/globalStyle';
+import { CommonCardStyle, CommonTextStyle } from 'styles/common';
 
 export const PostBox = styled.ul`
   width: 85%;
@@ -23,10 +23,16 @@ export const PostList = styled(CommonCardStyle)`
 
 export const ImageBox = styled.div`
   width: 20%;
+  height: 100%;
 
   @media ${({ theme }) => theme.device.tablet} {
     display: none;
   }
+`;
+
+export const Image = styled.img`
+  width: 100%;
+  height: 100%;
 `;
 
 export const TextBox = styled.div`

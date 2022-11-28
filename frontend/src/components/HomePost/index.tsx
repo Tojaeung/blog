@@ -23,7 +23,7 @@ function HomePost() {
           <Link to={`/post/${post.id}`} key={post.id}>
             <S.PostList>
               <S.ImageBox>
-                <img src={post.thumbnail} alt='포스팅 썸네일' />
+                <S.Image src={post.thumbnail} alt='포스팅 썸네일' />
               </S.ImageBox>
               <S.TextBox>
                 <S.Title>{post.title}</S.Title>

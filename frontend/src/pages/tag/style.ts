@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { CommonBadgeStyle, CommonTitleStyle, jittery } from 'styles/globalStyle';
+import { CommonBadgeStyle, CommonTitleStyle, jittery } from 'styles/common';
 
 export const Container = styled.ul`
   display: flex;

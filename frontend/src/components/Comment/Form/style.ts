@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { CommonButtonStyle, CommonCommentStyle, CommonInputStyle, CommonTitleStyle } from 'styles/globalStyle';
+import { CommonButtonStyle, CommonCommentStyle, CommonInputStyle, CommonTitleStyle } from 'styles/common';
 
 export const Container = styled.div`
   display: flex;

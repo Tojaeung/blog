@@ -13,7 +13,7 @@ import Footer from 'layouts/Footer';
 import Router from 'routes/Router';
 
 import { lightTheme } from 'styles/theme';
-import { GlobalStyles } from 'styles/globalStyle';
+import GlobalStyle from 'styles/GlobalStyle';
 
 function App() {
   const { setAuth } = useContext(AuthContext) as IAuthContext;
@@ -33,7 +33,7 @@ function App() {
 
   return (
     <ThemeProvider theme={lightTheme}>
-      <GlobalStyles />
+      <GlobalStyle />
       <BrowserRouter>
         <Header />
         <Container>
@@ -48,6 +48,12 @@ function App() {
 const Container = styled.div`
   width: 100%;
   max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 20px;
+
+  @media ${({ theme }) => theme.device.mobile} {
+    padding: 0 10px;
+  }
 `;
 
 export default App;

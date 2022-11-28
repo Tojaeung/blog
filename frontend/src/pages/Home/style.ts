@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { CommonTitleStyle } from 'styles/globalStyle';
+import { CommonTitleStyle } from 'styles/common';
 
 export const Container = styled.div`
   width: 100%;

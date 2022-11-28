@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { CommonBadgeStyle, CommonCardStyle, CommonTextStyle } from 'styles/globalStyle';
+import { CommonBadgeStyle, CommonCardStyle, CommonTextStyle } from 'styles/common';
 
 export const PostBox = styled.ul`
   width: 100%;

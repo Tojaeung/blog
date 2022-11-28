@@ -5,7 +5,7 @@ import {
   CommonInputStyle,
   CommonTextStyle,
   CommonTitleStyle,
-} from 'styles/globalStyle';
+} from 'styles/common';
 
 export const Container = styled.div`
   width: 100%;

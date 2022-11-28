@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { CommonTextStyle } from 'styles/globalStyle';
+import { CommonTextStyle } from 'styles/common';
 import { AiFillGithub, AiOutlineInstagram } from 'react-icons/ai';
 import { GrSoundcloud } from 'react-icons/gr';
 import { GiBrain } from 'react-icons/gi';
@@ -12,6 +12,7 @@ export const Container = styled.div`
   align-items: center;
   gap: 10px;
   padding: 20px;
+  margin-top: 20px;
   background-color: ${({ theme }) => theme.palette.mainColor};
 `;
 

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { CommonButtonStyle, CommonTextStyle, jittery } from 'styles/globalStyle';
+import { CommonButtonStyle, CommonTextStyle, jittery } from 'styles/common';
 
 export const Container = styled.div`
   width: 100%;

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { CommonButtonStyle, CommonTextStyle, CommonTitleStyle } from 'styles/globalStyle';
+import { CommonButtonStyle, CommonTextStyle, CommonTitleStyle } from 'styles/common';
 
 export const Container = styled.div`
   width: 100%;

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { CommonBadgeStyle, CommonTitleStyle } from 'styles/globalStyle';
+import { CommonBadgeStyle, CommonTitleStyle } from 'styles/common';
 
 export const Container = styled.div`
   width: 100%;

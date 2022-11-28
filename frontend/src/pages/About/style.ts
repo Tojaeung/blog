@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { CommonTextStyle, CommonTitleStyle } from 'styles/globalStyle';
+import { CommonTextStyle, CommonTitleStyle } from 'styles/common';
 
 export const Container = styled.div`
   width: 100%;
@@ -8,7 +8,7 @@ export const Container = styled.div`
   gap: 30px;
   margin-top: 30px;
 
-  @media ${({ theme }) => theme.device.tablet} {
+  @media ${({ theme }) => theme.device.laptop} {
     flex-direction: column;
   }
 `;
@@ -18,7 +18,7 @@ export const AboutBox = styled.div`
   flex-direction: column;
   gap: 20px;
 
-  @media ${({ theme }) => theme.device.tablet} {
+  @media ${({ theme }) => theme.device.laptop} {
     width: 100%;
   }
 `;
@@ -34,6 +34,12 @@ export const ProfileBox = styled.div`
   }
 `;
 
+export const ProfileImage = styled.img`
+  width: 300px;
+  @media ${({ theme }) => theme.device.mobile} {
+    width: 100%;
+  }
+`;
 export const IntroBox = styled.div`
   display: flex;
   flex-direction: column;
@@ -64,6 +70,15 @@ export const CertificateBox = styled.div`
   gap: 10px;
 `;
 
+export const CommonImage = styled.img`
+  width: 250px;
+
+  @media ${({ theme }) => theme.device.mobile} {
+    width: 100px;
+    height: 150px;
+  }
+`;
+
 export const CertificateTitle = styled(CommonTitleStyle)``;
 export const CertificateImages = styled.div`
   display: flex;
@@ -73,17 +88,6 @@ export const CertificateImages = styled.div`
   @media ${({ theme }) => theme.device.tablet} {
     gap: 5px;
   }
-`;
-export const CertificatePlan = styled.div`
-  width: 200px;
-  background-color: ${({ theme }) => theme.palette.white};
-  border: 1px solid;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 18px;
-  text-align: center;
-  color: ${({ theme }) => theme.palette.textColor};
 `;
 
 export const DevBooksBox = styled.div`
@@ -104,11 +108,11 @@ export const DevBooksImages = styled.div`
 `;
 
 export const GitHubImage = styled.img`
+  width: 100%;
   cursor: pointer;
 `;
 export const SolvedacImage = styled.img`
   width: 50%;
-  height: 50%;
   cursor: pointer;
   @media ${({ theme }) => theme.device.mobile} {
     width: 100%;

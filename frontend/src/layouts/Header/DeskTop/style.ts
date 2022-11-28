@@ -15,8 +15,8 @@ export const Container = styled.div`
 export const MenuBox = styled.ul`
   display: flex;
   gap: 20px;
-  font-size: 20px;
-  font-family: 'Roboto';
+  font-size: 22px;
+  font-family: ${({ theme }) => theme.font.en};
   font-weight: bold;
   color: ${({ theme }) => theme.palette.textColor};
 `;

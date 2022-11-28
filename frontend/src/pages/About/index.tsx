@@ -7,10 +7,10 @@ import * as S from './style';
 function About() {
   return (
     <S.Container>
-      <S.Title>About Me</S.Title>
       <S.AboutBox>
+        <S.Title>About Me</S.Title>
         <S.ProfileBox>
-          <img src='/images/cat.gif' alt='프로필사진' />
+          <S.ProfileImage src='/images/cat.gif' alt='프로필사진' />
 
           <S.IntroBox>
             <S.IntroMySelf>
@@ -43,22 +43,23 @@ function About() {
         <S.CertificateBox>
           <S.CertificateTitle>자격증</S.CertificateTitle>
           <S.CertificateImages>
-            <img src='/images/sqld자격증.png' alt='sqld자격증' />
-            <S.CertificatePlan>
-              정보처리기사 <br />
-              2023.1 도전예정
-            </S.CertificatePlan>
+            <S.CommonImage src='/images/sqld자격증.png' alt='sqld자격증' />
           </S.CertificateImages>
         </S.CertificateBox>
 
         <S.DevBooksBox>
           <S.DevBooksTitle>개발서적</S.DevBooksTitle>
           <S.DevBooksImages>
-            <img src='/images/sql레벨업.png' alt='sql레벨업' />
-            <img src='/images/테스트주도개발시작하기.png' alt='테스트주도개발시작하기' />
-            <img src='/images/이코테.png' alt='이코테' />
-            <img src='/images/이펙티브자바.png' alt='이펙티브자바' />
-            <img src='/images/객체지향사실과오해.png' alt='객체지향사실과오해' />
+            <S.CommonImage src='/images/sql레벨업.png' alt='sql레벨업' />
+            <S.CommonImage
+              src='/images/테스트주도개발시작하기.png'
+              width='250'
+              height='300'
+              alt='테스트주도개발시작하기'
+            />
+            <S.CommonImage src='/images/이코테.png' alt='이코테' />
+            <S.CommonImage src='/images/이펙티브자바.png' alt='이펙티브자바' />
+            <S.CommonImage src='/images/객체지향사실과오해.png' alt='객체지향사실과오해' />
           </S.DevBooksImages>
         </S.DevBooksBox>
 

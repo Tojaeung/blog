@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { CommonInputStyle } from 'styles/globalStyle';
+import { CommonInputStyle } from 'styles/common';
 import { AiOutlineSearch } from 'react-icons/ai';
 
 export const Container = styled.div`

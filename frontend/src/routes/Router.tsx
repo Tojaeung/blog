@@ -6,6 +6,7 @@ import PrivateRouter from './PrivateRoute';
 import Home from 'pages/Home';
 import Login from 'pages/Login';
 import About from 'pages/About';
+import Blog from 'pages/Blog';
 import Contact from 'pages/Contact';
 import Guestbook from 'pages/Guestbook';
 import Search from 'pages/Search';
@@ -23,6 +24,7 @@ function Router() {
     <Routes>
       <Route path='/' element={<Home />} />
       <Route path='/about' element={<About />} />
+      <Route path='/blog' element={<Blog />} />
       <Route path='/category/:categoryId' element={<Category />} />
       <Route path='/post/:postId' element={<Post />} />
       <Route path='/contact' element={<Contact />} />

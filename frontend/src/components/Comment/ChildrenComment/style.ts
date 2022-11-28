@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { CommonTextStyle } from 'styles/globalStyle';
+import { CommonTextStyle } from 'styles/common';
 
 export const CommentBox = styled.ul`
   width: 100%;
