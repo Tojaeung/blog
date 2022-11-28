@@ -27,15 +27,15 @@ public class CategoryController {
 
     // 모든 카테고리 가져오기
     @GetMapping("api/category")
-    public ResponseEntity<List<PostCntResDto>> findAll() {
-        return ResponseEntity.ok(categoryService.countPostsInCategory());
+    public ResponseEntity<List<PostCntResDto>> findAllCntPostsInCategory() {
+        return ResponseEntity.ok(categoryService.findAllCntPostsInCategory());
     }
 
-    // 특정카테고리 가져오기 (포스팅들과 함께)
-    // @GetMapping("api/category/{categoryId}")
-    // public ResponseEntity<Category> findOneWithPosts(@PathVariable Long categoryId) {
-    //     return ResponseEntity.ok(categoryService.findOneWithPosts(categoryId));
-    // }
+    // 특정 카테고리 가져오기
+    @GetMapping("api/category/{categoryId}")
+    public ResponseEntity<PostCntResDto> findOneCntPostsInCategory(@PathVariable Long categoryId) {
+        return ResponseEntity.ok(categoryService.findOneCntPostsInCategory(categoryId));
+    }
 
     // 카테고리 수정
     @PutMapping("api/admin/category/{categoryId}")

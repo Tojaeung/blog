@@ -32,20 +32,19 @@ public class CategoryService {
 
     // 모든 카테고리 가져오기
     @Transactional(readOnly = true)
-    public List<PostCntResDto> countPostsInCategory() {
-        List<PostCntResDto> allCategories = categoryRepository.countPostsInCategory();
+    public List<PostCntResDto> findAllCntPostsInCategory() {
+        List<PostCntResDto> allCategories = categoryRepository.findAllCntPostsInCategory();
 
         return allCategories;
     }
 
-    // 특정카테고리 가져오기 (포스팅들과 함께)
-    // @Transactional(readOnly = true)
-    // public Category findOneWithPosts(Long categoryId) {
-    //     Category category = categoryRepository.findById(categoryId)
-    //             .orElseThrow(() -> new CustomException(ExceptionCode.NOT_FOUND_CATEGORY));
-    //
-    //     return category;
-    // }
+    // 특정 카테고리 가져오기
+    @Transactional(readOnly = true)
+    public PostCntResDto findOneCntPostsInCategory(Long categoryId) {
+        PostCntResDto category = categoryRepository.findOneCntPostsInCategory(categoryId);
+
+        return category;
+    }
 
     // 카테고리 수정
     @Transactional
