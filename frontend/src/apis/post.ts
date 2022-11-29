@@ -1,20 +1,26 @@
 import { adminApi, clientApi } from 'utils/axios';
-import { IPost } from 'interfaces/post';
+import { IPagePost, IPost } from 'interfaces/post';
 
-export const addPost = (categoryId: number, formData: FormData) => {
-  adminApi.post(`/category/${categoryId}/post`, formData).then((res) => res.data);
+export const addPost = async (categoryId: number, formData: FormData): Promise<IPost> => {
+  const { data } = await adminApi.post(`/category/${categoryId}/post`, formData);
+  return data;
 };
 
 export const getTop5 = async (): Promise<IPost[]> => {
-  const res = await clientApi.get('/post/top5').then((res) => res.data);
+  const res = await clientApi.get('/post/top5');
   return res.data;
 };
 
 // 페이지네이션이 있다.
-export const getAllPosts = (pageNum: number) => clientApi.get(`/post?page=${pageNum}`).then((res) => res.data);
+export const getAllPosts = async (pageNum: number): Promise<IPagePost> => {
+  const { data } = await clientApi.get(`/post?page=${pageNum}`);
+  return data;
+};
 
-export const getPostsInCategory = (categoryId: number, pageNum: number) =>
-  clientApi.get(`/category/${categoryId}/post?page=${pageNum}`).then((res) => res.data);
+export const getPostsInCategory = async (categoryId: number, pageNum: number): Promise<IPagePost> => {
+  const { data } = await clientApi.get(`/category/${categoryId}/post?page=${pageNum}`);
+  return data;
+};
 
 export const getPost = async (postId: number): Promise<IPost> => {
   const res = await clientApi.get(`/post/${postId}`);

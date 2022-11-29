@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { useQuery } from 'react-query';
 
-import usePostQuery from 'hooks/usePostQuery';
-import useCategoryQuery from 'hooks/useCategoryQuery';
+import { getCategory } from 'apis/category';
+import { getPostsInCategory } from 'apis/post';
 
 import BlogPost from 'components/BlogPost';
 import BlogCategory from 'components/BlogCategory';
@@ -16,11 +17,10 @@ function Category() {
   const [pageNum, setPageNum] = useState(1);
   const [blockNum, setBlockNum] = useState(0); // 한 페이지에 보여 줄 페이지네이션의 개수를 block으로 지정하는 state. 초기 값은 0
 
-  const { fetchPostsInCategoryQuery } = usePostQuery();
-  const { data: page } = fetchPostsInCategoryQuery(Number(categoryId), pageNum);
-
-  const { fetchCategoryQuery } = useCategoryQuery();
-  const { data: selectedCategory } = fetchCategoryQuery(Number(categoryId));
+  const { data: selectedCategory } = useQuery(['category'], () => getCategory(Number(categoryId)));
+  const { data: page } = useQuery(['postInCategory', categoryId], () =>
+    getPostsInCategory(Number(categoryId), pageNum),
+  );
 
   return (
     <S.Container>

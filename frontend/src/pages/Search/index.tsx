@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import { useQuery } from 'react-query';
+
+import { searchKeyword } from 'apis/search';
 
 import NotFound from 'pages/NotFound';
-
-import useSearchQuery from 'hooks/useSearchQuery';
 
 import BlogCategory from 'components/BlogCategory';
 import BlogPost from 'components/BlogPost';
@@ -18,9 +19,7 @@ function Search() {
   const [pageNum, setPageNum] = useState(1);
   const [blockNum, setBlockNum] = useState(0); // 한 페이지에 보여 줄 페이지네이션의 개수를 block으로 지정하는 state. 초기 값은 0
 
-  const { searchKeywordQuery } = useSearchQuery();
-
-  const { data: page } = searchKeywordQuery(keyword || '', pageNum);
+  const { data: page } = useQuery(['search', keyword], () => searchKeyword(keyword || '', pageNum));
 
   if (page?.totalCnt === 0) return <NotFound />;
   else {

@@ -1,7 +1,7 @@
 import * as S from './style';
 import { IProps } from './type';
 
-function Pagination({ pageNum, setPageNum, blockNum, setBlockNum, totalCnt }: IProps) {
+function Pagination({ pageNum, setPageNum, blockNum, setBlockNum, totalCnt = 0 }: IProps) {
   const createArr = (n: number) => {
     const iArr: number[] = new Array(n);
     for (let i = 0; i < n; i++) iArr[i] = i + 1;
@@ -9,7 +9,7 @@ function Pagination({ pageNum, setPageNum, blockNum, setBlockNum, totalCnt }: IP
   };
 
   const pageLimit = 5;
-  const totalPage: number = Math.ceil(totalCnt || 0 / 10);
+  const totalPage: number = Math.ceil(totalCnt / 10);
   const blockArea = Number(blockNum * pageLimit);
   const nArr = createArr(Number(totalPage));
   const pArr = nArr?.slice(blockArea, Number(pageLimit) + blockArea);

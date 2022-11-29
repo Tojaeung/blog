@@ -1,13 +1,12 @@
 import { Link } from 'react-router-dom';
+import { useQuery } from 'react-query';
 
-import useCategoryQuery from 'hooks/useCategoryQuery';
+import { getCategories } from 'apis/category';
 
 import * as S from './style';
 
 function HomeCategory() {
-  const { fetchCategoriesQuery } = useCategoryQuery();
-
-  const { data: categories } = fetchCategoriesQuery();
+  const { data: categories } = useQuery(['categories'], () => getCategories());
 
   return (
     <S.CategoryBox>

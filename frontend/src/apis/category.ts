@@ -16,8 +16,7 @@ export const getCategory = async (categoryId: number): Promise<ICategory> => {
   return data;
 };
 
-export const updateCategory = async (updateCategory: IUpdateCategory): Promise<ICategory> => {
-  const { categoryId, updatedName } = updateCategory;
+export const updateCategory = async ({ categoryId, updatedName }: IUpdateCategory): Promise<ICategory> => {
   const { data } = await adminApi.put(`/category/${categoryId}`, { updatedName });
   return data;
 };

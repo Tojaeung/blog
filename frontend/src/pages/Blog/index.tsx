@@ -7,16 +7,13 @@ import BlogCategory from 'components/BlogCategory';
 import BlogPost from 'components/BlogPost';
 import Pagination from 'components/Pagination';
 
-import { IPagePost } from 'interfaces/post';
-import { IError } from 'interfaces/error';
-
 import * as S from './style';
 
 function Blog() {
   const [pageNum, setPageNum] = useState(1);
   const [blockNum, setBlockNum] = useState(0); // 한 페이지에 보여 줄 페이지네이션의 개수를 block으로 지정하는 state. 초기 값은 0
 
-  const { data: page } = useQuery<IPagePost, IError>(['allPosts'], () => getAllPosts(pageNum));
+  const { data: page } = useQuery(['allPosts', pageNum], () => getAllPosts(pageNum));
 
   return (
     <S.Container>

@@ -17,7 +17,7 @@ function Login() {
     try {
       const auth = await login(username, password);
       setAuth(auth);
-      localStorage.setItem(accessToken, auth.accessToken);
+      localStorage.setItem('accessToken', auth.accessToken);
       alert('로그인 되었습니다.');
     } catch (err) {
       alert('로그인 실패하였습니다.');

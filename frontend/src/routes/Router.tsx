@@ -31,8 +31,9 @@ function Router() {
       <Route path='/Guestbook' element={<Guestbook />} />
       <Route path='/search' element={<Search />} />
 
-      <Route path='/tag' element={<Tag />}>
-        <Route path=':tagName' element={<TagName />} />
+      <Route path='/'>
+        <Route path='/tag' element={<Tag />} />
+        <Route path='/tag/:tagName' element={<TagName />} />
       </Route>
 
       <Route path='/' element={<PublicRouter />}>

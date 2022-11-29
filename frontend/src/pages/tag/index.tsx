@@ -1,13 +1,13 @@
 import { Link } from 'react-router-dom';
+import { useQuery } from 'react-query';
 import { AiOutlineTag } from 'react-icons/ai';
 
-import useTagQuery from 'hooks/useTagQuery';
+import { getAllTags } from 'apis/tag';
 
 import * as S from './style';
 
 function Tags() {
-  const { fetchAllTagsQuery } = useTagQuery();
-  const { data: allTags } = fetchAllTagsQuery();
+  const { data: allTags } = useQuery(['allTags'], () => getAllTags());
 
   return (
     <S.Container>

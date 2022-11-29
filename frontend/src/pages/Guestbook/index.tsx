@@ -1,29 +1,36 @@
 import { useState, useContext } from 'react';
+import { useQuery, useMutation, useQueryClient } from 'react-query';
 
 import { AuthContext } from 'contexts/Auth';
 import { IAuthContext } from 'contexts/Auth/type';
 
-import useGuestbookQuery from 'hooks/useGuestbookQuery';
+import { addGuestbook, deleteGuestbook, getGuestbooks } from 'apis/guestbook';
 
 import HomeCategory from 'components/HomeCategory';
-
-import { INewGuestbook } from 'interfaces/guestbook';
 
 import * as S from './style';
 
 function Guestbook() {
+  const queryCache = useQueryClient();
   const { auth } = useContext(AuthContext) as IAuthContext;
 
   const [author, setAuthor] = useState('');
   const [content, setContent] = useState('');
 
-  const { addGuestbookMutation, deleteGuestbookMutation, fetchGuestbooksQuery } = useGuestbookQuery();
-
-  const { data: guestbooks } = fetchGuestbooksQuery();
+  const { data: guestbooks } = useQuery(['guestbook'], () => getGuestbooks());
+  const { mutate: addGuestbookMutate } = useMutation(addGuestbook, {
+    onSuccess: () => {
+      queryCache.invalidateQueries({ queryKey: ['guestbook'] });
+    },
+  });
+  const { mutate: deleteGuestbookMutate } = useMutation(deleteGuestbook, {
+    onSuccess: () => {
+      queryCache.invalidateQueries({ queryKey: ['guestbook'] });
+    },
+  });
 
   const handleSubmit = async () => {
-    const newGuestbook: INewGuestbook = { author, content, isAdmin: !!auth?.accessToken };
-    addGuestbookMutation.mutate(newGuestbook);
+    addGuestbookMutate({ author, content, isAdmin: !!auth?.accessToken });
     setAuthor('');
     setContent('');
   };
@@ -33,7 +40,7 @@ function Guestbook() {
 
     const confirm = prompt('정말로 삭제하시겠습니까?("삭제" 입력시, 실행된다.)', '');
     if (confirm === '삭제') {
-      deleteGuestbookMutation.mutate(guestbookId);
+      deleteGuestbookMutate(guestbookId);
       alert('삭제 되었습니다.');
     } else {
       alert('삭제 되지 않았습니다.');

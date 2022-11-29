@@ -1,6 +1,7 @@
 import { useState } from 'react';
+import { useQuery, useMutation } from 'react-query';
 
-import useCategoryQuery from 'hooks/useCategoryQuery';
+import { addCategory, deleteCategory, getCategories, updateCategory } from 'apis/category';
 
 import * as S from './style';
 
@@ -8,19 +9,14 @@ function Category() {
   const [newCategoryName, setNewCategoryName] = useState('');
   const [updatedName, setUpdatedName] = useState('');
 
-  const { addCategoryMutation, deleteCategoryMutation, fetchCategoriesQuery, updateCategoryMutation } =
-    useCategoryQuery();
+  const { data: categories } = useQuery(['categories'], () => getCategories());
+  const { mutate: addCategoryMutate } = useMutation(addCategory);
+  const { mutate: updateCategoryMutate } = useMutation(updateCategory);
+  const { mutate: deleteCategoryMutate } = useMutation(deleteCategory);
 
-  const { data: categories } = fetchCategoriesQuery();
-
-  const handleCreate = async () => addCategoryMutation.mutate(newCategoryName);
-
-  const handleDelete = async (categoryId: number) => deleteCategoryMutation.mutate(categoryId);
-
-  const handleUpdate = async (categoryId: number) => {
-    const updateCategory = { categoryId, updatedName };
-    updateCategoryMutation.mutate(updateCategory);
-  };
+  const handleCreate = async () => addCategoryMutate(newCategoryName);
+  const handleUpdate = async (categoryId: number) => updateCategoryMutate({ categoryId, updatedName });
+  const handleDelete = async (categoryId: number) => deleteCategoryMutate(categoryId);
 
   return (
     <S.Container>

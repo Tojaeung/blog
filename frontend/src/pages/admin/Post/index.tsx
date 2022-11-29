@@ -1,12 +1,12 @@
 import { useState, ChangeEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useQuery } from 'react-query';
 
 import { searchTagName } from 'apis/tag';
+import { getCategories } from 'apis/category';
+import { addPost } from 'apis/post';
 
 import QuillEditor from 'components/QuillEditor';
-
-import useCategoryQuery from 'hooks/useCategoryQuery';
-import usePostQuery from 'hooks/usePostQuery';
 
 import * as S from './style';
 
@@ -26,10 +26,7 @@ function Post() {
   const [tagName, setTagName] = useState<string>('');
   const [tags, setTags] = useState<string[]>([]);
 
-  const { fetchCategoriesQuery } = useCategoryQuery();
-  const { addPostMutation } = usePostQuery();
-
-  const { data: categories } = fetchCategoriesQuery();
+  const { data: categories } = useQuery(['categories'], () => getCategories());
 
   const onUploadImage = (e: ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return;
@@ -48,13 +45,13 @@ function Post() {
     formData.append('thumbnail', thumbnail!);
     formData.append('createReqDto', new Blob([JSON.stringify(body)], { type: 'application/json' }));
 
-    const newPost = { categoryId, formData };
-    addPostMutation.mutate(newPost, {
-      onSuccess: (newPost) => {
-        alert('포스팅 되었습니다.');
-        navigate(`/post/${newPost.id}`);
-      },
-    });
+    try {
+      const newPost = await addPost(categoryId, formData);
+      alert('포스팅 되었습니다.');
+      navigate(`/post/${newPost.id}`);
+    } catch (e) {
+      alert('포스팅 실패하였습니다..');
+    }
   };
 
   return (

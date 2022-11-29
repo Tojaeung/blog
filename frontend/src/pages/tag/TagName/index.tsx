@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { useQuery } from 'react-query';
+
+import { getPostsInTag } from 'apis/tag';
 
 import NotFound from 'pages/NotFound';
-
-import useTagQuery from 'hooks/useTagQuery';
 
 import BlogCategory from 'components/BlogCategory';
 import BlogPost from 'components/BlogPost';
@@ -17,9 +18,7 @@ function TagName() {
   const [pageNum, setPageNum] = useState(1);
   const [blockNum, setBlockNum] = useState(0); // 한 페이지에 보여 줄 페이지네이션의 개수를 block으로 지정하는 state. 초기 값은 0
 
-  const { fetchPostsInTagQuery } = useTagQuery();
-
-  const { data: page } = fetchPostsInTagQuery(tagName || '', pageNum);
+  const { data: page } = useQuery(['postsInTag', tagName], () => getPostsInTag(tagName || '', pageNum));
 
   if (page?.totalCnt === 0) return <NotFound />;
   else {

@@ -7,12 +7,12 @@ export const searchTagName = async (keyword: string): Promise<string[]> => {
   return data;
 };
 
-export const fetchAllTags = async (): Promise<ITag[]> => {
+export const getAllTags = async (): Promise<ITag[]> => {
   const { data } = await clientApi.get('/tags');
   return data;
 };
 
-export const fetchPostsInTag = async (tagName: string, page: number): Promise<IPagePost> => {
-  const { data } = await clientApi.get(`/tag?tagName=${tagName}&page=${page}`);
+export const getPostsInTag = async (tagName: string, pageNum: number): Promise<IPagePost> => {
+  const { data } = await clientApi.get(`/tag?tagName=${tagName}&page=${pageNum}`);
   return data;
 };
