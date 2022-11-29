@@ -6,12 +6,12 @@ export const addCategory = async (newCategoryName: string): Promise<ICategory> =
   return data;
 };
 
-export const fetchCategories = async (): Promise<ICategory[]> => {
+export const getCategories = async (): Promise<ICategory[]> => {
   const { data } = await clientApi.get('/category');
   return data;
 };
 
-export const fetchCategory = async (categoryId: number): Promise<ICategory> => {
+export const getCategory = async (categoryId: number): Promise<ICategory> => {
   const { data } = await clientApi.get(`/category/${categoryId}`);
   return data;
 };

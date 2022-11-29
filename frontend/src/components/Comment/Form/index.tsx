@@ -1,29 +1,38 @@
-import { useParams } from 'react-router-dom';
 import { useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { useMutation, useQueryClient } from 'react-query';
 
-import useCommentQuery from 'hooks/useCommentQuery';
+import { addComment, addChildComment } from 'apis/comment';
 
 import * as S from './style';
 import { IProp } from './type';
 
 function Form({ parentId }: IProp) {
+  const { invalidateQueries } = useQueryClient();
   const { postId } = useParams();
 
   const [author, setAuthor] = useState('');
   const [content, setContent] = useState('');
 
-  const { addCommentMutation, addChildCommentMutation } = useCommentQuery();
+  const { mutate: addCommentMutate } = useMutation(addComment, {
+    onSuccess: () => {
+      invalidateQueries({ queryKey: ['comment', postId] });
+    },
+  });
+  const { mutate: addChildCommentMutate } = useMutation(addChildComment, {
+    onSuccess: () => {
+      invalidateQueries({ queryKey: ['comment', postId] });
+    },
+  });
 
   // 부모 댓글이 있는지 없는지
   const handleSubmit = async () => {
     if (!parentId) {
-      const newComment = { author, content, postId: Number(postId) };
-      addCommentMutation.mutate(newComment);
+      addCommentMutate({ author, content, postId: Number(postId) });
       setAuthor('');
       setContent('');
     } else {
-      const newChildComment = { author, content, postId: Number(postId), parentId };
-      addChildCommentMutation.mutate(newChildComment);
+      addChildCommentMutate({ author, content, postId: Number(postId), parentId });
       setAuthor('');
       setContent('');
     }

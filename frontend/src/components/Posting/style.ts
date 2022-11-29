@@ -34,8 +34,11 @@ export const UpdateButton = styled(CommonButtonStyle)``;
 export const DeleteButton = styled(CommonButtonStyle)``;
 
 export const Title = styled(CommonTitleStyle)``;
-
 export const Detail = styled(CommonTextStyle)``;
+
+export const thumbnailImage = styled.img`
+  width: 100%;
+`;
 
 export const Line = styled.hr`
   width: 100%;

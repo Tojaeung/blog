@@ -24,6 +24,10 @@ export const PostList = styled(CommonCardStyle)`
   gap: 10px;
 `;
 
+export const PostImage = styled.img`
+  width: 100%;
+`;
+
 export const Title = styled.h1`
   margin-top: 10px;
   font-size: 23px;

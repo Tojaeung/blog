@@ -13,7 +13,7 @@ function BlogPost({ posts }: IProp) {
         return (
           <Link to={`/post/${post.id}`} key={post.id}>
             <S.PostList>
-              <img src={post.thumbnail} alt='포스팅 썸네일' />
+              <S.PostImage src={post.thumbnail} alt='포스팅 썸네일' />
               <S.Title>{post.title}</S.Title>
 
               <Viewer content={post.content} />

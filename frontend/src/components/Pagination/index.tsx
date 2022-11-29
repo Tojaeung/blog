@@ -9,7 +9,7 @@ function Pagination({ pageNum, setPageNum, blockNum, setBlockNum, totalCnt }: IP
   };
 
   const pageLimit = 5;
-  const totalPage: number = Math.ceil((totalCnt as number) / 10);
+  const totalPage: number = Math.ceil(totalCnt || 0 / 10);
   const blockArea = Number(blockNum * pageLimit);
   const nArr = createArr(Number(totalPage));
   const pArr = nArr?.slice(blockArea, Number(pageLimit) + blockArea);

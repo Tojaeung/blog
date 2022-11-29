@@ -1,5 +1,8 @@
-import { useQuery, useMutation, useQueryClient } from 'react-query';
+import { useQuery, useMutation, useQueryClient, UseQueryOptions } from 'react-query';
 import { addCategory, deleteCategory, fetchCategories, fetchCategory, updateCategory } from 'apis/category';
+import { AxiosError, AxiosResponse } from 'axios';
+import { IError } from 'interfaces/error';
+import { ICategory } from 'interfaces/category';
 
 const useCategoryQuery = () => {
   const { invalidateQueries } = useQueryClient();
@@ -11,8 +14,8 @@ const useCategoryQuery = () => {
     },
   });
 
-  const fetchCategoriesQuery = () => {
-    return useQuery('categories', () => fetchCategories());
+  const fetchCategoriesQuery = (options?: UseQueryOptions<Promise<AxiosResponse<ICategory[]>>, AxiosError<IError>>) => {
+    return useQuery('categories', () => fetchCategories(), options);
   };
 
   const fetchCategoryQuery = (categoryId: number) => {

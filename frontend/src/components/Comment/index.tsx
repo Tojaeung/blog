@@ -1,32 +1,38 @@
 import { useContext, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { useQuery, useMutation, useQueryClient } from 'react-query';
 
 import Form from './Form';
 import ChildrenComment from './ChildrenComment';
 
+import { getComments, deleteComment } from 'apis/comment';
+
 import { AuthContext } from 'contexts/Auth';
 import { IAuthContext } from 'contexts/Auth/type';
-
-import useCommentQuery from 'hooks/useCommentQuery';
 
 import * as S from './style';
 
 function Comment() {
+  const { invalidateQueries } = useQueryClient();
+
   const { postId } = useParams();
   const { auth } = useContext(AuthContext) as IAuthContext;
 
   const [reply, setReply] = useState<number>(-1);
 
-  const { deleteCommentMutation, fetchCommentsQuery } = useCommentQuery();
-
-  const { data: comments } = fetchCommentsQuery(Number(postId));
+  const { data: comments } = useQuery(['comment', postId], () => getComments(Number(postId)));
+  const { mutate: deleteCommentMutate } = useMutation(deleteComment, {
+    onSuccess: () => {
+      invalidateQueries({ queryKey: ['comment', postId] });
+    },
+  });
 
   const handleDelete = async (commentId: number) => {
     if (!auth?.accessToken) return;
 
     const confirm = prompt('정말로 삭제하시겠습니까?("삭제" 입력시, 실행된다.)', '');
     if (confirm === '삭제') {
-      deleteCommentMutation(Number(postId)).mutate(commentId);
+      deleteCommentMutate(commentId);
       alert('삭제 되었습니다.');
     } else {
       alert('삭제 되지 않았습니다.');

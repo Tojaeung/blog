@@ -1,14 +1,20 @@
+import { AxiosResponse, AxiosError } from 'axios';
 import { useQuery, useMutation, useQueryClient } from 'react-query';
 import { addPost, deletePost, fetchAllPosts, fetchPost, fetchPostsInCategory, updatePost } from 'apis/post';
+import { IPagePost, IPost } from 'interfaces/post';
+import { IError } from 'interfaces/error';
 
 const usePostQuery = () => {
   const { invalidateQueries } = useQueryClient();
 
   const addPostMutation = useMutation({ mutationFn: addPost });
 
-  const fetchAllPostsQuery = (pageNumber: number) => {
-    return useQuery({ queryKey: ['allPosts', pageNumber], queryFn: () => fetchAllPosts(pageNumber) });
-  };
+  interface IProp {
+    pageNum: number;
+  }
+
+  const fetchAllPostsQuery = ({ pageNum }: IProp) =>
+    useQuery<AxiosResponse<IPagePost>, AxiosError<IError>>(['allPosts', pageNum], () => fetchAllPosts({ pageNum }));
 
   const fetchPostsInCategoryQuery = (categoryId: number, pageNumber: number) => {
     return useQuery({

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
-import { fetchTop5 } from 'apis/post';
+import { getTop5 } from 'apis/post';
 
 import Viewer from 'components/Viewer';
 
@@ -13,7 +13,7 @@ function HomePost() {
   const [top5, setTop5] = useState<IPost[]>([]);
 
   useEffect(() => {
-    fetchTop5().then((res) => setTop5(res));
+    getTop5().then((res) => setTop5(res));
   }, []);
 
   return (
