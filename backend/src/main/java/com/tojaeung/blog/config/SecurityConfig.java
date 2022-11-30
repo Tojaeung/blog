@@ -10,13 +10,11 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.web.filter.CorsFilter;
 
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
-    private final CorsFilter corsFilter;
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
@@ -29,8 +27,9 @@ public class SecurityConfig {
                 .httpBasic().disable()  // Bearer 토큰을 사용한다.
                 .formLogin().disable()
                 .csrf().disable()
+                .cors()
 
-                .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class)
+                .and()
                 .authorizeRequests()
                 .antMatchers("/api/**").permitAll()
                 .antMatchers("api/admin/**").authenticated()

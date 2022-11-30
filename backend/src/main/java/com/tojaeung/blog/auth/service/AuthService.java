@@ -32,9 +32,11 @@ public class AuthService {
         } else throw new CustomException(ExceptionCode.INVALID_ADMIN_PASSWORD);
     }
 
-    public RefreshResponseDto refresh(String token) {
-        if (token != null && jwtTokenProvider.validateToken(token)) {
-            String username = jwtTokenProvider.getUsername(token);
+    public RefreshResponseDto refresh(String refreshToken) {
+        System.out.println(jwtTokenProvider.validateToken(refreshToken));
+
+        if (refreshToken != null && jwtTokenProvider.validateToken(refreshToken)) {
+            String username = jwtTokenProvider.getUsername(refreshToken);
 
             Admin findAdmin = authRepository.findByUsername(username)
                     .orElseThrow(() -> new CustomException(ExceptionCode.NOT_FOUND_ADMIN));

@@ -13,12 +13,9 @@ import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/api")
 @RequiredArgsConstructor
 @Slf4j
 public class AuthController {
@@ -26,27 +23,21 @@ public class AuthController {
     private final CookieUtil cookieUtil;
 
     // 로그인
-    @PostMapping("/login")
+    @PostMapping("api/login")
     public ResponseEntity<LoginResponseDto> login(@Valid @RequestBody LoginDto loginDto) {
         Admin admin = new Admin(loginDto.getUsername(), loginDto.getPassword());
         LoginResponseDto loginResponseDto = authService.login(admin);
 
-        ResponseCookie refreshToken = cookieUtil.createRefreshCookie(loginResponseDto.getUsername());
+        ResponseCookie cookie = cookieUtil.createRefreshCookie(loginResponseDto.getUsername());
 
         return ResponseEntity.ok()
-                .header(HttpHeaders.SET_COOKIE, refreshToken.toString())
+                .header(HttpHeaders.SET_COOKIE, cookie.toString())
                 .body(loginResponseDto);
     }
 
     // 로그인유지를 위한 리프레쉬 로그인
-    @GetMapping("/refresh")
-    public ResponseEntity<RefreshResponseDto> refresh(HttpServletRequest request) {
-        Cookie[] cookies = request.getCookies();
-        // 리프레쉬 토큰이 없을때 null포인터 에러 방지..
-        if (cookies == null) return null;
-
-        String token = cookies[0].getName();
-
-        return ResponseEntity.ok(authService.refresh(token));
+    @GetMapping("api/refresh")
+    public ResponseEntity<RefreshResponseDto> refresh(@CookieValue(name = "refreshToken") String refreshToken) {
+        return ResponseEntity.ok(authService.refresh(refreshToken));
     }
 }

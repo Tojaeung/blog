@@ -13,6 +13,7 @@ import org.springframework.util.StringUtils;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
+import java.time.Duration;
 import java.util.Base64;
 import java.util.Date;
 import java.util.List;
@@ -24,7 +25,8 @@ public class JwtTokenProvider {
 
     @Value("${jwt-secret-key}")
     private String secretKey;
-    private long accessTokenValidTime = 1000 * 60 * 60 * 24 * 3;
+    private long accessTokenValidTime = Duration.ofMinutes(30).toMillis();
+    private long refreshTokenValidTime = Duration.ofDays(14).toMillis();
     private final UserDetailsService userDetailsService;
 
     @PostConstruct
@@ -51,7 +53,7 @@ public class JwtTokenProvider {
         return Jwts.builder()
                 .setClaims(claims) // 정보 저장
                 .setIssuedAt(now) // 토큰 발행 시간 정보
-                .setExpiration(new Date(now.getTime() + accessTokenValidTime)) // set Expire Time
+                .setExpiration(new Date(now.getTime() + refreshTokenValidTime)) // set Expire Time
                 .signWith(SignatureAlgorithm.HS256, secretKey)  // 사용할 암호화 알고리즘과
                 // signature 에 들어갈 secret값 세팅
                 .compact();
