@@ -13,7 +13,7 @@ import { IAuthContext } from 'contexts/Auth/type';
 import * as S from './style';
 
 function Comment() {
-  const { invalidateQueries } = useQueryClient();
+  const queryCache = useQueryClient();
 
   const { postId } = useParams();
   const { auth } = useContext(AuthContext) as IAuthContext;
@@ -23,7 +23,7 @@ function Comment() {
   const { data: comments } = useQuery(['comment', postId], () => getComments(Number(postId)));
   const { mutate: deleteCommentMutate } = useMutation(deleteComment, {
     onSuccess: () => {
-      invalidateQueries({ queryKey: ['comment', postId] });
+      queryCache.invalidateQueries({ queryKey: ['comment', postId] });
     },
   });
 

@@ -13,7 +13,7 @@ import TagBadges from 'components/TagBadges';
 import * as S from './style';
 
 function Posting() {
-  const { invalidateQueries } = useQueryClient();
+  const queryCache = useQueryClient();
 
   const { auth } = useContext(AuthContext) as IAuthContext;
 
@@ -23,7 +23,7 @@ function Posting() {
   const { data: post } = useQuery(['post', postId], () => getPost(Number(postId)));
   const { mutate: deletePostMutate } = useMutation(deletePost, {
     onSuccess: (deletedId) => {
-      invalidateQueries({ queryKey: ['post', deletedId] });
+      queryCache.invalidateQueries({ queryKey: ['post', deletedId] });
     },
   });
 

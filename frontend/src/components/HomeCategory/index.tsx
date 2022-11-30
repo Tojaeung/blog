@@ -12,7 +12,7 @@ function HomeCategory() {
     <S.CategoryBox>
       <S.Title>Category</S.Title>
       {categories?.map((category) => (
-        <Link to={`category/${category.id}`} key={category.id}>
+        <Link to={`/category/${category.id}`} key={category.id}>
           <S.Badge>
             {category.name} ({category.postCnt})
           </S.Badge>

@@ -4,8 +4,8 @@ import { CommonBadgeStyle, CommonTextStyle, CommonTitleStyle } from 'styles/comm
 export const Container = styled.div`
   width: 100%;
   display: flex;
-  flex-direction: column
-  gap: 20px
+  flex-direction: column;
+  gap: 20px;
   margin-top: 30px;
 `;
 

@@ -14,10 +14,12 @@ export type INewComment = {
   postId: number;
   author: string;
   content: string;
+  isAdmin: boolean;
 };
 export type INewChildComment = {
   postId: number;
   author: string;
   content: string;
+  isAdmin: boolean;
   parentId: number;
 };
