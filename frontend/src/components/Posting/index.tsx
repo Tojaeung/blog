@@ -24,7 +24,7 @@ function Posting() {
   });
 
   const handleDelete = async () => {
-    if (accessToken) return;
+    if (!accessToken) return;
 
     const confirm = prompt('정말로 삭제하시겠습니까?("삭제" 입력시, 실행된다.)', '');
     if (confirm === '삭제') {
