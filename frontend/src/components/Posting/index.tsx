@@ -5,6 +5,7 @@ import 'highlight.js/styles/github.css';
 import { getPost, deletePost } from 'apis/post';
 
 import TagBadges from 'components/TagBadges';
+import MetaTag from 'layouts/MetaTag';
 
 import * as S from './style';
 
@@ -36,6 +37,13 @@ function Posting() {
 
   return (
     <S.Container>
+      <MetaTag
+        title={post?.title || ''}
+        desc={post?.content || ''}
+        keywords={post?.tags}
+        image={post?.thumbnail || ''}
+        url={`https://tojaeung.com/post/${postId}`}
+      />
       <S.Header>
         <S.TitleBox>
           <S.Title>{post?.title}</S.Title>

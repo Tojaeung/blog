@@ -1,0 +1,34 @@
+User-agent: *
+Disallow: /
+
+User-agent: Yeti
+Allow: /
+Disallow: /apis*/
+Disallow: /hooks*/
+Disallow: /interfaces*/
+Disallow: /layouts*/
+Disallow: /pages/About*/
+Disallow: /pages/Admin*/
+Disallow: /pages/Blog*/
+Disallow: /pages/Category*/
+Disallow: /pages/Contact*/
+Disallow: /pages/Guestbook*/
+Disallow: /pages/Login*/
+Disallow: /pages/Search*/
+Disallow: /pages/Tag*/
+
+User-agent: Googlebot
+Allow: /
+Disallow: /apis*/
+Disallow: /hooks*/
+Disallow: /interfaces*/
+Disallow: /layouts*/
+Disallow: /pages/About*/
+Disallow: /pages/Admin*/
+Disallow: /pages/Blog*/
+Disallow: /pages/Category*/
+Disallow: /pages/Contact*/
+Disallow: /pages/Guestbook*/
+Disallow: /pages/Login*/
+Disallow: /pages/Search*/
+Disallow: /pages/Tag*/
