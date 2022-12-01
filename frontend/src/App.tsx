@@ -2,7 +2,7 @@ import { useContext, useEffect } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import styled, { ThemeProvider } from 'styled-components';
 
-import { getRefresh } from 'apis/auth';
+import { persistLogin } from 'apis/auth';
 
 import { AuthContext } from 'contexts/Auth';
 import { IAuthContext } from 'contexts/Auth/type';
@@ -19,16 +19,18 @@ function App() {
   const { setAuth } = useContext(AuthContext) as IAuthContext;
 
   useEffect(() => {
-    getRefresh()
-      .then((data) => {
-        setAuth(data);
-        localStorage.setItem('accessToken', data.accessToken);
-      })
-      .catch(() => {
-        alert('다시 로그인 해주세요.');
-        setAuth(null);
-        localStorage.removeItem('accessToken');
-      });
+    if (!localStorage.getItem('accessToken')) return;
+    else {
+      persistLogin()
+        .then((data) => {
+          setAuth(data);
+          localStorage.setItem('accessToken', data?.accessToken as string);
+        })
+        .catch(() => {
+          alert('로그인 유지에 실패하였습니다.');
+          localStorage.removeItem('accessToken');
+        });
+    }
   }, []);
 
   return (

@@ -1,13 +1,16 @@
 import { useContext } from 'react';
-import { AuthContext } from 'contexts/Auth';
 import { Navigate, Outlet } from 'react-router-dom';
 
-const PublicRoute = () => {
-  const accessToken = useContext(AuthContext);
+import { AuthContext } from 'contexts/Auth';
+import { IAuthContext } from 'contexts/Auth/type';
 
-  !accessToken && alert('로그인 후 이용 가능합니다.');
+const PrivateRoute = () => {
+  const { auth } = useContext(AuthContext) as IAuthContext;
+  console.log(auth?.accessToken);
 
-  return accessToken ? <Outlet /> : <Navigate to='/login' />;
+  !auth?.accessToken && alert('로그인 후 이용 가능합니다.');
+
+  return auth?.accessToken ? <Outlet /> : <Navigate to='/login' />;
 };
 
-export default PublicRoute;
+export default PrivateRoute;

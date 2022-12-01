@@ -1,11 +1,13 @@
 import { useContext } from 'react';
-import { AuthContext } from 'contexts/Auth';
 import { Navigate, Outlet } from 'react-router-dom';
 
-const PublicRoute = () => {
-  const accessToken = useContext(AuthContext);
+import { AuthContext } from 'contexts/Auth';
+import { IAuthContext } from 'contexts/Auth/type';
 
-  return accessToken ? <Navigate to='/' /> : <Outlet />;
+const PublicRoute = () => {
+  const { auth } = useContext(AuthContext) as IAuthContext;
+
+  return auth?.accessToken ? <Navigate to='/' /> : <Outlet />;
 };
 
 export default PublicRoute;
