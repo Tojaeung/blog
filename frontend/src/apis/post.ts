@@ -1,7 +1,7 @@
 import { adminApi, clientApi } from 'utils/axios';
 import { IPagePost, IPost } from 'interfaces/post';
 
-export const addPost = async (categoryId: number, formData: FormData): Promise<IPost> => {
+export const addPost = async (categoryId: number, formData: FormData): Promise<number> => {
   const { data } = await adminApi.post(`/category/${categoryId}/post`, formData);
   return data;
 };

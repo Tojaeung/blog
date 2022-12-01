@@ -13,7 +13,7 @@ import * as S from './style';
 function Post() {
   const navigate = useNavigate();
 
-  const [categoryId, setCategoryId] = useState<number>(1);
+  const [categoryId, setCategoryId] = useState<number | undefined>(undefined);
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [thumbnail, setThumbnail] = useState<File>();
@@ -42,21 +42,24 @@ function Post() {
     const body = { title, content, tags };
 
     const formData = new FormData();
-    formData.append('thumbnail', thumbnail!);
+    formData.append('thumbnail', thumbnail as File);
     formData.append('createReqDto', new Blob([JSON.stringify(body)], { type: 'application/json' }));
 
     try {
-      const newPost = await addPost(categoryId, formData);
+      if (typeof categoryId === 'undefined') return alert('카테고리를 선택해주세요 !!');
+
+      const newPostId = await addPost(categoryId, formData);
       alert('포스팅 되었습니다.');
-      navigate(`/post/${newPost.id}`);
-    } catch (e) {
-      alert('포스팅 실패하였습니다..');
+      navigate(`/post/${newPostId}`);
+    } catch (e: any) {
+      alert(`${e.response.data.message} `);
     }
   };
 
   return (
     <S.Container>
       <S.Selector onChange={(e) => setCategoryId(Number(e.target.value))} value={categoryId}>
+        <S.Option value={undefined}>카테고리 선택하세요.</S.Option>
         {categories?.map((category) => (
           <S.Option value={category.id} key={category.id}>
             {category.name} {category.postCnt}개

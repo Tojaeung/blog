@@ -97,12 +97,17 @@ export const Content = styled.div`
   }
 
   blockquote {
+    position: relative;
+    width: 100%;
+    padding: 0.5rem 1rem;
+    line-height: 1.7;
     font-size: 14px;
-    font-family: ${({ theme }) => theme.font.text};
     font-style: italic;
     font-weight: bold;
-    background-color: ${({ theme }) => theme.palette.cardBgColor};
+    font-family: ${({ theme }) => theme.font.text};
+    border-left: 6px solid ${({ theme }) => theme.palette.badgeColor};
     color: ${({ theme }) => theme.palette.textColor};
+    background: ${({ theme }) => theme.palette.white};
   }
 
   img {
