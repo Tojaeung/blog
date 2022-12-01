@@ -41,10 +41,9 @@ function Router() {
       </Route>
 
       <Route path='/' element={<PrivateRouter />}>
-        <Route path='admin' element={<Admin />}>
-          <Route path='category' element={<AdminCategory />} />
-          <Route path='post' element={<AdminPost />} />
-        </Route>
+        <Route path='/admin' element={<Admin />} />
+        <Route path='/admin/category' element={<AdminCategory />} />
+        <Route path='/admin/post' element={<AdminPost />} />
       </Route>
 
       <Route path='/not-found' element={<NotFound />} />

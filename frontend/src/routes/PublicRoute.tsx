@@ -1,13 +1,11 @@
-import { useContext } from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
 
-import { AuthContext } from 'contexts/Auth';
-import { IAuthContext } from 'contexts/Auth/type';
-
 const PublicRoute = () => {
-  const { auth } = useContext(AuthContext) as IAuthContext;
+  const accessToken = localStorage.getItem('accessToken');
 
-  return auth?.accessToken ? <Navigate to='/' /> : <Outlet />;
+  accessToken && alert('이미 로그인되었습니다.');
+
+  return accessToken ? <Navigate to='/' /> : <Outlet />;
 };
 
 export default PublicRoute;

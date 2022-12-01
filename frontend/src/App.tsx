@@ -1,11 +1,8 @@
-import { useContext, useEffect } from 'react';
+import { useEffect } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import styled, { ThemeProvider } from 'styled-components';
 
 import { persistLogin } from 'apis/auth';
-
-import { AuthContext } from 'contexts/Auth';
-import { IAuthContext } from 'contexts/Auth/type';
 
 import Header from 'layouts/Header';
 import Footer from 'layouts/Footer';
@@ -16,16 +13,11 @@ import { lightTheme } from 'styles/theme';
 import GlobalStyle from 'styles/GlobalStyle';
 
 function App() {
-  const { setAuth } = useContext(AuthContext) as IAuthContext;
-
   useEffect(() => {
     if (!localStorage.getItem('accessToken')) return;
     else {
       persistLogin()
-        .then((data) => {
-          setAuth(data);
-          localStorage.setItem('accessToken', data?.accessToken as string);
-        })
+        .then(({ accessToken }) => localStorage.setItem('accessToken', accessToken))
         .catch(() => {
           alert('로그인 유지에 실패하였습니다.');
           localStorage.removeItem('accessToken');

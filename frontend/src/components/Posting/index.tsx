@@ -1,10 +1,6 @@
-import { useContext } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from 'react-query';
 import 'highlight.js/styles/github.css';
-
-import { AuthContext } from 'contexts/Auth';
-import { IAuthContext } from 'contexts/Auth/type';
 
 import { getPost, deletePost } from 'apis/post';
 
@@ -15,7 +11,7 @@ import * as S from './style';
 function Posting() {
   const queryCache = useQueryClient();
 
-  const { auth } = useContext(AuthContext) as IAuthContext;
+  const accessToken = localStorage.getItem('accessToken');
 
   const navigate = useNavigate();
   const { postId } = useParams();
@@ -28,7 +24,7 @@ function Posting() {
   });
 
   const handleDelete = async () => {
-    if (!auth?.accessToken) return;
+    if (accessToken) return;
 
     const confirm = prompt('정말로 삭제하시겠습니까?("삭제" 입력시, 실행된다.)', '');
     if (confirm === '삭제') {
@@ -48,7 +44,7 @@ function Posting() {
           </S.Detail>
         </S.TitleBox>
 
-        {auth?.accessToken && (
+        {accessToken && (
           <S.AdminButtonBox>
             <S.CreateButton onClick={() => navigate('/admin/post')}>생성</S.CreateButton>
             <S.DeleteButton onClick={handleDelete}>제거</S.DeleteButton>

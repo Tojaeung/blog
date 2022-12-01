@@ -1,8 +1,5 @@
-import { useState, useContext } from 'react';
+import { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from 'react-query';
-
-import { AuthContext } from 'contexts/Auth';
-import { IAuthContext } from 'contexts/Auth/type';
 
 import { addGuestbook, deleteGuestbook, getGuestbooks } from 'apis/guestbook';
 
@@ -12,7 +9,7 @@ import * as S from './style';
 
 function Guestbook() {
   const queryCache = useQueryClient();
-  const { auth } = useContext(AuthContext) as IAuthContext;
+  const accessToken = localStorage.getItem('accessToken');
 
   const [author, setAuthor] = useState('');
   const [content, setContent] = useState('');
@@ -30,13 +27,13 @@ function Guestbook() {
   });
 
   const handleSubmit = async () => {
-    addGuestbookMutate({ author, content, isAdmin: !!auth?.accessToken });
+    addGuestbookMutate({ author, content, isAdmin: !!accessToken });
     setAuthor('');
     setContent('');
   };
 
   const handleDelete = async (guestbookId: number) => {
-    if (!auth?.accessToken) return;
+    if (!accessToken) return;
 
     const confirm = prompt('정말로 삭제하시겠습니까?("삭제" 입력시, 실행된다.)', '');
     if (confirm === '삭제') {
@@ -69,7 +66,7 @@ function Guestbook() {
                 {/* 관리자 방명록일 경우 스타일 추가 */}
                 <S.Author>{!guestbook.isAdmin ? guestbook.author : `👑${guestbook.author}`}</S.Author>
                 <S.DateTime>({guestbook.createdAt})</S.DateTime>
-                {auth?.accessToken && <S.DeleteButton onClick={() => handleDelete(guestbook.id)}>삭제</S.DeleteButton>}
+                {accessToken && <S.DeleteButton onClick={() => handleDelete(guestbook.id)}>삭제</S.DeleteButton>}
               </S.AuthorBox>
 
               <S.Content>{guestbook.content}</S.Content>

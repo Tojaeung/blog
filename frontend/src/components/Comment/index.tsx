@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from 'react-query';
 
@@ -7,16 +7,13 @@ import ChildrenComment from './ChildrenComment';
 
 import { getComments, deleteComment } from 'apis/comment';
 
-import { AuthContext } from 'contexts/Auth';
-import { IAuthContext } from 'contexts/Auth/type';
-
 import * as S from './style';
 
 function Comment() {
   const queryCache = useQueryClient();
 
   const { postId } = useParams();
-  const { auth } = useContext(AuthContext) as IAuthContext;
+  const accessToken = localStorage.getItem('accessToken');
 
   const [reply, setReply] = useState<number>(-1);
 
@@ -28,7 +25,7 @@ function Comment() {
   });
 
   const handleDelete = async (commentId: number) => {
-    if (!auth?.accessToken) return;
+    if (!accessToken) return;
 
     const confirm = prompt('정말로 삭제하시겠습니까?("삭제" 입력시, 실행된다.)', '');
     if (confirm === '삭제') {
@@ -50,7 +47,7 @@ function Comment() {
               <S.AuthorBox>
                 <S.Author>{!comment.isAdmin ? comment.author : `👑${comment.author}`}</S.Author>
                 <S.DateTime>({comment.createdAt})</S.DateTime>
-                {auth?.accessToken && <S.DeleteButton onClick={() => handleDelete(comment.id)}>삭제</S.DeleteButton>}
+                {accessToken && <S.DeleteButton onClick={() => handleDelete(comment.id)}>삭제</S.DeleteButton>}
               </S.AuthorBox>
 
               <S.Content>{comment.content}</S.Content>
