@@ -16,7 +16,7 @@ public class CookieUtil {
                 .httpOnly(true)
                 .sameSite("Lax")
                 .maxAge(14 * 24 * 60 * 60)
-                .path("/api/refresh")
+                .path("/")
                 .build();
 
         return cookie;

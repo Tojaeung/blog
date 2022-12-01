@@ -1,7 +1,7 @@
 package com.tojaeung.blog.auth.service;
 
 import com.tojaeung.blog.auth.domain.Admin;
-import com.tojaeung.blog.auth.dto.LoginResponseDto;
+import com.tojaeung.blog.auth.dto.AuthResponseDto;
 import com.tojaeung.blog.auth.jwt.JwtTokenProvider;
 import com.tojaeung.blog.auth.repository.AuthRepository;
 import com.tojaeung.blog.exception.CustomException;
@@ -68,9 +68,9 @@ class AuthServiceTest {
         BDDMockito.given(admin.checkPassword(admin.getPassword(), passwordEncoder)).willReturn(true);
         BDDMockito.given(jwtTokenProvider.createAccessToken(admin.getUsername(), admin.getRoles())).willReturn("엑세스토큰발급");
 
-        LoginResponseDto actual = authService.login(admin);
+        AuthResponseDto authResponseDto = authService.login(admin);
 
-        assertThat(actual.getAccessToken()).isEqualTo("엑세스토큰발급");
-        assertThat(actual.getUsername()).isEqualTo("올바른ID");
+        assertThat(authResponseDto.getAccessToken()).isEqualTo("엑세스토큰발급");
+        assertThat(authResponseDto.getUsername()).isEqualTo("올바른ID");
     }
 }

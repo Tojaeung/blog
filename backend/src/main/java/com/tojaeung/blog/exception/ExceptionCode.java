@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 public enum ExceptionCode {
     INVALID_ADMIN_USERNAME(1001, "관리자 계정 또는 비밀번호가 올바르지 않습니다.", 400),
     INVALID_ADMIN_PASSWORD(1002, "관리자 계정 또는 비밀번호가 올바르지 않습니다.", 400),
+    INVALID_REFRESH_TOKEN(1003, "유효하지 않는 리프레쉬 토큰 입니다.", 400),
 
     // VALIDATION_EXCEPTION(2000, "", 400), 라이브러리 validation에 의한 예외코드를 2000으로 통일하였다.. 
 
