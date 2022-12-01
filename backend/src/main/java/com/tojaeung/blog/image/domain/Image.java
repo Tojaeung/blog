@@ -1,4 +1,4 @@
-package com.tojaeung.blog.File.domain;
+package com.tojaeung.blog.image.domain;
 
 import lombok.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -11,10 +11,10 @@ import javax.persistence.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
-public class File {
+public class Image {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "file_id")
+    @Column(name = "image_id")
     private Long id;
 
     @Column
@@ -25,5 +25,4 @@ public class File {
 
     @Column
     private String savedPath;   // 파일 저장경로
-
 }

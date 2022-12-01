@@ -1,11 +1,11 @@
 package com.tojaeung.blog.post.service;
 
-import com.tojaeung.blog.File.domain.File;
-import com.tojaeung.blog.File.util.FileUtil;
 import com.tojaeung.blog.category.domain.Category;
 import com.tojaeung.blog.category.repository.CategoryRepository;
 import com.tojaeung.blog.exception.CustomException;
 import com.tojaeung.blog.exception.ExceptionCode;
+import com.tojaeung.blog.image.domain.Image;
+import com.tojaeung.blog.image.util.ImageUtil;
 import com.tojaeung.blog.post.domain.Post;
 import com.tojaeung.blog.post.dto.CreateReqDto;
 import com.tojaeung.blog.post.dto.PageResDto;
@@ -34,7 +34,7 @@ public class PostService {
     private final PostRepository postRepository;
     private final CategoryRepository categoryRepository;
     private final TagRepository tagRepository;
-    private final FileUtil fileUtil;
+    private final ImageUtil imageUtil;
 
     // 포스팅 생성
     @Transactional
@@ -43,17 +43,18 @@ public class PostService {
                 .orElseThrow(() -> new CustomException(ExceptionCode.NOT_FOUND_CATEGORY));
 
         // 썸네일 aws s3저장
-        File file = fileUtil.saveToAwsS3(thumbnail);
+        Image image = imageUtil.saveToAwsS3(thumbnail);
 
         Post post = Post.builder()
                 .title(createReqDto.getTitle())
                 .content(createReqDto.getContent())
-                .thumbnail(file.getSavedPath())
+                .thumbnail(image.getSavedPath())
                 .views(0)
                 .category(category)
                 .build();
 
         Post newPost = postRepository.save(post);
+
 
         // 태그 저장
         List<String> tags = createReqDto.getTags();
@@ -165,12 +166,12 @@ public class PostService {
         Category updatedCategory = categoryRepository.findById(updateReqDto.getUpdatedCategoryId())
                 .orElseThrow(() -> new CustomException(ExceptionCode.NOT_FOUND_CATEGORY));
 
-        File file = fileUtil.saveToAwsS3(updatedThumbnail);
+        Image image = imageUtil.saveToAwsS3(updatedThumbnail);
 
         Post updatedPost = Post.builder()
                 .title(updateReqDto.getUpdatedTitle())
                 .content(updateReqDto.getUpdatedContent())
-                .thumbnail(file.getSavedPath())
+                .thumbnail(image.getSavedPath())
                 .category(updatedCategory)
                 .build();
 

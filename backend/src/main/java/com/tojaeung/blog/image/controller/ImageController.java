@@ -1,7 +1,7 @@
-package com.tojaeung.blog.File.controller;
+package com.tojaeung.blog.image.controller;
 
-import com.tojaeung.blog.File.dto.ResponseDto;
-import com.tojaeung.blog.File.service.FileService;
+import com.tojaeung.blog.image.dto.ImageResponseDto;
+import com.tojaeung.blog.image.service.ImageService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -14,14 +14,12 @@ import org.springframework.web.multipart.MultipartFile;
 @RestController
 @RequiredArgsConstructor
 @Slf4j
-public class FileController {
-    private final FileService fileService;
+public class ImageController {
+    private final ImageService imageService;
 
     // 포스팅 내 이미지 업로드
-    @PostMapping("api/post/upload")
-    public ResponseEntity<ResponseDto> upload(
-            @RequestParam("file") MultipartFile multipartFile) {
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(fileService.upload(multipartFile));
+    @PostMapping("api/admin/post/upload")
+    public ResponseEntity<ImageResponseDto> upload(@RequestParam("file") MultipartFile multipartFile) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(imageService.upload(multipartFile));
     }
 }

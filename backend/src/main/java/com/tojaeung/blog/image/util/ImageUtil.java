@@ -1,12 +1,12 @@
-package com.tojaeung.blog.File.util;
+package com.tojaeung.blog.image.util;
 
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
-import com.tojaeung.blog.File.domain.File;
 import com.tojaeung.blog.exception.CustomException;
 import com.tojaeung.blog.exception.ExceptionCode;
+import com.tojaeung.blog.image.domain.Image;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -18,11 +18,12 @@ import java.util.UUID;
 
 @Component
 @RequiredArgsConstructor
-public class FileUtil {
+public class ImageUtil {
 
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
     private final AmazonS3Client amazonS3Client;
+
 
     /**
      * 썸네일을 Aws S3에 저장하는 함수
@@ -30,9 +31,9 @@ public class FileUtil {
      * @param multipartFile 썸네일 File 객체
      * @return 썸네일이 저장된 Url 리턴
      */
-    public File saveToAwsS3(MultipartFile multipartFile) {
+    public Image saveToAwsS3(MultipartFile multipartFile) {
         if (multipartFile.isEmpty()) return null;
-        
+
         String originalName = multipartFile.getOriginalFilename();
         // 파일 이름으로 쓸 uuid 생성
         String uuid = UUID.randomUUID().toString();
@@ -57,12 +58,12 @@ public class FileUtil {
             throw new CustomException(ExceptionCode.FAILED_IMAGE_UPLOAD);
         }
 
-        File file = File.builder()
+        Image image = Image.builder()
                 .originalName(originalName)
                 .savedName(savedName)
                 .savedPath(savedPath)
                 .build();
 
-        return file;
+        return image;
     }
 }
