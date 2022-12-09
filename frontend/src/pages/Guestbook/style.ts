@@ -71,7 +71,9 @@ export const DeleteButton = styled.button`
   cursor: pointer;
 `;
 
-export const Content = styled(CommonTextStyle)``;
+export const Content = styled(CommonTextStyle)`
+  white-space: pre;
+`;
 
 export const FormBox = styled.div`
   display: flex;

@@ -53,7 +53,9 @@ export const DeleteButton = styled.button`
   cursor: pointer;
 `;
 
-export const Content = styled(CommonTextStyle)``;
+export const Content = styled(CommonTextStyle)`
+  white-space: pre;
+`;
 export const ReplyButton = styled(CommonButtonStyle)`
   width: 7%;
   min-width: 50px;
