@@ -3,7 +3,6 @@ package com.tojaeung.blog.image.controller;
 import com.tojaeung.blog.image.dto.ImageResponseDto;
 import com.tojaeung.blog.image.service.ImageService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,7 +12,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequiredArgsConstructor
-@Slf4j
 public class ImageController {
     private final ImageService imageService;
 

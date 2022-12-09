@@ -24,7 +24,6 @@ public class ImageUtil {
     private String bucket;
     private final AmazonS3Client amazonS3Client;
 
-
     /**
      * 썸네일을 Aws S3에 저장하는 함수
      *
@@ -32,7 +31,8 @@ public class ImageUtil {
      * @return 썸네일이 저장된 Url 리턴
      */
     public Image saveToAwsS3(MultipartFile multipartFile) {
-        if (multipartFile.isEmpty()) return null;
+        if (multipartFile.isEmpty())
+            return null;
 
         String originalName = multipartFile.getOriginalFilename();
         // 파일 이름으로 쓸 uuid 생성

@@ -5,7 +5,6 @@ import com.tojaeung.blog.tag.dto.AllTagResDto;
 import com.tojaeung.blog.tag.dto.UpdateReqDto;
 import com.tojaeung.blog.tag.service.TagService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +15,6 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@Slf4j
 public class TagController {
     private final TagService tagService;
 
@@ -26,13 +24,13 @@ public class TagController {
         return ResponseEntity.ok(tagService.searchTagName(tagName));
     }
 
-    // 태그 조회 (태그 네임으로 해당하는 모든 포스트 조회) return findPostwithCategory (페이징) 
+    // 태그 조회 (태그 네임으로 해당하는 모든 포스트 조회) return findPostwithCategory (페이징)
     @GetMapping("api/tags")
     public ResponseEntity<List<AllTagResDto>> findAllTags() {
         return ResponseEntity.ok(tagService.findAllTags());
     }
 
-    // 태그 조회 (태그 네임으로 해당하는 모든 포스트 조회) return findPostwithCategory (페이징) 
+    // 태그 조회 (태그 네임으로 해당하는 모든 포스트 조회) return findPostwithCategory (페이징)
     @GetMapping("api/tag")
     public ResponseEntity<PageResDto> findPostsInTag(
             @RequestParam("tagName") String tagName, @PageableDefault(size = 10) Pageable pageable) {
@@ -41,7 +39,7 @@ public class TagController {
 
     // 해당하는 태그 디비내 전체 태그명 변경
     @PutMapping("api/admin/tag/{tagId}")
-    public ResponseEntity update(
+    public ResponseEntity<?> update(
             @PathVariable Long tagId,
             @Valid @RequestBody UpdateReqDto updateReqDto) {
 

@@ -4,7 +4,6 @@ import com.tojaeung.blog.guestbook.dto.CreateReqDto;
 import com.tojaeung.blog.guestbook.dto.GuestbookResDto;
 import com.tojaeung.blog.guestbook.service.GuestbookService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +13,6 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@Slf4j
 public class GuestbookController {
     private final GuestbookService guestbookService;
 

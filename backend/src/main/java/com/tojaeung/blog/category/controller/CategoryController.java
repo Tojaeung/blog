@@ -5,7 +5,6 @@ import com.tojaeung.blog.category.dto.PostCntResDto;
 import com.tojaeung.blog.category.dto.UpdateReqDto;
 import com.tojaeung.blog.category.service.CategoryService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +14,6 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@Slf4j
 public class CategoryController {
     private final CategoryService categoryService;
 
@@ -39,12 +37,12 @@ public class CategoryController {
 
     // 카테고리 수정
     @PutMapping("api/admin/category/{categoryId}")
-    public ResponseEntity<PostCntResDto> update(@PathVariable Long categoryId, @Valid @RequestBody UpdateReqDto updateReqDto) {
+    public ResponseEntity<PostCntResDto> update(@PathVariable Long categoryId,
+            @Valid @RequestBody UpdateReqDto updateReqDto) {
         PostCntResDto updatedCategory = categoryService.update(categoryId, updateReqDto);
 
         return ResponseEntity.ok(updatedCategory);
     }
-
 
     // 카테고리 삭제 관련된 자식 포스팅도 모두 삭제 유의 !!
     @DeleteMapping("api/admin/category/{categoryId}")

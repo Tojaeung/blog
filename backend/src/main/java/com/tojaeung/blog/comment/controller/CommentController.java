@@ -4,7 +4,6 @@ import com.tojaeung.blog.comment.dto.CommentResDto;
 import com.tojaeung.blog.comment.dto.CreateReqDto;
 import com.tojaeung.blog.comment.service.CommentService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,12 +13,11 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@Slf4j
 public class CommentController {
     private final CommentService commentService;
 
     // 댓글 새로 생성
-    @PostMapping(value = {"api/post/{postId}/comment"})
+    @PostMapping(value = { "api/post/{postId}/comment" })
     public ResponseEntity<CommentResDto> create(
             @PathVariable(value = "postId") Long postId,
             @Valid @RequestBody CreateReqDto createReqDto) {
@@ -29,7 +27,7 @@ public class CommentController {
     }
 
     // 자식댓글 새로 생성
-    @PostMapping(value = {"api/post/{postId}/comment/{parentId}"})
+    @PostMapping(value = { "api/post/{postId}/comment/{parentId}" })
     public ResponseEntity<CommentResDto> createChild(
             @PathVariable(value = "postId") Long postId,
             @PathVariable(value = "parentId", required = false) Long parentId,
@@ -39,7 +37,6 @@ public class CommentController {
 
         return ResponseEntity.status(HttpStatus.CREATED).body(newComment);
     }
-
 
     // 댓글 가져오기
     @GetMapping("api/post/{postId}/comment")

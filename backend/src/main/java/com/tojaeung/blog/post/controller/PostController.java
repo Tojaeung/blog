@@ -7,7 +7,6 @@ import com.tojaeung.blog.post.dto.PostResDto;
 import com.tojaeung.blog.post.dto.UpdateReqDto;
 import com.tojaeung.blog.post.service.PostService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
@@ -20,7 +19,6 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@Slf4j
 public class PostController {
     private final PostService postService;
 
@@ -73,7 +71,7 @@ public class PostController {
 
     // 특정 포스팅 업데이트
     @PutMapping("api/admin/post/{postId}")
-    public ResponseEntity update(
+    public ResponseEntity<?> update(
             @PathVariable Long postId,
             @Valid @RequestPart UpdateReqDto updateReqDto,
             @RequestPart MultipartFile updatedThumbnail) {
