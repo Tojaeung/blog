@@ -1,6 +1,7 @@
 import { useRef, useMemo } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import 'react-quill/dist/quill.core.css';
 import { RangeStatic } from 'quill';
 
 import hljs from 'highlight.js';
@@ -92,6 +93,7 @@ function QuillEditor({ content, setContent }: IProps) {
 
   return (
     <Editor
+      className='ql-editor ql-syntax'
       ref={quillRef}
       modules={modules}
       formats={formats}

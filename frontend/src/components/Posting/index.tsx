@@ -1,5 +1,6 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from 'react-query';
+import 'react-quill/dist/quill.core.css';
 import 'highlight.js/styles/github.css';
 
 import { getPost, deletePost } from 'apis/post';
@@ -62,7 +63,9 @@ function Posting() {
 
       <S.thumbnailImage src={post?.thumbnail} alt='포스팅 사진' />
 
-      {post?.content && <S.Content dangerouslySetInnerHTML={{ __html: post?.content || '' }} />}
+      {post?.content && (
+        <S.Content className='ql-editor ql-syntax' dangerouslySetInnerHTML={{ __html: post?.content || '' }} />
+      )}
 
       <S.Line />
       <S.Title>Tags</S.Title>

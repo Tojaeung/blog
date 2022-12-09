@@ -1,5 +1,6 @@
 import styled from 'styled-components';
-import { CommonBadgeStyle, CommonTitleStyle, jittery } from 'styles/common';
+import { CommonBadgeStyle, CommonTitleStyle } from 'styles/common';
+import { jittery } from 'styles/animation';
 
 export const Container = styled.ul`
   display: flex;

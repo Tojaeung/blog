@@ -13,6 +13,8 @@ export const lightTheme: DefaultTheme = {
     badgeColor: '#e2e8f0',
     gradationColor: 'linear-gradient(120deg, #4a90e2, #bd10e0)',
     inputColor: '#f7f7f7',
+    brightGray: '#fbfcfb',
+    darkGray: '#f7f9f8',
   },
 
   font: {

@@ -15,6 +15,8 @@ declare module 'styled-components' {
       badgeColor: string;
       gradationColor: string;
       inputColor: string;
+      brightGray: string;
+      darkGray: string;
     };
 
     font: {
