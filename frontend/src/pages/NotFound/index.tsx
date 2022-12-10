@@ -1,15 +1,16 @@
+import * as S from './style';
+
 function NotFound() {
   return (
-    <div>
-      <h1>
-        <strong>NotFound</strong>
-      </h1>
-      <h2>NotFound</h2>
-      <h3>NotFound</h3>
-      <h4>NotFound</h4>
-      <h5>NotFound</h5>
-      <h6>NotFound</h6>
-    </div>
+    <S.Container>
+      <S.NotFoundImage src='/images/notFound.png' alt='404페이지 이미지' />
+      <S.MessageBox>
+        <S.ErrorCode>404</S.ErrorCode>
+        <S.Message>
+          This is not <br /> the web page <br /> you are looking for.
+        </S.Message>
+      </S.MessageBox>
+    </S.Container>
   );
 }
 
