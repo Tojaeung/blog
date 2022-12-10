@@ -27,7 +27,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 import java.util.stream.Collectors;
 
-
 @Service
 @RequiredArgsConstructor
 public class PostService {
@@ -55,7 +54,6 @@ public class PostService {
 
         Post newPost = postRepository.save(post);
 
-
         // 태그 저장
         List<String> tags = createReqDto.getTags();
         for (String tagName : tags) {
@@ -75,8 +73,7 @@ public class PostService {
         PageRequest pageRequest = PageRequest.of(
                 pageNumber - 1,
                 pageable.getPageSize(),
-                Sort.by("createdAt").descending()
-        );
+                Sort.by("createdAt").descending());
 
         Page<Post> pages = postRepository.findAllPosts(pageRequest);
 
@@ -99,8 +96,7 @@ public class PostService {
             PageRequest pageRequest = PageRequest.of(
                     pageNumber - 1,
                     pageable.getPageSize(),
-                    Sort.by("createdAt").descending()
-            );
+                    Sort.by("createdAt").descending());
 
             Page<Post> pages = postRepository.findPostsInCategory(categoryId, pageRequest);
             long totalCnt = pages.getTotalElements();
@@ -126,9 +122,10 @@ public class PostService {
     // 특정포스팅 가져오기 (부모 카테고리와 함께)
     @Transactional
     public PostResDto findPost(Long postId) {
-        if (!postRepository.existsById(postId)) throw new CustomException(ExceptionCode.NOT_FOUND_POST);
+        if (!postRepository.existsById(postId))
+            throw new CustomException(ExceptionCode.NOT_FOUND_POST);
         else {
-            // 조회수 views 증가 
+            // 조회수 views 증가
             postRepository.addView(postId);
 
             Post findPost = postRepository.findPost(postId)
@@ -144,8 +141,7 @@ public class PostService {
         PageRequest pageRequest = PageRequest.of(
                 pageNumber - 1,
                 pageable.getPageSize(),
-                Sort.by("createdAt").descending()
-        );
+                Sort.by("createdAt").descending());
 
         Page<Post> pages = postRepository.searchPosts(keyword, pageRequest);
         long totalCnt = pages.getTotalElements();

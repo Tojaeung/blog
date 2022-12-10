@@ -84,5 +84,4 @@ public class Admin implements UserDetails {
         return passwordEncoder.matches(plainPassword, this.password);
     }
 
-
 }
