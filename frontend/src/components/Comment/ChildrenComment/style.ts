@@ -39,4 +39,7 @@ export const DateTime = styled(CommonTextStyle)`
   font-size: 12px;
 `;
 
-export const Content = styled(CommonTextStyle)``;
+export const Content = styled(CommonTextStyle)`
+  white-space: pre-wrap;
+  line-height: 20px;
+`;

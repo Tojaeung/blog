@@ -52,7 +52,7 @@ function Post() {
       alert('포스팅 되었습니다.');
       navigate(`/post/${newPostId}`);
     } catch (e: any) {
-      alert(`${e.response.data.message} `);
+      alert(e.response.data.message);
     }
   };
 

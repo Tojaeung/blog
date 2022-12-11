@@ -51,7 +51,7 @@ export const GuestbookList = styled.li`
   padding: 5px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 5px;
 `;
 
 export const AuthorBox = styled.div`
@@ -72,7 +72,8 @@ export const DeleteButton = styled.button`
 `;
 
 export const Content = styled(CommonTextStyle)`
-  white-space: pre;
+  white-space: pre-wrap;
+  line-height: 20px;
 `;
 
 export const FormBox = styled.div`

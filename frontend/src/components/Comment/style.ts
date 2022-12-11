@@ -54,7 +54,8 @@ export const DeleteButton = styled.button`
 `;
 
 export const Content = styled(CommonTextStyle)`
-  white-space: pre;
+  white-space: pre-wrap;
+  line-height: 20px;
 `;
 export const ReplyButton = styled(CommonButtonStyle)`
   width: 7%;

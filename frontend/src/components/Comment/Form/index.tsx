@@ -20,10 +20,16 @@ function Form({ parentId }: IProp) {
     onSuccess: () => {
       queryCache.invalidateQueries({ queryKey: ['comment', postId] });
     },
+    onError: (e: any) => {
+      alert(e.response.data.message);
+    },
   });
   const { mutate: addChildCommentMutate } = useMutation(addChildComment, {
     onSuccess: () => {
       queryCache.invalidateQueries({ queryKey: ['comment', postId] });
+    },
+    onError: (e: any) => {
+      alert(e.response.data.message);
     },
   });
 

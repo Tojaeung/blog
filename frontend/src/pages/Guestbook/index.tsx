@@ -19,6 +19,9 @@ function Guestbook() {
     onSuccess: () => {
       queryCache.invalidateQueries({ queryKey: ['guestbook'] });
     },
+    onError: (e: any) => {
+      alert(e.response.data.message);
+    },
   });
   const { mutate: deleteGuestbookMutate } = useMutation(deleteGuestbook, {
     onSuccess: () => {
