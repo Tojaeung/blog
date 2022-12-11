@@ -93,7 +93,6 @@ function QuillEditor({ content, setContent }: IProps) {
 
   return (
     <Editor
-      className='ql-editor ql-syntax'
       ref={quillRef}
       modules={modules}
       formats={formats}

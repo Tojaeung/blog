@@ -71,7 +71,6 @@ export const EditorStyle = css`
     font-family: ${({ theme }) => theme.font.text};
     border-left: 6px solid ${({ theme }) => theme.palette.badgeColor};
     color: ${({ theme }) => theme.palette.textColor};
-    background: ${({ theme }) => theme.palette.brightGray};
   }
 
   img {
