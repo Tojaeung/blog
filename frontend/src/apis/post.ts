@@ -1,5 +1,5 @@
 import { adminApi, clientApi } from 'utils/axios';
-import { IPagePost, IPost } from 'interfaces/post';
+import { IPagePost, IPost, IUpdatedPost } from 'interfaces/post';
 
 export const addPost = async (categoryId: number, formData: FormData): Promise<number> => {
   const { data } = await adminApi.post(`/category/${categoryId}/post`, formData);
@@ -27,8 +27,8 @@ export const getPost = async (postId: number): Promise<IPost> => {
   return res.data;
 };
 
-export const updatePost = (postId: number, formData: FormData) =>
-  adminApi.put(`/post/${postId}`, formData).then((res) => res.data);
+export const updatePost = ({ postId, updatedTitle, updatedContent }: IUpdatedPost) =>
+  adminApi.put(`/post/${postId}`, { updatedTitle, updatedContent }).then((res) => res.data);
 
 export const deletePost = async (postId: number): Promise<number> => {
   const res = await adminApi.delete(`/post/${postId}`);

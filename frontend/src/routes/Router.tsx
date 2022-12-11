@@ -17,6 +17,7 @@ import TagName from 'pages/Tag/TagName';
 import Admin from 'pages/Admin';
 import AdminCategory from 'pages/Admin/Category';
 import AdminPost from 'pages/Admin/Post';
+import AdminUpdate from 'pages/Admin/Update';
 import NotFound from 'pages/NotFound';
 
 function Router() {
@@ -44,6 +45,7 @@ function Router() {
         <Route path='/admin' element={<Admin />} />
         <Route path='/admin/category' element={<AdminCategory />} />
         <Route path='/admin/post' element={<AdminPost />} />
+        <Route path='/admin/update/:postId' element={<AdminUpdate />} />
       </Route>
 
       <Route path='/not-found' element={<NotFound />} />

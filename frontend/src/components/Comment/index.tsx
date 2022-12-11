@@ -22,6 +22,9 @@ function Comment() {
     onSuccess: () => {
       queryCache.invalidateQueries({ queryKey: ['comment', postId] });
     },
+    onError: (e: any) => {
+      alert(e.response.data.message);
+    },
   });
 
   const handleDelete = async (commentId: number) => {

@@ -57,6 +57,7 @@ function Posting() {
           {accessToken && (
             <S.AdminButtonBox>
               <S.CreateButton onClick={() => navigate('/admin/post')}>생성</S.CreateButton>
+              <S.CreateButton onClick={() => navigate(`/admin/update/${post?.id}`)}>변경</S.CreateButton>
               <S.DeleteButton onClick={handleDelete}>제거</S.DeleteButton>
             </S.AdminButtonBox>
           )}

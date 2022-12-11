@@ -24,5 +24,6 @@ export type INewPost = {
 
 export type IUpdatedPost = {
   postId: number;
-  formData: FormData;
+  updatedTitle: string;
+  updatedContent: string;
 };
