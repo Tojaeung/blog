@@ -9,6 +9,7 @@ import NotFound from 'pages/NotFound';
 import BlogCategory from 'components/BlogCategory';
 import BlogPost from 'components/BlogPost';
 import Pagination from 'components/Pagination';
+import MetaTag from 'layouts/MetaTag';
 
 import * as S from './style';
 
@@ -24,30 +25,39 @@ function Search() {
   if (page?.totalCnt === 0) return <NotFound />;
   else {
     return (
-      <S.Container>
-        <BlogCategory />
-
-        <S.TitleBox>
-          {page?.totalCnt === 0 ? (
-            <S.Title>{keyword} 검색결과가 없습니다.</S.Title>
-          ) : (
-            <S.Title>{keyword} 검색결과</S.Title>
-          )}
-
-          <S.PostCntBadge>{page?.totalCnt}</S.PostCntBadge>
-        </S.TitleBox>
-        <S.Detail>{keyword} 관련된 포스팅을 모아놓았습니다.</S.Detail>
-
-        <BlogPost posts={page?.posts} />
-
-        <Pagination
-          pageNum={pageNum}
-          setPageNum={setPageNum}
-          blockNum={blockNum}
-          setBlockNum={setBlockNum}
-          totalCnt={page?.totalCnt}
+      <>
+        <MetaTag
+          title={`${keyword} 검색결과 - 토재웅`}
+          desc='안녕하세요 !! 백엔드 개발자 토재웅 입니다. 첫째도 기본!! 둘째도 기본!! 기본에 충실하자 !!'
+          image='/images/profile.jpg'
+          url={`https://tojaeung.com/search?keyword=${keyword}`}
         />
-      </S.Container>
+
+        <S.Container>
+          <BlogCategory />
+
+          <S.TitleBox>
+            {page?.totalCnt === 0 ? (
+              <S.Title>{keyword} 검색결과가 없습니다.</S.Title>
+            ) : (
+              <S.Title>{keyword} 검색결과</S.Title>
+            )}
+
+            <S.PostCntBadge>{page?.totalCnt}</S.PostCntBadge>
+          </S.TitleBox>
+          <S.Detail>{keyword} 관련된 포스팅을 모아놓았습니다.</S.Detail>
+
+          <BlogPost posts={page?.posts} />
+
+          <Pagination
+            pageNum={pageNum}
+            setPageNum={setPageNum}
+            blockNum={blockNum}
+            setBlockNum={setBlockNum}
+            totalCnt={page?.totalCnt}
+          />
+        </S.Container>
+      </>
     );
   }
 }

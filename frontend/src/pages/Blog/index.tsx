@@ -6,6 +6,7 @@ import { getAllPosts } from 'apis/post';
 import BlogCategory from 'components/BlogCategory';
 import BlogPost from 'components/BlogPost';
 import Pagination from 'components/Pagination';
+import MetaTag from 'layouts/MetaTag';
 
 import * as S from './style';
 
@@ -16,21 +17,30 @@ function Blog() {
   const { data: page } = useQuery(['allPosts', pageNum], () => getAllPosts(pageNum));
 
   return (
-    <S.Container>
-      <BlogCategory />
-      <S.TitleBox>
-        <S.Title>Blog</S.Title>
-        <S.AllPostsCnt>전체 ({page?.totalCnt})</S.AllPostsCnt>
-      </S.TitleBox>
-      <BlogPost posts={page?.posts} />
-      <Pagination
-        pageNum={pageNum}
-        setPageNum={setPageNum}
-        blockNum={blockNum}
-        setBlockNum={setBlockNum}
-        totalCnt={page?.totalCnt}
+    <>
+      <MetaTag
+        title='블로그 - 토재웅'
+        desc='안녕하세요 !! 백엔드 개발자 토재웅 입니다. 첫째도 기본!! 둘째도 기본!! 기본에 충실하자 !!'
+        image='/images/profile.jpg'
+        url='https://tojaeung.com/blog'
       />
-    </S.Container>
+
+      <S.Container>
+        <BlogCategory />
+        <S.TitleBox>
+          <S.Title>Blog</S.Title>
+          <S.AllPostsCnt>전체 ({page?.totalCnt})</S.AllPostsCnt>
+        </S.TitleBox>
+        <BlogPost posts={page?.posts} />
+        <Pagination
+          pageNum={pageNum}
+          setPageNum={setPageNum}
+          blockNum={blockNum}
+          setBlockNum={setBlockNum}
+          totalCnt={page?.totalCnt}
+        />
+      </S.Container>
+    </>
   );
 }
 

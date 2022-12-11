@@ -7,6 +7,7 @@ import { getCategories } from 'apis/category';
 import { addPost } from 'apis/post';
 
 import QuillEditor from 'components/QuillEditor';
+import MetaTag from 'layouts/MetaTag';
 
 import * as S from './style';
 
@@ -57,37 +58,45 @@ function Post() {
   };
 
   return (
-    <S.Container>
-      <S.Selector onChange={(e) => setCategoryId(Number(e.target.value))} value={categoryId}>
-        <S.Option value={undefined}>카테고리 선택하세요.</S.Option>
-        {categories?.map((category) => (
-          <S.Option value={category.id} key={category.id}>
-            {category.name} {category.postCnt}개
-          </S.Option>
-        ))}
-      </S.Selector>
+    <>
+      <MetaTag
+        title='포스팅 관리 - 토재웅'
+        desc='안녕하세요 !! 백엔드 개발자 토재웅 입니다. 첫째도 기본!! 둘째도 기본!! 기본에 충실하자 !!'
+        image='/images/profile.jpg'
+        url='https://tojaeung.com/admin/post'
+      />
+      <S.Container>
+        <S.Selector onChange={(e) => setCategoryId(Number(e.target.value))} value={categoryId}>
+          <S.Option value={undefined}>카테고리 선택하세요.</S.Option>
+          {categories?.map((category) => (
+            <S.Option value={category.id} key={category.id}>
+              {category.name} {category.postCnt}개
+            </S.Option>
+          ))}
+        </S.Selector>
 
-      <S.TitleInput placeholder='포스팅 제목' onChange={(e) => setTitle(e.target.value)} />
+        <S.TitleInput placeholder='포스팅 제목' onChange={(e) => setTitle(e.target.value)} />
 
-      <QuillEditor content={content} setContent={setContent} />
+        <QuillEditor content={content} setContent={setContent} />
 
-      <S.ThumbnailInput type='file' accept='image/*' onChange={onUploadImage} />
+        <S.ThumbnailInput type='file' accept='image/*' onChange={onUploadImage} />
 
-      <S.TagSearchBox>
-        <S.SearchTagInput placeholder='태그검색..' onChange={(e) => setKeyword(e.target.value)} />
-        <S.SearchButton onClick={handleSearchTagName}>검색</S.SearchButton>
-        {!searchedTags.length ? <p>검색된 태그가 없습니다.</p> : <p>{JSON.stringify(searchedTags)}</p>}
-      </S.TagSearchBox>
+        <S.TagSearchBox>
+          <S.SearchTagInput placeholder='태그검색..' onChange={(e) => setKeyword(e.target.value)} />
+          <S.SearchButton onClick={handleSearchTagName}>검색</S.SearchButton>
+          {!searchedTags.length ? <p>검색된 태그가 없습니다.</p> : <p>{JSON.stringify(searchedTags)}</p>}
+        </S.TagSearchBox>
 
-      <S.TagBox>
-        <S.TagInput placeholder='태그추가..' onChange={(e) => setTagName(e.target.value)} />
-        <S.AddTagButton onClick={() => setTags([...tags, tagName])}>추가</S.AddTagButton>
-        <S.InitButton onClick={() => setTags([])}>초기화</S.InitButton>
-        {!tags.length ? <p>추가된 태그가 없습니다.</p> : <p>{JSON.stringify(tags)}</p>}
-      </S.TagBox>
+        <S.TagBox>
+          <S.TagInput placeholder='태그추가..' onChange={(e) => setTagName(e.target.value)} />
+          <S.AddTagButton onClick={() => setTags([...tags, tagName])}>추가</S.AddTagButton>
+          <S.InitButton onClick={() => setTags([])}>초기화</S.InitButton>
+          {!tags.length ? <p>추가된 태그가 없습니다.</p> : <p>{JSON.stringify(tags)}</p>}
+        </S.TagBox>
 
-      <S.SubmitButton onClick={handleSubmit}>포스팅하기</S.SubmitButton>
-    </S.Container>
+        <S.SubmitButton onClick={handleSubmit}>포스팅하기</S.SubmitButton>
+      </S.Container>
+    </>
   );
 }
 

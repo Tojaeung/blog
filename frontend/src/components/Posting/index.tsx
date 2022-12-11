@@ -37,7 +37,7 @@ function Posting() {
   };
 
   return (
-    <S.Container>
+    <>
       <MetaTag
         title={post?.title || ''}
         desc={post?.content || ''}
@@ -45,32 +45,34 @@ function Posting() {
         image={post?.thumbnail || ''}
         url={`https://tojaeung.com/post/${postId}`}
       />
-      <S.Header>
-        <S.TitleBox>
-          <S.Title>{post?.title}</S.Title>
-          <S.Detail>
-            {post?.categoryName} | {post?.createdAt} | 조회수 {post?.views}
-          </S.Detail>
-        </S.TitleBox>
+      <S.Container>
+        <S.Header>
+          <S.TitleBox>
+            <S.Title>{post?.title}</S.Title>
+            <S.Detail>
+              {post?.categoryName} | {post?.createdAt} | 조회수 {post?.views}
+            </S.Detail>
+          </S.TitleBox>
 
-        {accessToken && (
-          <S.AdminButtonBox>
-            <S.CreateButton onClick={() => navigate('/admin/post')}>생성</S.CreateButton>
-            <S.DeleteButton onClick={handleDelete}>제거</S.DeleteButton>
-          </S.AdminButtonBox>
+          {accessToken && (
+            <S.AdminButtonBox>
+              <S.CreateButton onClick={() => navigate('/admin/post')}>생성</S.CreateButton>
+              <S.DeleteButton onClick={handleDelete}>제거</S.DeleteButton>
+            </S.AdminButtonBox>
+          )}
+        </S.Header>
+
+        <S.thumbnailImage src={post?.thumbnail} alt='포스팅 사진' />
+
+        {post?.content && (
+          <S.Content className='ql-editor ql-syntax' dangerouslySetInnerHTML={{ __html: post?.content || '' }} />
         )}
-      </S.Header>
 
-      <S.thumbnailImage src={post?.thumbnail} alt='포스팅 사진' />
-
-      {post?.content && (
-        <S.Content className='ql-editor ql-syntax' dangerouslySetInnerHTML={{ __html: post?.content || '' }} />
-      )}
-
-      <S.Line />
-      <S.Title>Tags</S.Title>
-      {post?.tags.length !== 0 && <TagBadges tags={post?.tags} />}
-    </S.Container>
+        <S.Line />
+        <S.Title>Tags</S.Title>
+        {post?.tags.length !== 0 && <TagBadges tags={post?.tags} />}
+      </S.Container>
+    </>
   );
 }
 

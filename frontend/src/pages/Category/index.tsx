@@ -8,6 +8,7 @@ import { getPostsInCategory } from 'apis/post';
 import BlogPost from 'components/BlogPost';
 import BlogCategory from 'components/BlogCategory';
 import Pagination from 'components/Pagination';
+import MetaTag from 'layouts/MetaTag';
 
 import * as S from './style';
 
@@ -23,22 +24,30 @@ function Category() {
   );
 
   return (
-    <S.Container>
-      <BlogCategory />
-      <S.TitleBox>
-        <S.Title>{selectedCategory?.name}</S.Title>
-        <S.PostCntBadge>{selectedCategory?.postCnt}</S.PostCntBadge>
-      </S.TitleBox>
-      <S.Detail>{selectedCategory?.name} 관련된 포스팅을 모아놓았습니다.</S.Detail>
-      <BlogPost posts={page?.posts} />
-      <Pagination
-        pageNum={pageNum}
-        setPageNum={setPageNum}
-        blockNum={blockNum}
-        setBlockNum={setBlockNum}
-        totalCnt={page?.totalCnt}
+    <>
+      <MetaTag
+        title={`${selectedCategory?.name} 카테고리 - 토재웅`}
+        desc='안녕하세요 !! 백엔드 개발자 토재웅 입니다. 첫째도 기본!! 둘째도 기본!! 기본에 충실하자 !!'
+        image='/images/profile.jpg'
+        url={`https://tojaeung.com/category/${selectedCategory?.id}`}
       />
-    </S.Container>
+      <S.Container>
+        <BlogCategory />
+        <S.TitleBox>
+          <S.Title>{selectedCategory?.name}</S.Title>
+          <S.PostCntBadge>{selectedCategory?.postCnt}</S.PostCntBadge>
+        </S.TitleBox>
+        <S.Detail>{selectedCategory?.name} 관련된 포스팅을 모아놓았습니다.</S.Detail>
+        <BlogPost posts={page?.posts} />
+        <Pagination
+          pageNum={pageNum}
+          setPageNum={setPageNum}
+          blockNum={blockNum}
+          setBlockNum={setBlockNum}
+          totalCnt={page?.totalCnt}
+        />
+      </S.Container>
+    </>
   );
 }
 

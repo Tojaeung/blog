@@ -4,6 +4,7 @@ import { useQuery, useMutation, useQueryClient } from 'react-query';
 import { addGuestbook, deleteGuestbook, getGuestbooks } from 'apis/guestbook';
 
 import HomeCategory from 'components/HomeCategory';
+import MetaTag from 'layouts/MetaTag';
 
 import * as S from './style';
 
@@ -48,37 +49,45 @@ function Guestbook() {
   };
 
   return (
-    <S.Container>
-      <S.GuestbookSection>
-        <S.Title>방명록</S.Title>
+    <>
+      <MetaTag
+        title='방명록 - 토재웅'
+        desc='안녕하세요 !! 백엔드 개발자 토재웅 입니다. 첫째도 기본!! 둘째도 기본!! 기본에 충실하자 !!'
+        image='/images/profile.jpg'
+        url='https://tojaeung.com/guestbook'
+      />
+      <S.Container>
+        <S.GuestbookSection>
+          <S.Title>방명록</S.Title>
 
-        <S.FormBox>
-          <S.AuthorInput placeholder='이름' value={author} onChange={(e) => setAuthor(e.target.value)} />
-          <S.ContentInput
-            placeholder='여러분의 소중한 방명록을 남겨주세요!! 🙏'
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
-          />
-          <S.SubmitButton onClick={handleSubmit}>방명록 남기기</S.SubmitButton>
-        </S.FormBox>
+          <S.FormBox>
+            <S.AuthorInput placeholder='이름' value={author} onChange={(e) => setAuthor(e.target.value)} />
+            <S.ContentInput
+              placeholder='여러분의 소중한 방명록을 남겨주세요!! 🙏'
+              value={content}
+              onChange={(e) => setContent(e.target.value)}
+            />
+            <S.SubmitButton onClick={handleSubmit}>방명록 남기기</S.SubmitButton>
+          </S.FormBox>
 
-        <S.GuestbookBox>
-          {guestbooks?.map((guestbook) => (
-            <S.GuestbookList key={guestbook.id}>
-              <S.AuthorBox>
-                {/* 관리자 방명록일 경우 스타일 추가 */}
-                <S.Author>{!guestbook.isAdmin ? guestbook.author : `👑${guestbook.author}`}</S.Author>
-                <S.DateTime>({guestbook.createdAt})</S.DateTime>
-                {accessToken && <S.DeleteButton onClick={() => handleDelete(guestbook.id)}>삭제</S.DeleteButton>}
-              </S.AuthorBox>
+          <S.GuestbookBox>
+            {guestbooks?.map((guestbook) => (
+              <S.GuestbookList key={guestbook.id}>
+                <S.AuthorBox>
+                  {/* 관리자 방명록일 경우 스타일 추가 */}
+                  <S.Author>{!guestbook.isAdmin ? guestbook.author : `👑${guestbook.author}`}</S.Author>
+                  <S.DateTime>({guestbook.createdAt})</S.DateTime>
+                  {accessToken && <S.DeleteButton onClick={() => handleDelete(guestbook.id)}>삭제</S.DeleteButton>}
+                </S.AuthorBox>
 
-              <S.Content>{guestbook.content}</S.Content>
-            </S.GuestbookList>
-          ))}
-        </S.GuestbookBox>
-      </S.GuestbookSection>
-      <HomeCategory />
-    </S.Container>
+                <S.Content>{guestbook.content}</S.Content>
+              </S.GuestbookList>
+            ))}
+          </S.GuestbookBox>
+        </S.GuestbookSection>
+        <HomeCategory />
+      </S.Container>
+    </>
   );
 }
 
