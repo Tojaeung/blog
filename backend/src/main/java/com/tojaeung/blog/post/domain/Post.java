@@ -20,44 +20,43 @@ import java.util.List;
 @AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
 public class Post {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "post_id")
-    private Long id;
-    @Column
-    private String title;
-    @Lob
-    @Column
-    private String content;
-    @Column
-    private int views;
-    @Column
-    private String thumbnail;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "post_id")
+	private Long id;
+	@Column
+	private String title;
+	@Lob
+	@Column
+	private String content;
+	@Column
+	private int views;
+	@Column
+	private String thumbnail;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "category_id")
-    private Category category;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "category_id")
+	private Category category;
 
-    @OneToMany(mappedBy = "post", orphanRemoval = true)
-    List<Comment> comments;
+	@OneToMany(mappedBy = "post", orphanRemoval = true)
+	List<Comment> comments;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "post", orphanRemoval = true)
-    List<Tag> tags;
+	@JsonIgnore
+	@OneToMany(mappedBy = "post", orphanRemoval = true)
+	List<Tag> tags;
 
-    @CreatedDate
-    @Column(name = "created_at", nullable = false, updatable = false)
-    private LocalDate createdAt;
-    @LastModifiedDate
-    @Column(name = "last_modified_at", nullable = false)
-    private LocalDate lastModifiedAt;
+	@CreatedDate
+	@Column(name = "created_at", nullable = false, updatable = false)
+	private LocalDate createdAt;
+	@LastModifiedDate
+	@Column(name = "last_modified_at", nullable = false)
+	private LocalDate lastModifiedAt;
 
-    // 변경감지를 위한 엔티티 업데이트
-    public void update(Post post) {
-        this.title = post.getTitle();
-        this.content = post.getContent();
-        this.thumbnail = post.getThumbnail();
-        this.category = post.getCategory();
-    }
+	// 변경감지를 위한 엔티티 업데이트
+	public void update(Post post) {
+		this.title = post.getTitle();
+		this.content = post.getContent();
+
+	}
 
 }
