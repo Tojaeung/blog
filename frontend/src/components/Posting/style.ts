@@ -37,6 +37,21 @@ export const DeleteButton = styled(CommonButtonStyle)``;
 export const Title = styled(CommonTitleStyle)``;
 export const Detail = styled(CommonTextStyle)``;
 
+export const ThumbnailBox = styled.div`
+  position: relative;
+`;
+
+export const UpdateThumbnailBox = styled.div`
+  display: flex;
+  align-items: center;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+`;
+
+export const ThumbnailInput = styled.input``;
+export const UpdateThumbnailButton = styled(CommonButtonStyle)``;
+
 export const thumbnailImage = styled.img`
   width: 100%;
 `;
