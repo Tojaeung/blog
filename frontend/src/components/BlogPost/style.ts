@@ -26,6 +26,7 @@ export const PostList = styled(CommonCardStyle)`
 
 export const PostImage = styled.img`
   width: 100%;
+  aspect-ratio: 1.3333333/ 1;
 `;
 
 export const Title = styled.h1`
