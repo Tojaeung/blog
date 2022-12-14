@@ -157,13 +157,8 @@ public class PostService {
 		Post findPost = postRepository.findById(postId)
 				.orElseThrow(() -> new CustomException(ExceptionCode.NOT_FOUND_POST));
 
-		Post updatedPost = Post.builder()
-				.title(updateReqDto.getUpdatedTitle())
-				.content(updateReqDto.getUpdatedContent())
-				.build();
-
 		// 변경감지 사용
-		findPost.update(updatedPost);
+		findPost.updatePosting(updateReqDto.getUpdatedTitle(), updateReqDto.getUpdatedContent());
 	}
 
 	// 포스팅 제거
