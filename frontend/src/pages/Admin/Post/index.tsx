@@ -40,21 +40,24 @@ function Post() {
   };
 
   const handleSubmit = async () => {
-    const body = { title, content, tags };
+    const confirm = prompt('정말로 포스팅 하시겠습니까?("포스팅" 입력시, 실행된다.)', '');
+    if (confirm === '포스팅') {
+      const body = { title, content, tags };
 
-    const formData = new FormData();
-    formData.append('thumbnail', thumbnail as File);
-    formData.append('createReqDto', new Blob([JSON.stringify(body)], { type: 'application/json' }));
+      const formData = new FormData();
+      formData.append('thumbnail', thumbnail as File);
+      formData.append('createReqDto', new Blob([JSON.stringify(body)], { type: 'application/json' }));
 
-    try {
-      if (typeof categoryId === 'undefined') return alert('카테고리를 선택해주세요 !!');
+      try {
+        if (typeof categoryId === 'undefined') return alert('카테고리를 선택해주세요 !!');
 
-      const newPostId = await addPost(categoryId, formData);
-      alert('포스팅 되었습니다.');
-      navigate(`/post/${newPostId}`);
-    } catch (e: any) {
-      alert(e.response.data.message);
-    }
+        const newPostId = await addPost(categoryId, formData);
+        alert('포스팅 되었습니다.');
+        navigate(`/post/${newPostId}`);
+      } catch (e: any) {
+        alert(e.response.data.message);
+      }
+    } else alert('포스팅 되지 않았습니다.');
   };
 
   return (
