@@ -77,6 +77,11 @@ export const EditorStyle = css`
     width: 100%;
   }
 
+  a {
+    color: blue;
+    text-decoration: underline;
+  }
+
   .ql-syntax {
     font-family: ${({ theme }) => theme.font.en};
     font-size: 14px;
