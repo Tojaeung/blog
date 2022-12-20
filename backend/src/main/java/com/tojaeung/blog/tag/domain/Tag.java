@@ -13,15 +13,15 @@ import javax.persistence.*;
 @AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
 public class Tag {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "tag_id")
-    private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "tag_id")
+	private Long id;
 
-    @Column
-    private String name;
+	@Column
+	private String name;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "post_id")
-    private Post post;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "post_id")
+	private Post post;
 }

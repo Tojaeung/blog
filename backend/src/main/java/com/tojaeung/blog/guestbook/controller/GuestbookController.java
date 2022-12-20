@@ -14,30 +14,30 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 public class GuestbookController {
-    private final GuestbookService guestbookService;
+	private final GuestbookService guestbookService;
 
-    // 방명록 새로 생성
-    @PostMapping("api/guestbook")
-    public ResponseEntity<GuestbookResDto> create(
-            @Valid @RequestBody CreateReqDto createReqDto) {
+	// 방명록 새로 생성
+	@PostMapping("api/guestbook")
+	public ResponseEntity<GuestbookResDto> create(
+			@Valid @RequestBody CreateReqDto createReqDto) {
 
-        GuestbookResDto newGuestBook = guestbookService.create(createReqDto);
+		GuestbookResDto newGuestBook = guestbookService.create(createReqDto);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(newGuestBook);
-    }
+		return ResponseEntity.status(HttpStatus.CREATED).body(newGuestBook);
+	}
 
-    // 방명록 가져오기
-    @GetMapping("api/guestbook")
-    public ResponseEntity<List<GuestbookResDto>> findAllGuestbooks() {
+	// 방명록 가져오기
+	@GetMapping("api/guestbook")
+	public ResponseEntity<List<GuestbookResDto>> findAllGuestbooks() {
 
-        return ResponseEntity.ok(guestbookService.findAllGuestBooks());
-    }
+		return ResponseEntity.ok(guestbookService.findAllGuestBooks());
+	}
 
-    // 방명록 삭제
-    @DeleteMapping("api/admin/guestbook/{guestbookId}")
-    public ResponseEntity<Long> delete(@PathVariable Long guestbookId) {
-        guestbookService.delete(guestbookId);
+	// 방명록 삭제
+	@DeleteMapping("api/admin/guestbook/{guestbookId}")
+	public ResponseEntity<Long> delete(@PathVariable Long guestbookId) {
+		guestbookService.delete(guestbookId);
 
-        return ResponseEntity.ok(guestbookId);
-    }
+		return ResponseEntity.ok(guestbookId);
+	}
 }

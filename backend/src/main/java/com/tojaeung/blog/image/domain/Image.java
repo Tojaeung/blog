@@ -12,17 +12,17 @@ import javax.persistence.*;
 @AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
 public class Image {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "image_id")
-    private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "image_id")
+	private Long id;
 
-    @Column
-    private String originalName;    // 원래 파일이름
+	@Column
+	private String originalName; // 원래 파일이름
 
-    @Column
-    private String savedName;   // UUID + 확장자 (실질적인 파일이름)
+	@Column
+	private String savedName; // UUID + 확장자 (실질적인 파일이름)
 
-    @Column
-    private String savedPath;   // 파일 저장경로
+	@Column
+	private String savedPath; // 파일 저장경로
 }

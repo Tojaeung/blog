@@ -11,11 +11,11 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class CustomUserDetailService implements UserDetailsService {
 
-    private final AuthRepository adminReposiroty;
+	private final AuthRepository adminReposiroty;
 
-    @Override
-    public UserDetails loadUserByUsername(String admin) throws UsernameNotFoundException {
-        return adminReposiroty.findByUsername(admin)
-                .orElseThrow(() -> new UsernameNotFoundException("사용자를 찾을 수 없습니다."));
-    }
+	@Override
+	public UserDetails loadUserByUsername(String admin) throws UsernameNotFoundException {
+		return adminReposiroty.findByUsername(admin)
+				.orElseThrow(() -> new UsernameNotFoundException("사용자를 찾을 수 없습니다."));
+	}
 }

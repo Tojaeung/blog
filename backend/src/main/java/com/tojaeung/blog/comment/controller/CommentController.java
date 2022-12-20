@@ -14,42 +14,42 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 public class CommentController {
-    private final CommentService commentService;
+	private final CommentService commentService;
 
-    // 댓글 새로 생성
-    @PostMapping(value = { "api/post/{postId}/comment" })
-    public ResponseEntity<CommentResDto> create(
-            @PathVariable(value = "postId") Long postId,
-            @Valid @RequestBody CreateReqDto createReqDto) {
-        CommentResDto newComment = commentService.create(postId, createReqDto);
+	// 댓글 새로 생성
+	@PostMapping(value = { "api/post/{postId}/comment" })
+	public ResponseEntity<CommentResDto> create(
+			@PathVariable(value = "postId") Long postId,
+			@Valid @RequestBody CreateReqDto createReqDto) {
+		CommentResDto newComment = commentService.create(postId, createReqDto);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(newComment);
-    }
+		return ResponseEntity.status(HttpStatus.CREATED).body(newComment);
+	}
 
-    // 자식댓글 새로 생성
-    @PostMapping(value = { "api/post/{postId}/comment/{parentId}" })
-    public ResponseEntity<CommentResDto> createChild(
-            @PathVariable(value = "postId") Long postId,
-            @PathVariable(value = "parentId", required = false) Long parentId,
-            @Valid @RequestBody CreateReqDto createReqDto) {
+	// 자식댓글 새로 생성
+	@PostMapping(value = { "api/post/{postId}/comment/{parentId}" })
+	public ResponseEntity<CommentResDto> createChild(
+			@PathVariable(value = "postId") Long postId,
+			@PathVariable(value = "parentId", required = false) Long parentId,
+			@Valid @RequestBody CreateReqDto createReqDto) {
 
-        CommentResDto newComment = commentService.createChild(postId, parentId, createReqDto);
+		CommentResDto newComment = commentService.createChild(postId, parentId, createReqDto);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(newComment);
-    }
+		return ResponseEntity.status(HttpStatus.CREATED).body(newComment);
+	}
 
-    // 댓글 가져오기
-    @GetMapping("api/post/{postId}/comment")
-    public ResponseEntity<List<CommentResDto>> findCommentsInPost(@PathVariable Long postId) {
+	// 댓글 가져오기
+	@GetMapping("api/post/{postId}/comment")
+	public ResponseEntity<List<CommentResDto>> findCommentsInPost(@PathVariable Long postId) {
 
-        return ResponseEntity.ok(commentService.findCommentsInPost(postId));
-    }
+		return ResponseEntity.ok(commentService.findCommentsInPost(postId));
+	}
 
-    // 댓글 삭제
-    @DeleteMapping("api/admin/comment/{commentId}")
-    public ResponseEntity<Long> delete(@PathVariable Long commentId) {
-        commentService.delete(commentId);
+	// 댓글 삭제
+	@DeleteMapping("api/admin/comment/{commentId}")
+	public ResponseEntity<Long> delete(@PathVariable Long commentId) {
+		commentService.delete(commentId);
 
-        return ResponseEntity.ok(commentId);
-    }
+		return ResponseEntity.ok(commentId);
+	}
 }

@@ -20,50 +20,50 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class ImageUtil {
 
-    @Value("${cloud.aws.s3.bucket}")
-    private String bucket;
-    private final AmazonS3Client amazonS3Client;
+	@Value("${cloud.aws.s3.bucket}")
+	private String bucket;
+	private final AmazonS3Client amazonS3Client;
 
-    /**
-     * 썸네일을 Aws S3에 저장하는 함수
-     *
-     * @param multipartFile 썸네일 File 객체
-     * @return 썸네일이 저장된 Url 리턴
-     */
-    public Image saveToAwsS3(MultipartFile multipartFile) {
-        if (multipartFile.isEmpty())
-            return null;
+	/**
+	 * 썸네일을 Aws S3에 저장하는 함수
+	 *
+	 * @param multipartFile 썸네일 File 객체
+	 * @return 썸네일이 저장된 Url 리턴
+	 */
+	public Image saveToAwsS3(MultipartFile multipartFile) {
+		if (multipartFile.isEmpty())
+			return null;
 
-        String originalName = multipartFile.getOriginalFilename();
-        // 파일 이름으로 쓸 uuid 생성
-        String uuid = UUID.randomUUID().toString();
+		String originalName = multipartFile.getOriginalFilename();
+		// 파일 이름으로 쓸 uuid 생성
+		String uuid = UUID.randomUUID().toString();
 
-        // 확장자 추출(ex : .png)
-        String extension = originalName.substring(originalName.lastIndexOf("."));
+		// 확장자 추출(ex : .png)
+		String extension = originalName.substring(originalName.lastIndexOf("."));
 
-        // uuid와 확장자 결합
-        String savedName = uuid + extension;
+		// uuid와 확장자 결합
+		String savedName = uuid + extension;
 
-        // 파일을 불러올 때 사용할 파일 경로
-        String savedPath = "https://" + bucket + ".s3.ap-northeast-2.amazonaws.com/" + savedName;
+		// 파일을 불러올 때 사용할 파일 경로
+		String savedPath = "https://" + bucket + ".s3.ap-northeast-2.amazonaws.com/" + savedName;
 
-        ObjectMetadata objectMetadata = new ObjectMetadata();
-        objectMetadata.setContentLength(multipartFile.getSize());
-        objectMetadata.setContentType(multipartFile.getContentType());
+		ObjectMetadata objectMetadata = new ObjectMetadata();
+		objectMetadata.setContentLength(multipartFile.getSize());
+		objectMetadata.setContentType(multipartFile.getContentType());
 
-        try (InputStream inputStream = multipartFile.getInputStream()) {
-            amazonS3Client.putObject(new PutObjectRequest(bucket, savedName, inputStream, objectMetadata)
-                    .withCannedAcl(CannedAccessControlList.PublicRead));
-        } catch (IOException e) {
-            throw new CustomException(ExceptionCode.FAILED_IMAGE_UPLOAD);
-        }
+		try (InputStream inputStream = multipartFile.getInputStream()) {
+			amazonS3Client.putObject(new PutObjectRequest(bucket, savedName, inputStream, objectMetadata)
+					.withCannedAcl(CannedAccessControlList.PublicRead));
+		} catch (IOException e) {
+			throw new CustomException(ExceptionCode.FAILED_IMAGE_UPLOAD);
+		}
 
-        Image image = Image.builder()
-                .originalName(originalName)
-                .savedName(savedName)
-                .savedPath(savedPath)
-                .build();
+		Image image = Image.builder()
+				.originalName(originalName)
+				.savedName(savedName)
+				.savedPath(savedPath)
+				.build();
 
-        return image;
-    }
+		return image;
+	}
 }

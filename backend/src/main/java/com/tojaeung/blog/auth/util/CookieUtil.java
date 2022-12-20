@@ -8,18 +8,18 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class CookieUtil {
-    private final JwtTokenProvider jwtTokenProvider;
+	private final JwtTokenProvider jwtTokenProvider;
 
-    public ResponseCookie createRefreshCookie(String username) {
-        ResponseCookie cookie = ResponseCookie.from("refreshToken", jwtTokenProvider.createRefreshToken(username))
-                .secure(true)
-                .httpOnly(true)
-                .sameSite("Lax")
-                .maxAge(14 * 24 * 60 * 60)
-                .path("/")
-                .build();
+	public ResponseCookie createRefreshCookie(String username) {
+		ResponseCookie cookie = ResponseCookie.from("refreshToken", jwtTokenProvider.createRefreshToken(username))
+				.secure(true)
+				.httpOnly(true)
+				.sameSite("Lax")
+				.maxAge(14 * 24 * 60 * 60)
+				.path("/")
+				.build();
 
-        return cookie;
-    }
+		return cookie;
+	}
 
 }

@@ -6,11 +6,11 @@ import java.util.UUID;
 
 @Getter
 public class AllTagResDto {
-    private UUID id;
-    private String tagName;
+	private UUID id;
+	private String tagName;
 
-    public AllTagResDto(UUID id, String tagName) {
-        this.id = id;
-        this.tagName = tagName;
-    }
+	public AllTagResDto(UUID id, String tagName) {
+		this.id = id;
+		this.tagName = tagName;
+	}
 }

@@ -10,20 +10,20 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 @Getter
 public class ExceptionResponse {
 
-    private int exceptionCode;
-    private String message;
-    private int statusCode;
+	private int exceptionCode;
+	private String message;
+	private int statusCode;
 
-    public ExceptionResponse(ExceptionCode exceptionCode) {
-        this.exceptionCode = exceptionCode.getExceptionCode();
-        this.message = exceptionCode.getMessage();
-        this.statusCode = exceptionCode.getStatusCode();
-    }
+	public ExceptionResponse(ExceptionCode exceptionCode) {
+		this.exceptionCode = exceptionCode.getExceptionCode();
+		this.message = exceptionCode.getMessage();
+		this.statusCode = exceptionCode.getStatusCode();
+	}
 
-    // 유효성 검증 validation
-    public ExceptionResponse(MethodArgumentNotValidException e) {
-        this.exceptionCode = 2000;
-        this.message = e.getFieldErrors().get(0).getDefaultMessage();
-        this.statusCode = 400;
-    }
+	// 유효성 검증 validation
+	public ExceptionResponse(MethodArgumentNotValidException e) {
+		this.exceptionCode = 2000;
+		this.message = e.getFieldErrors().get(0).getDefaultMessage();
+		this.statusCode = 400;
+	}
 }

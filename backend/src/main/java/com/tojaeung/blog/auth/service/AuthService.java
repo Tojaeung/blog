@@ -13,65 +13,66 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class AuthService {
-    private final AuthRepository authRepository;
-    private final PasswordEncoder passwordEncoder;
-    private final JwtTokenProvider jwtTokenProvider;
+	private final AuthRepository authRepository;
+	private final PasswordEncoder passwordEncoder;
+	private final JwtTokenProvider jwtTokenProvider;
 
-    public AuthResponseDto login(Admin admin) {
-        // 아이디가 존재 하는지
-        Admin findAdmin = authRepository.findByUsername(admin.getUsername())
-                .orElseThrow(() -> new CustomException(ExceptionCode.INVALID_ADMIN_USERNAME));
+	public AuthResponseDto login(Admin admin) {
+		// 아이디가 존재 하는지
+		Admin findAdmin = authRepository.findByUsername(admin.getUsername())
+				.orElseThrow(() -> new CustomException(ExceptionCode.INVALID_ADMIN_USERNAME));
 
-        // 비밀번호가 맞는지
-        if (findAdmin.checkPassword(admin.getPassword(), passwordEncoder)) {
-            return AuthResponseDto.builder()
-                    .accessToken(jwtTokenProvider.createAccessToken(findAdmin.getUsername(), findAdmin.getRoles()))
-                    .username(findAdmin.getUsername())
-                    .build();
-        } else throw new CustomException(ExceptionCode.INVALID_ADMIN_PASSWORD);
-    }
+		// 비밀번호가 맞는지
+		if (findAdmin.checkPassword(admin.getPassword(), passwordEncoder)) {
+			return AuthResponseDto.builder()
+					.accessToken(jwtTokenProvider.createAccessToken(findAdmin.getUsername(), findAdmin.getRoles()))
+					.username(findAdmin.getUsername())
+					.build();
+		} else
+			throw new CustomException(ExceptionCode.INVALID_ADMIN_PASSWORD);
+	}
 
-    public AuthResponseDto persist(String refreshToken) {
-        String username;
+	public AuthResponseDto persist(String refreshToken) {
+		String username;
 
-        if (refreshToken != null && jwtTokenProvider.validateToken(refreshToken)) {
-            username = jwtTokenProvider.getUsername(refreshToken);
-        } else {
-            throw new CustomException(ExceptionCode.INVALID_REFRESH_TOKEN);
-        }
+		if (refreshToken != null && jwtTokenProvider.validateToken(refreshToken)) {
+			username = jwtTokenProvider.getUsername(refreshToken);
+		} else {
+			throw new CustomException(ExceptionCode.INVALID_REFRESH_TOKEN);
+		}
 
-        Admin findAdmin = authRepository.findByUsername(username)
-                .orElseThrow(() -> new CustomException(ExceptionCode.NOT_FOUND_ADMIN));
+		Admin findAdmin = authRepository.findByUsername(username)
+				.orElseThrow(() -> new CustomException(ExceptionCode.NOT_FOUND_ADMIN));
 
-        // 엑세스토큰 유저정보 응답
-        AuthResponseDto authResponseDto = AuthResponseDto.builder()
-                .accessToken(jwtTokenProvider.createAccessToken(findAdmin.getUsername(), findAdmin.getRoles()))
-                .username(findAdmin.getUsername())
-                .build();
+		// 엑세스토큰 유저정보 응답
+		AuthResponseDto authResponseDto = AuthResponseDto.builder()
+				.accessToken(jwtTokenProvider.createAccessToken(findAdmin.getUsername(), findAdmin.getRoles()))
+				.username(findAdmin.getUsername())
+				.build();
 
-        return authResponseDto;
+		return authResponseDto;
 
-    }
+	}
 
-    public AuthResponseDto reissue(String refreshToken) {
-        String username;
+	public AuthResponseDto reissue(String refreshToken) {
+		String username;
 
-        if (refreshToken != null && jwtTokenProvider.validateToken(refreshToken)) {
-            username = jwtTokenProvider.getUsername(refreshToken);
-        } else {
-            throw new CustomException(ExceptionCode.INVALID_REFRESH_TOKEN);
-        }
+		if (refreshToken != null && jwtTokenProvider.validateToken(refreshToken)) {
+			username = jwtTokenProvider.getUsername(refreshToken);
+		} else {
+			throw new CustomException(ExceptionCode.INVALID_REFRESH_TOKEN);
+		}
 
-        Admin findAdmin = authRepository.findByUsername(username)
-                .orElseThrow(() -> new CustomException(ExceptionCode.NOT_FOUND_ADMIN));
+		Admin findAdmin = authRepository.findByUsername(username)
+				.orElseThrow(() -> new CustomException(ExceptionCode.NOT_FOUND_ADMIN));
 
-        // 엑세스토큰 유저정보 응답
-        AuthResponseDto refreshResponseDto = AuthResponseDto.builder()
-                .accessToken(jwtTokenProvider.createAccessToken(findAdmin.getUsername(), findAdmin.getRoles()))
-                .username(findAdmin.getUsername())
-                .build();
+		// 엑세스토큰 유저정보 응답
+		AuthResponseDto refreshResponseDto = AuthResponseDto.builder()
+				.accessToken(jwtTokenProvider.createAccessToken(findAdmin.getUsername(), findAdmin.getRoles()))
+				.username(findAdmin.getUsername())
+				.build();
 
-        return refreshResponseDto;
+		return refreshResponseDto;
 
-    }
+	}
 }

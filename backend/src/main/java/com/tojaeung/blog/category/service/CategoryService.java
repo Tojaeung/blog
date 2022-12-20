@@ -16,58 +16,58 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class CategoryService {
-    private final CategoryRepository categoryRepository;
+	private final CategoryRepository categoryRepository;
 
-    // 카테고리 생성
-    @Transactional
-    public PostCntResDto create(CreateReqDto createReqDto) {
-        Category category = Category.builder()
-                .name(createReqDto.getName())
-                .build();
+	// 카테고리 생성
+	@Transactional
+	public PostCntResDto create(CreateReqDto createReqDto) {
+		Category category = Category.builder()
+				.name(createReqDto.getName())
+				.build();
 
-        Category newCategory = categoryRepository.save(category);
+		Category newCategory = categoryRepository.save(category);
 
-        return new PostCntResDto(newCategory.getId(), newCategory.getName(), 0);
-    }
+		return new PostCntResDto(newCategory.getId(), newCategory.getName(), 0);
+	}
 
-    // 모든 카테고리 가져오기
-    @Transactional(readOnly = true)
-    public List<PostCntResDto> findAllCntPostsInCategory() {
-        List<PostCntResDto> allCategories = categoryRepository.findAllCntPostsInCategory();
+	// 모든 카테고리 가져오기
+	@Transactional(readOnly = true)
+	public List<PostCntResDto> findAllCntPostsInCategory() {
+		List<PostCntResDto> allCategories = categoryRepository.findAllCntPostsInCategory();
 
-        return allCategories;
-    }
+		return allCategories;
+	}
 
-    // 특정 카테고리 가져오기
-    @Transactional(readOnly = true)
-    public PostCntResDto findOneCntPostsInCategory(Long categoryId) {
-        PostCntResDto category = categoryRepository.findOneCntPostsInCategory(categoryId);
+	// 특정 카테고리 가져오기
+	@Transactional(readOnly = true)
+	public PostCntResDto findOneCntPostsInCategory(Long categoryId) {
+		PostCntResDto category = categoryRepository.findOneCntPostsInCategory(categoryId);
 
-        return category;
-    }
+		return category;
+	}
 
-    // 카테고리 수정
-    @Transactional
-    public PostCntResDto update(Long categoryId, UpdateReqDto updateReqDto) {
-        Category findCategory = categoryRepository.findById(categoryId)
-                .orElseThrow(() -> new CustomException(ExceptionCode.NOT_FOUND_CATEGORY));
+	// 카테고리 수정
+	@Transactional
+	public PostCntResDto update(Long categoryId, UpdateReqDto updateReqDto) {
+		Category findCategory = categoryRepository.findById(categoryId)
+				.orElseThrow(() -> new CustomException(ExceptionCode.NOT_FOUND_CATEGORY));
 
-        Category category = Category.builder()
-                .name(updateReqDto.getUpdatedName())
-                .build();
+		Category category = Category.builder()
+				.name(updateReqDto.getUpdatedName())
+				.build();
 
-        findCategory.update(category);
+		findCategory.update(category);
 
-        return new PostCntResDto(findCategory.getId(), findCategory.getName(), findCategory.getPosts().size());
-    }
+		return new PostCntResDto(findCategory.getId(), findCategory.getName(), findCategory.getPosts().size());
+	}
 
-    // 카테고리 삭제
-    @Transactional
-    public void delete(Long categoryId) {
-        if (!categoryRepository.existsById(categoryId)) {
-            throw new CustomException(ExceptionCode.NOT_FOUND_CATEGORY);
-        } else {
-            categoryRepository.deleteById(categoryId);
-        }
-    }
+	// 카테고리 삭제
+	@Transactional
+	public void delete(Long categoryId) {
+		if (!categoryRepository.existsById(categoryId)) {
+			throw new CustomException(ExceptionCode.NOT_FOUND_CATEGORY);
+		} else {
+			categoryRepository.deleteById(categoryId);
+		}
+	}
 }

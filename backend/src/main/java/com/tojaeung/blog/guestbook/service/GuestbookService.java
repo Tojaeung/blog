@@ -16,42 +16,42 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class GuestbookService {
-    private final GuestbookRepository guestbookRepository;
+	private final GuestbookRepository guestbookRepository;
 
-    // 방명록 생성
-    @Transactional
-    public GuestbookResDto create(CreateReqDto createReqDto) {
+	// 방명록 생성
+	@Transactional
+	public GuestbookResDto create(CreateReqDto createReqDto) {
 
-        Guestbook guestbook = Guestbook.builder()
-                .author(createReqDto.getAuthor())
-                .content(createReqDto.getContent())
-                .isAdmin(createReqDto.getIsAdmin())
-                .build();
+		Guestbook guestbook = Guestbook.builder()
+				.author(createReqDto.getAuthor())
+				.content(createReqDto.getContent())
+				.isAdmin(createReqDto.getIsAdmin())
+				.build();
 
-        Guestbook savedGuestbook = guestbookRepository.save(guestbook);
+		Guestbook savedGuestbook = guestbookRepository.save(guestbook);
 
-        return new GuestbookResDto(savedGuestbook);
-    }
+		return new GuestbookResDto(savedGuestbook);
+	}
 
-    // 포스팅의 댓글들 조회하기
+	// 포스팅의 댓글들 조회하기
 
-    @Transactional(readOnly = true)
-    public List<GuestbookResDto> findAllGuestBooks() {
+	@Transactional(readOnly = true)
+	public List<GuestbookResDto> findAllGuestBooks() {
 
-        List<Guestbook> findGuestbooks = guestbookRepository.findAllGuestbooks();
+		List<Guestbook> findGuestbooks = guestbookRepository.findAllGuestbooks();
 
-        List<GuestbookResDto> allGuestbooks = findGuestbooks.stream()
-                .map(guestbook -> new GuestbookResDto(guestbook))
-                .collect(Collectors.toList());
+		List<GuestbookResDto> allGuestbooks = findGuestbooks.stream()
+				.map(guestbook -> new GuestbookResDto(guestbook))
+				.collect(Collectors.toList());
 
-        return allGuestbooks;
-    }
+		return allGuestbooks;
+	}
 
-    @Transactional
-    public void delete(Long guestbookId) {
-        if (!guestbookRepository.existsById(guestbookId)) {
-            throw new CustomException(ExceptionCode.NOT_FOUND_GUESTBOOK);
-        }
-        guestbookRepository.deleteById(guestbookId);
-    }
+	@Transactional
+	public void delete(Long guestbookId) {
+		if (!guestbookRepository.existsById(guestbookId)) {
+			throw new CustomException(ExceptionCode.NOT_FOUND_GUESTBOOK);
+		}
+		guestbookRepository.deleteById(guestbookId);
+	}
 }

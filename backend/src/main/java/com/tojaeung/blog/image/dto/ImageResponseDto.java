@@ -4,11 +4,11 @@ import lombok.Getter;
 
 @Getter
 public class ImageResponseDto {
-    private Long imageId;
-    private String imageUrl;
+	private Long imageId;
+	private String imageUrl;
 
-    public ImageResponseDto(Long imageId, String imageUrl) {
-        this.imageId = imageId;
-        this.imageUrl = imageUrl;
-    }
+	public ImageResponseDto(Long imageId, String imageUrl) {
+		this.imageId = imageId;
+		this.imageUrl = imageUrl;
+	}
 }
