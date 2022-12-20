@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useQuery, useMutation } from 'react-query';
+import { useQuery, useMutation, useQueryClient } from 'react-query';
 
 import { addCategory, deleteCategory, getCategories, updateCategory } from 'apis/category';
 
@@ -7,6 +7,8 @@ import * as S from './style';
 import MetaTag from 'layouts/MetaTag';
 
 function Category() {
+  const queryCache = useQueryClient();
+
   const [newCategoryName, setNewCategoryName] = useState('');
   const [updatedName, setUpdatedName] = useState('');
 
@@ -15,9 +17,39 @@ function Category() {
   const { mutate: updateCategoryMutate } = useMutation(updateCategory);
   const { mutate: deleteCategoryMutate } = useMutation(deleteCategory);
 
-  const handleCreate = async () => addCategoryMutate(newCategoryName);
-  const handleUpdate = async (categoryId: number) => updateCategoryMutate({ categoryId, updatedName });
-  const handleDelete = async (categoryId: number) => deleteCategoryMutate(categoryId);
+  const handleCreate = async () =>
+    addCategoryMutate(newCategoryName, {
+      onSuccess: () => {
+        queryCache.invalidateQueries({ queryKey: ['categories'] });
+        alert('카테고리 생성되었습니다.');
+      },
+      onError: (e: any) => {
+        alert(e.response.data.message);
+      },
+    });
+  const handleUpdate = async (categoryId: number) =>
+    updateCategoryMutate(
+      { categoryId, updatedName },
+      {
+        onSuccess: () => {
+          queryCache.invalidateQueries({ queryKey: ['categories'] });
+          alert('카테고리 변경되었습니다.');
+        },
+        onError: (e: any) => {
+          alert(e.response.data.message);
+        },
+      },
+    );
+  const handleDelete = async (categoryId: number) =>
+    deleteCategoryMutate(categoryId, {
+      onSuccess: () => {
+        queryCache.invalidateQueries({ queryKey: ['categories'] });
+        alert('카테고리 삭제되었습니다.');
+      },
+      onError: (e: any) => {
+        alert(e.response.data.message);
+      },
+    });
 
   return (
     <>
