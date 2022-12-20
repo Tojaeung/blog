@@ -1,6 +1,3 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-
 import * as S from './style';
 
 const Footer = () => {
@@ -9,18 +6,18 @@ const Footer = () => {
       <S.Logo>Tojaeung</S.Logo>
 
       <S.IconBox>
-        <Link to='https://github.com/Tojaeung'>
+        <a href='https://github.com/Tojaeung' target='_blank' rel='noreferrer'>
           <S.GithubIcon size={25} color='black' />
-        </Link>
-        <Link to='https://www.instagram.com/tojaeung1027'>
+        </a>
+        <a href='https://www.instagram.com/tojaeung1027' target='_blank' rel='noreferrer'>
           <S.InstaIcon size={25} color='black' />
-        </Link>
-        <Link to='https://solved.ac/tojaeung'>
+        </a>
+        <a href='https://solved.ac/tojaeung' target='_blank' rel='noreferrer'>
           <S.BrainIcon size={25} color='black' />
-        </Link>
-        <Link to='https://soundcloud.com/tojaeung'>
+        </a>
+        <a href='https://soundcloud.com/tojaeung' target='_blank' rel='noreferrer'>
           <S.SoundcloudIcon size={25} color='black' />
-        </Link>
+        </a>
       </S.IconBox>
 
       <S.CopyRightText>Copyrightⓒ 2022 Tojaeung All Rights Reserved</S.CopyRightText>
