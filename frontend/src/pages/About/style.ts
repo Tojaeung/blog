@@ -35,7 +35,8 @@ export const ProfileBox = styled.div`
 `;
 
 export const ProfileImage = styled.img`
-  width: 300px;
+  width: 250px;
+  aspect-ratio: 1 / 1;
   @media ${({ theme }) => theme.device.mobile} {
     width: 100%;
   }
