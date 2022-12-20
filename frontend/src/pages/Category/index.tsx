@@ -19,9 +19,7 @@ function Category() {
   const [blockNum, setBlockNum] = useState(0); // 한 페이지에 보여 줄 페이지네이션의 개수를 block으로 지정하는 state. 초기 값은 0
 
   const { data: selectedCategory } = useQuery(['category'], () => getCategory(Number(categoryId)));
-  const { data: page } = useQuery(['postInCategory', categoryId], () =>
-    getPostsInCategory(Number(categoryId), pageNum),
-  );
+  const { data: page } = useQuery(['postInCategory', pageNum], () => getPostsInCategory(Number(categoryId), pageNum));
 
   return (
     <>
