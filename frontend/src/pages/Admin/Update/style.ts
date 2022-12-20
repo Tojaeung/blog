@@ -39,4 +39,6 @@ export const TagInput = styled(CommonInputStyle)``;
 export const AddTagButton = styled(CommonButtonStyle)``;
 export const InitButton = styled(CommonButtonStyle)``;
 
-export const SubmitButton = styled(CommonButtonStyle)``;
+export const SubmitButton = styled(CommonButtonStyle)`
+  margin-top: 30px;
+`;
