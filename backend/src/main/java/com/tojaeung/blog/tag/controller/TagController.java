@@ -33,7 +33,7 @@ public class TagController {
 	// 태그 조회 (태그 네임으로 해당하는 모든 포스트 조회) return findPostwithCategory (페이징)
 	@GetMapping("api/tag")
 	public ResponseEntity<PageResDto> findPostsInTag(
-			@RequestParam("tagName") String tagName, @PageableDefault(size = 10) Pageable pageable) {
+			@RequestParam("tagName") String tagName, @PageableDefault(size = 9) Pageable pageable) {
 		return ResponseEntity.ok(tagService.findPostsInTag(tagName, pageable));
 	}
 

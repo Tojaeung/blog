@@ -36,7 +36,7 @@ public class PostController {
 
 	// 모든 블로그 가져오기 (페이지네이션)
 	@GetMapping("api/post")
-	public ResponseEntity<PageResDto> findAllPosts(@PageableDefault(size = 10) Pageable pageable) {
+	public ResponseEntity<PageResDto> findAllPosts(@PageableDefault(size = 9) Pageable pageable) {
 		return ResponseEntity.ok(postService.findAllPosts(pageable));
 	}
 
@@ -44,7 +44,7 @@ public class PostController {
 	@GetMapping("api/category/{categoryId}/post")
 	public ResponseEntity<PageResDto> findPostsInCategory(
 			@PathVariable Long categoryId,
-			@PageableDefault(size = 10) Pageable pageable) {
+			@PageableDefault(size = 9) Pageable pageable) {
 		return ResponseEntity.ok(postService.findPostsInCategory(categoryId, pageable));
 	}
 
@@ -64,7 +64,7 @@ public class PostController {
 	@GetMapping("api/post/search")
 	public ResponseEntity<PageResDto> searchPosts(
 			@RequestParam("keyword") String keyword,
-			@PageableDefault(size = 10) Pageable pageable) {
+			@PageableDefault(size = 9) Pageable pageable) {
 
 		return ResponseEntity.ok(postService.searchPosts(keyword, pageable));
 	}

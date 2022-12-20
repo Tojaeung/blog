@@ -134,7 +134,7 @@ public class PostService {
 	}
 
 	@Transactional(readOnly = true)
-	public PageResDto searchPosts(String keyword, @PageableDefault(size = 10) Pageable pageable) {
+	public PageResDto searchPosts(String keyword, Pageable pageable) {
 		int pageNumber = pageable.getPageNumber();
 		PageRequest pageRequest = PageRequest.of(
 				pageNumber - 1,
