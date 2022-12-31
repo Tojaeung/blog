@@ -1,5 +1,3 @@
-import { Link } from 'react-router-dom';
-
 import HomeCategory from 'components/HomeCategory';
 import DevBooks from 'components/DevBooks';
 import MetaTag from 'layouts/MetaTag';
@@ -59,16 +57,13 @@ function About() {
 
           <DevBooks />
 
-          <Link to='https://github.com/Tojaeung'>
+          <a href='https://github.com/Tojaeung' target='_blank' rel='noreferrer'>
             <S.GitHubImage src='https://ghchart.rshah.org/Tojaeung' alt='깃허브 커밋 그래프' />
-          </Link>
+          </a>
 
-          <Link to='https://solved.ac/tojaeung'>
-            <S.SolvedacImage
-              src='http://mazassumnida.wtf/api/v2/generate_badge?boj=tojaeung'
-              alt='깃허브 커밋 그래프'
-            />
-          </Link>
+          <a href='https://solved.ac/tojaeung' target='_blank' rel='noreferrer'>
+            <S.SolvedacImage src='http://mazassumnida.wtf/api/v2/generate_badge?boj=tojaeung' alt='솔브닥티어' />
+          </a>
         </S.AboutBox>
         <HomeCategory />
       </S.Container>
