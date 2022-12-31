@@ -1,5 +1,3 @@
-import { Link } from 'react-router-dom';
-
 import TagBadges from 'components/TagBadges';
 import Viewer from 'components/Viewer';
 
@@ -11,7 +9,7 @@ function BlogPost({ posts }: IProp) {
     <S.PostBox>
       {posts?.map((post) => {
         return (
-          <Link to={`/post/${post.id}`} key={post.id}>
+          <S.PostLink to={`/post/${post.id}`} key={post.id}>
             <S.PostList>
               <S.PostImage src={post.thumbnail} alt='포스팅 썸네일' />
               <S.Title>{post.title}</S.Title>
@@ -24,7 +22,7 @@ function BlogPost({ posts }: IProp) {
                 {post.createdAt} | 조회수 {post.views}
               </S.Detailed>
             </S.PostList>
-          </Link>
+          </S.PostLink>
         );
       })}
     </S.PostBox>

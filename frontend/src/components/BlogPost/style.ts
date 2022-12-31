@@ -1,19 +1,29 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 import { CommonBadgeStyle, CommonCardStyle, CommonTextStyle } from 'styles/common';
 
 export const PostBox = styled.ul`
   width: 100%;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  display: flex;
   gap: 20px;
+  flex-wrap: wrap;
 
   @media ${({ theme }) => theme.device.tablet} {
-    grid-template-columns: repeat(2, 1fr);
     gap: 10px;
   }
   @media ${({ theme }) => theme.device.mobile} {
-    grid-template-columns: 1fr;
-    gap: 20px;
+    gap: 10px;
+  }
+`;
+
+export const PostLink = styled(Link)`
+  width: calc((100% - 40px) / 3);
+
+  @media ${({ theme }) => theme.device.tablet} {
+    width: calc((100% - 10px) / 2);
+  }
+  @media ${({ theme }) => theme.device.mobile} {
+    width: 100%;
   }
 `;
 
@@ -25,7 +35,6 @@ export const PostList = styled(CommonCardStyle)`
 `;
 
 export const PostImage = styled.img`
-  width: 100%;
   aspect-ratio: 1.3333333/ 1;
 `;
 
