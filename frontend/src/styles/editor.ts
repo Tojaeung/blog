@@ -88,5 +88,6 @@ export const EditorStyle = css`
     padding: 10px;
     background-color: ${({ theme }) => theme.palette.darkGray};
     border-radius: 10px;
+    overflow-x: scroll;
   }
 `;
