@@ -19,9 +19,9 @@ function DeskTop() {
         <Link to='/tag'>
           <MenuList>Tags</MenuList>
         </Link>
-        <Link to='/contact'>
-          <MenuList>Contact</MenuList>
-        </Link>
+        <a href='https://soundcloud.com/tojaeung' target='_blank' rel='noreferrer'>
+          <MenuList>Music</MenuList>
+        </a>
       </MenuBox>
     </Container>
   );
