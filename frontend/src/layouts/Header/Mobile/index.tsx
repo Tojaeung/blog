@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { GiHamburgerMenu } from 'react-icons/gi';
 
 import Search from 'components/Search';
@@ -24,8 +24,8 @@ function Mobile() {
           <S.CloseIcon size='30' onClick={onToggle} />
           <Search />
           <S.MenuBox>
-            <Link to='/about'>
-              <S.MenuList>About</S.MenuList>
+            <Link to='/notice'>
+              <S.MenuList>Notice</S.MenuList>
             </Link>
             <Link to='/blog'>
               <S.MenuList>Blog</S.MenuList>
@@ -33,9 +33,9 @@ function Mobile() {
             <Link to='/tag'>
               <S.MenuList>Tags</S.MenuList>
             </Link>
-            <Link to='/contact'>
-              <S.MenuList>Contact</S.MenuList>
-            </Link>
+            <a href='https://soundcloud.com/tojaeung' target='_blank' rel='noreferrer'>
+              <S.MenuList>Music</S.MenuList>
+            </a>
           </S.MenuBox>
         </S.Nav>
       </S.Background>

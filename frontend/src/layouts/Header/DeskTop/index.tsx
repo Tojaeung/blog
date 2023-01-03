@@ -10,8 +10,8 @@ function DeskTop() {
       <Search />
 
       <MenuBox>
-        <Link to='/about'>
-          <MenuList>About</MenuList>
+        <Link to='/notice'>
+          <MenuList>Notice</MenuList>
         </Link>
         <Link to='/blog'>
           <MenuList>Blog</MenuList>
