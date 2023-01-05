@@ -69,7 +69,6 @@ function Posting() {
         title={post?.title || ''}
         desc={post?.content || ''}
         keywords={post?.tags}
-        image={post?.thumbnail || ''}
         url={`https://tojaeung.com/post/${postId}`}
       />
       <S.Container>

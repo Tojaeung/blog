@@ -1,7 +1,7 @@
 import { Helmet } from 'react-helmet-async';
 import { IProps } from './type';
 
-function MetaTag({ title, desc, keywords, image, url }: IProps) {
+function MetaTag({ title, desc, keywords, url }: IProps) {
   return (
     <Helmet>
       <title>{title}</title>
@@ -13,13 +13,13 @@ function MetaTag({ title, desc, keywords, image, url }: IProps) {
       <meta property='og:title' content={title} />
       <meta property='og:site_name' content={title} />
       <meta property='og:description' content={desc.substring(0, 100)} />
-      <meta property='og:image' content={image} />
+      <meta property='og:image' content='/images/profile.jpg' />
       <meta property='og:url' content={url} />
 
       <meta property='twitter:card' content='summary' />
       <meta name='twitter:title' content={title} />
       <meta name='twitter:description' content={desc.substring(0, 100)} />
-      <meta name='twitter:image' content={image} />
+      <meta name='twitter:image' content='/images/profile.jpg' />
 
       <link rel='canonical' href={url} />
     </Helmet>
