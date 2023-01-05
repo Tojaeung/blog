@@ -4,6 +4,14 @@ export const EditorStyle = css`
   letter-spacing: 0.5px;
   line-height: 25px;
   word-wrap: break-word;
+  font-size: 100%;
+
+  @media ${({ theme }) => theme.device.tablet} {
+    font-size: 90%;
+  }
+  @media ${({ theme }) => theme.device.mobile} {
+    font-size: 85%;
+  }
 
   h1 {
     font-size: 26px;
