@@ -13,6 +13,10 @@ import { lightTheme } from 'styles/theme';
 import GlobalStyle from 'styles/GlobalStyle';
 
 function App() {
+  const msg = '%c토재웅님의 블로그 !!';
+  const css = 'font-size: 50px; color: #baabda; font-weight: bold; font-family: "Noto Sans KR";';
+  console.log(msg, css);
+
   useEffect(() => {
     if (!localStorage.getItem('accessToken')) return;
     else {
