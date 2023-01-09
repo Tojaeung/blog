@@ -7,7 +7,6 @@ Disallow: /apis*/
 Disallow: /hooks*/
 Disallow: /interfaces*/
 Disallow: /layouts*/
-Disallow: /pages/About*/
 Disallow: /pages/Admin*/
 Disallow: /pages/Blog*/
 Disallow: /pages/Category*/
@@ -23,7 +22,6 @@ Disallow: /apis*/
 Disallow: /hooks*/
 Disallow: /interfaces*/
 Disallow: /layouts*/
-Disallow: /pages/About*/
 Disallow: /pages/Admin*/
 Disallow: /pages/Blog*/
 Disallow: /pages/Category*/
