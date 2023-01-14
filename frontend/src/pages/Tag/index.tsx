@@ -1,10 +1,9 @@
 import { Link } from 'react-router-dom';
 import { useQuery } from 'react-query';
 import { AiOutlineTag } from 'react-icons/ai';
+import { Helmet } from 'react-helmet-async';
 
 import { getAllTags } from 'apis/tag';
-
-import MetaTag from 'layouts/MetaTag';
 
 import * as S from './style';
 
@@ -13,11 +12,9 @@ function Tags() {
 
   return (
     <>
-      <MetaTag
-        title='#태그모음 - 토재웅'
-        desc='안녕하세요 !! 백엔드 개발자 토재웅 입니다. 첫째도 기본!! 둘째도 기본!! 기본에 충실하자 !!'
-        url='https://tojaeung.com/tag'
-      />
+      <Helmet>
+        <title>#태그모음 - 토재웅</title>
+      </Helmet>
       <S.Container>
         <S.Title># 태그모음</S.Title>
 

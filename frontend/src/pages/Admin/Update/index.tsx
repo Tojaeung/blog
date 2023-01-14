@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { Helmet } from 'react-helmet-async';
 
 import { updatePost, getPost } from 'apis/post';
 
 import QuillEditor from 'components/QuillEditor';
-import MetaTag from 'layouts/MetaTag';
 
 import * as S from './style';
 import NotFound from 'pages/NotFound';
@@ -47,11 +47,9 @@ function Update() {
   if (isError) return <NotFound />;
   return (
     <>
-      <MetaTag
-        title='포스팅 변경 - 토재웅'
-        desc='안녕하세요 !! 백엔드 개발자 토재웅 입니다. 첫째도 기본!! 둘째도 기본!! 기본에 충실하자 !!'
-        url={`https://tojaeung.com/admin/update/${postId}`}
-      />
+      <Helmet>
+        <title>포스트 변경 - 토재웅</title>
+      </Helmet>
       <S.Container>
         <S.TitleInput
           placeholder='포스팅 제목'

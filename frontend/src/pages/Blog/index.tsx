@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { useQuery } from 'react-query';
+import { Helmet } from 'react-helmet-async';
 
 import { getAllPosts } from 'apis/post';
 
 import BlogCategory from 'components/BlogCategory';
 import BlogPost from 'components/BlogPost';
 import Pagination from 'components/Pagination';
-import MetaTag from 'layouts/MetaTag';
 
 import * as S from './style';
 
@@ -18,11 +18,9 @@ function Blog() {
 
   return (
     <>
-      <MetaTag
-        title='블로그 - 토재웅'
-        desc='안녕하세요 !! 백엔드 개발자 토재웅 입니다. 첫째도 기본!! 둘째도 기본!! 기본에 충실하자 !!'
-        url='https://tojaeung.com/blog'
-      />
+      <Helmet>
+        <title>블로그 - 토재웅</title>
+      </Helmet>
 
       <S.Container>
         <BlogCategory />

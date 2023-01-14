@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from 'react-query';
+import { Helmet } from 'react-helmet-async';
 
 import { addCategory, deleteCategory, getCategories, updateCategory } from 'apis/category';
 
 import * as S from './style';
-import MetaTag from 'layouts/MetaTag';
 
 function Category() {
   const queryCache = useQueryClient();
@@ -53,11 +53,9 @@ function Category() {
 
   return (
     <>
-      <MetaTag
-        title='카테고리 관리 - 토재웅'
-        desc='안녕하세요 !! 백엔드 개발자 토재웅 입니다. 첫째도 기본!! 둘째도 기본!! 기본에 충실하자 !!'
-        url='https://tojaeung.com/admin/category'
-      />
+      <Helmet>
+        <title>카테고리 관리 - 토재웅</title>
+      </Helmet>
       <S.Container>
         <S.Title>카테고리 편집</S.Title>
         <S.CreateBox>

@@ -1,13 +1,13 @@
 import { ChangeEvent, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from 'react-query';
+import { Helmet } from 'react-helmet-async';
 import 'react-quill/dist/quill.core.css';
 import 'highlight.js/styles/github.css';
 
 import { getPost, deletePost } from 'apis/post';
 
 import TagBadges from 'components/TagBadges';
-import MetaTag from 'layouts/MetaTag';
 
 import * as S from './style';
 import { adminApi } from 'utils/axios';
@@ -65,12 +65,9 @@ function Posting() {
 
   return (
     <>
-      <MetaTag
-        title={post?.title || ''}
-        desc={post?.content || ''}
-        keywords={post?.tags}
-        url={`https://tojaeung.com/post/${postId}`}
-      />
+      <Helmet>
+        <title>{post?.title}</title>
+      </Helmet>
       <S.Container>
         <S.Header>
           <S.TitleBox>

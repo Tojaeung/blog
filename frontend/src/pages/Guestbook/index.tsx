@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from 'react-query';
+import { Helmet } from 'react-helmet-async';
 
 import { addGuestbook, deleteGuestbook, getGuestbooks } from 'apis/guestbook';
 
 import HomeCategory from 'components/HomeCategory';
-import MetaTag from 'layouts/MetaTag';
 
 import * as S from './style';
 
@@ -50,11 +50,9 @@ function Guestbook() {
 
   return (
     <>
-      <MetaTag
-        title='방명록 - 토재웅'
-        desc='안녕하세요 !! 백엔드 개발자 토재웅 입니다. 첫째도 기본!! 둘째도 기본!! 기본에 충실하자 !!'
-        url='https://tojaeung.com/guestbook'
-      />
+      <Helmet>
+        <title>방명록 - 토재웅</title>
+      </Helmet>
       <S.Container>
         <S.GuestbookSection>
           <S.Title>방명록</S.Title>

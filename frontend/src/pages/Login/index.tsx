@@ -1,9 +1,8 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 
 import { login } from 'apis/auth';
-
-import MetaTag from 'layouts/MetaTag';
 
 import * as S from './style';
 
@@ -26,11 +25,9 @@ function Login() {
 
   return (
     <>
-      <MetaTag
-        title='로그인 - 토재웅'
-        desc='안녕하세요 !! 백엔드 개발자 토재웅 입니다. 첫째도 기본!! 둘째도 기본!! 기본에 충실하자 !!'
-        url='https://tojaeung.com/login'
-      />
+      <Helmet>
+        <title>로그인 - 토재웅</title>
+      </Helmet>
       <S.Container>
         <S.Title>관리자 로그인</S.Title>
         <S.LoginBox>

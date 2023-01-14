@@ -2,18 +2,15 @@ import Intro from 'components/Intro';
 import HomePost from 'components/HomePost';
 import HomeCategory from 'components/HomeCategory';
 
-import MetaTag from 'layouts/MetaTag';
-
 import * as S from './style';
+import { Helmet } from 'react-helmet-async';
 
 function Home() {
   return (
     <>
-      <MetaTag
-        title='토재웅님의 블로그'
-        desc='안녕하세요 !! 백엔드 개발자 토재웅 입니다. 첫째도 기본!! 둘째도 기본!! 기본에 충실하자 !!'
-        url='https://tojaeung.com'
-      />
+      <Helmet>
+        <title>토재웅님의 블로그</title>
+      </Helmet>
       <S.Container>
         <Intro />
 

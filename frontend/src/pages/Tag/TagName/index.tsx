@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useQuery } from 'react-query';
+import { Helmet } from 'react-helmet-async';
 
 import { getPostsInTag } from 'apis/tag';
 
@@ -9,7 +10,6 @@ import NotFound from 'pages/NotFound';
 import BlogCategory from 'components/BlogCategory';
 import BlogPost from 'components/BlogPost';
 import Pagination from 'components/Pagination';
-import MetaTag from 'layouts/MetaTag';
 
 import * as S from './style';
 
@@ -25,11 +25,9 @@ function TagName() {
   else {
     return (
       <>
-        <MetaTag
-          title={`#${tagName} - 토재웅`}
-          desc='안녕하세요 !! 백엔드 개발자 토재웅 입니다. 첫째도 기본!! 둘째도 기본!! 기본에 충실하자 !!'
-          url={`https://tojaeung.com/tag/${tagName}`}
-        />
+        <Helmet>
+          <title>{`#${tagName} - 토재웅`}</title>
+        </Helmet>
 
         <S.Container>
           <BlogCategory />

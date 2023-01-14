@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useQuery } from 'react-query';
+import { Helmet } from 'react-helmet-async';
 
 import { getCategory } from 'apis/category';
 import { getPostsInCategory } from 'apis/post';
@@ -8,7 +9,6 @@ import { getPostsInCategory } from 'apis/post';
 import BlogPost from 'components/BlogPost';
 import BlogCategory from 'components/BlogCategory';
 import Pagination from 'components/Pagination';
-import MetaTag from 'layouts/MetaTag';
 
 import * as S from './style';
 
@@ -30,11 +30,9 @@ function Category() {
 
   return (
     <>
-      <MetaTag
-        title={`${selectedCategory?.name} 카테고리 - 토재웅`}
-        desc='안녕하세요 !! 백엔드 개발자 토재웅 입니다. 첫째도 기본!! 둘째도 기본!! 기본에 충실하자 !!'
-        url={`https://tojaeung.com/category/${selectedCategory?.id}`}
-      />
+      <Helmet>
+        <title>{`${selectedCategory?.name} 카테고리 - 토재웅`}</title>
+      </Helmet>
       <S.Container>
         <BlogCategory />
         <S.TitleBox>

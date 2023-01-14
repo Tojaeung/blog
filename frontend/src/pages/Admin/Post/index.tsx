@@ -1,13 +1,13 @@
 import { useState, ChangeEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useQuery } from 'react-query';
+import { Helmet } from 'react-helmet-async';
 
 import { searchTagName } from 'apis/tag';
 import { getCategories } from 'apis/category';
 import { addPost } from 'apis/post';
 
 import QuillEditor from 'components/QuillEditor';
-import MetaTag from 'layouts/MetaTag';
 
 import * as S from './style';
 
@@ -62,11 +62,9 @@ function Post() {
 
   return (
     <>
-      <MetaTag
-        title='포스팅 생성 - 토재웅'
-        desc='안녕하세요 !! 백엔드 개발자 토재웅 입니다. 첫째도 기본!! 둘째도 기본!! 기본에 충실하자 !!'
-        url='https://tojaeung.com/admin/post'
-      />
+      <Helmet>
+        <title>포스트 생성 - 토재웅</title>
+      </Helmet>
       <S.Container>
         <S.Selector onChange={(e) => setCategoryId(Number(e.target.value))} value={categoryId}>
           <S.Option value={undefined}>카테고리 선택하세요.</S.Option>
