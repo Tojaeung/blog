@@ -29,6 +29,8 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 	// "order by p.views DESC ")
 	List<Post> findTop6ByOrderByViewsDesc();
 
+	List<Post> findTop6ByOrderByCreatedAtDesc();
+
 	// 포스팅 조회수 증가
 	@Modifying
 	@Transactional

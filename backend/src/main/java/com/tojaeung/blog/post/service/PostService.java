@@ -120,6 +120,15 @@ public class PostService {
 		return top5Posts;
 	}
 
+	@Transactional(readOnly = true)
+	public List<PostResDto> findRecentPosts() {
+		List<Post> posts = postRepository.findTop6ByOrderByCreatedAtDesc();
+		List<PostResDto> recentPosts = posts.stream()
+				.map(post -> new PostResDto(post))
+				.collect(Collectors.toList());
+		return recentPosts;
+	}
+
 	// 특정포스팅 가져오기 (부모 카테고리와 함께)
 	@Transactional
 	public PostResDto findPost(Long postId) {

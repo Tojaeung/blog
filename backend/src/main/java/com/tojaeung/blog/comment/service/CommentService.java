@@ -1,5 +1,11 @@
 package com.tojaeung.blog.comment.service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.tojaeung.blog.comment.domain.Comment;
 import com.tojaeung.blog.comment.dto.CommentResDto;
 import com.tojaeung.blog.comment.dto.CreateReqDto;
@@ -8,12 +14,8 @@ import com.tojaeung.blog.exception.CustomException;
 import com.tojaeung.blog.exception.ExceptionCode;
 import com.tojaeung.blog.post.domain.Post;
 import com.tojaeung.blog.post.repository.PostRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.stream.Collectors;
+import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
@@ -78,6 +80,17 @@ public class CommentService {
 
 			return allCommentsInPost;
 		}
+
+	}
+
+	// 최근 댓글 가져오기
+	@Transactional(readOnly = true)
+	public List<CommentResDto> findRecentComments() {
+		List<Comment> comments = commentRepository.findTop6ByOrderByCreatedAtDesc();
+		List<CommentResDto> recentComments = comments.stream()
+				.map(comment -> new CommentResDto(comment))
+				.collect(Collectors.toList());
+		return recentComments;
 
 	}
 

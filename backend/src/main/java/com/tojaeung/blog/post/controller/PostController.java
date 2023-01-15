@@ -59,10 +59,16 @@ public class PostController {
 		return ResponseEntity.ok(postService.findPostsInCategory(categoryId, pageable));
 	}
 
-	// 조회수가 많은 top5 가져오기
+	// 조회수 높은 포스팅 가져오기
 	@GetMapping("api/post/top5")
 	public ResponseEntity<List<PostResDto>> findTop5() {
 		return ResponseEntity.ok(postService.findTop5());
+	}
+
+	// 최근 포스팅 가져오기
+	@GetMapping("api/post/recent")
+	public ResponseEntity<List<PostResDto>> findRecentPosts() {
+		return ResponseEntity.ok(postService.findRecentPosts());
 	}
 
 	// 특정 포스팅 가져오기 (댓글 + 태그 + 카테고리)
