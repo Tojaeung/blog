@@ -5,7 +5,7 @@ import 'react-quill/dist/quill.core.css';
 import { RangeStatic } from 'quill';
 
 import hljs from 'highlight.js';
-import 'highlight.js/styles/github.css';
+import 'highlight.js/styles/androidstudio.css';
 
 import { adminApi } from 'utils/axios';
 
@@ -16,7 +16,7 @@ function QuillEditor({ content, setContent }: IProps) {
   const quillRef = useRef<ReactQuill>(null);
 
   hljs.configure({
-    languages: ['javascript', 'java'],
+    languages: ['javascript', 'java', 'kotlin', 'python'],
   });
 
   // 이미지 업로드 핸들러, modules 설정보다 위에 있어야 정상 적용
@@ -56,7 +56,7 @@ function QuillEditor({ content, setContent }: IProps) {
       },
       toolbar: {
         container: [
-          [{ header: [1, 2, 3, 4, 5, 6, false] }], // header 설정
+          [{ header: [1, 2, 3, false] }], // header 설정
           ['bold', 'italic', 'underline', 'strike', 'blockquote', 'code-block', 'formula'], // 굵기, 기울기, 밑줄 등 부가 tool 설정
           [{ list: 'ordered' }, { list: 'bullet' }, { indent: '-1' }, { indent: '+1' }], // 리스트, 인덴트 설정
           ['link', 'image', 'video'], // 링크, 이미지, 비디오 업로드 설정

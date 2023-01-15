@@ -2,8 +2,7 @@ import { ChangeEvent, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from 'react-query';
 import { Helmet } from 'react-helmet-async';
-import 'react-quill/dist/quill.core.css';
-import 'highlight.js/styles/github.css';
+import 'highlight.js/styles/androidstudio.css';
 
 import { getPost, deletePost } from 'apis/post';
 
@@ -96,9 +95,7 @@ function Posting() {
           <S.thumbnailImage src={post?.thumbnail} alt='포스팅 사진' />
         </S.ThumbnailBox>
 
-        {post?.content && (
-          <S.Content className='ql-editor ql-syntax' dangerouslySetInnerHTML={{ __html: post?.content || '' }} />
-        )}
+        {post?.content && <S.Content className='ql-syntax' dangerouslySetInnerHTML={{ __html: post?.content || '' }} />}
 
         <S.Line />
         <S.Title>Tags</S.Title>
