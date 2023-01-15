@@ -17,7 +17,14 @@ export const TitleBox = styled.div`
 export const PostCntBadge = styled(CommonBadgeStyle)`
   background-color: ${({ theme }) => theme.palette.white};
   color: ${({ theme }) => theme.palette.mainColor};
-  font-size: 20px;
+  font-size: 26px;
+
+  @media ${({ theme }) => theme.device.tablet} {
+    font-size: 20px;
+  }
+  @media ${({ theme }) => theme.device.mobile} {
+    font-size: 16px;
+  }
 
   &:hover {
     background-color: ${({ theme }) => theme.palette.mainColor};
@@ -26,7 +33,7 @@ export const PostCntBadge = styled(CommonBadgeStyle)`
 `;
 
 export const Title = styled(CommonTitleStyle)`
-  font-size: 50px;
+  font-size: 40px;
   @media ${({ theme }) => theme.device.tablet} {
     font-size: 30px;
   }
@@ -35,5 +42,8 @@ export const Detail = styled(CommonTextStyle)`
   font-size: 25px;
   @media ${({ theme }) => theme.device.tablet} {
     font-size: 20px;
+  }
+  @media ${({ theme }) => theme.device.mobile} {
+    font-size: 16px;
   }
 `;

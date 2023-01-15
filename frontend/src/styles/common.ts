@@ -21,7 +21,7 @@ export const CommonButtonStyle = styled.button`
   white-space: nowrap;
   border: none;
   border-radius: 5px;
-  font-size: 14px;
+  font-size: 12px;
   cursor: pointer;
   background: ${({ theme }) => theme.palette.gradationColor};
   color: ${({ theme }) => theme.palette.white};
@@ -52,7 +52,7 @@ export const CommonOptionStyle = styled.option`
 
 export const CommonBadgeStyle = styled.li`
   text-align: center;
-  font-size: 14px;
+  font-size: 12px;
   font-weight: bold;
   border-radius: 5px;
   padding: 10px 14px;
