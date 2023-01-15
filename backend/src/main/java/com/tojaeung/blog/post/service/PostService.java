@@ -1,5 +1,16 @@
 package com.tojaeung.blog.post.service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+
 import com.tojaeung.blog.category.domain.Category;
 import com.tojaeung.blog.category.repository.CategoryRepository;
 import com.tojaeung.blog.exception.CustomException;
@@ -14,18 +25,8 @@ import com.tojaeung.blog.post.dto.UpdateReqDto;
 import com.tojaeung.blog.post.repository.PostRepository;
 import com.tojaeung.blog.tag.domain.Tag;
 import com.tojaeung.blog.tag.repository.TagRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
-import java.util.stream.Collectors;
+import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
@@ -112,7 +113,7 @@ public class PostService {
 
 	@Transactional(readOnly = true)
 	public List<PostResDto> findTop5() {
-		List<Post> posts = postRepository.findTop5ByOrderByViewsDesc();
+		List<Post> posts = postRepository.findTop6ByOrderByViewsDesc();
 		List<PostResDto> top5Posts = posts.stream()
 				.map(post -> new PostResDto(post))
 				.collect(Collectors.toList());

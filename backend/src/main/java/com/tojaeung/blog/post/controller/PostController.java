@@ -1,21 +1,32 @@
 package com.tojaeung.blog.post.controller;
 
+import java.util.List;
+
+import javax.validation.Valid;
+
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+
 import com.tojaeung.blog.post.domain.Post;
 import com.tojaeung.blog.post.dto.CreateReqDto;
 import com.tojaeung.blog.post.dto.PageResDto;
 import com.tojaeung.blog.post.dto.PostResDto;
 import com.tojaeung.blog.post.dto.UpdateReqDto;
 import com.tojaeung.blog.post.service.PostService;
-import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.Valid;
-import java.util.List;
+import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
@@ -30,7 +41,7 @@ public class PostController {
 			@RequestPart("thumbnail") MultipartFile thumbnail) {
 
 		Post newPost = postService.create(categoryId, createReqDto, thumbnail);
-
+		System.out.println(createReqDto.getContent());
 		return ResponseEntity.status(HttpStatus.CREATED).body(newPost.getId());
 	}
 

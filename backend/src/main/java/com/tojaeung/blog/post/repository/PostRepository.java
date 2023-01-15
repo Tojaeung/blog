@@ -27,7 +27,7 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 	// @EntityGraph(attributePaths = {"category"})
 	// @Query("select p from Post p " +
 	// "order by p.views DESC ")
-	List<Post> findTop5ByOrderByViewsDesc();
+	List<Post> findTop6ByOrderByViewsDesc();
 
 	// 포스팅 조회수 증가
 	@Modifying
