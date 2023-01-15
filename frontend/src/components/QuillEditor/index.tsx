@@ -10,7 +10,7 @@ import 'highlight.js/styles/github.css';
 import { adminApi } from 'utils/axios';
 
 import { Editor } from './style';
-import { IProps } from './type';
+import { IImage, IProps } from './type';
 
 function QuillEditor({ content, setContent }: IProps) {
   const quillRef = useRef<ReactQuill>(null);
@@ -35,7 +35,7 @@ function QuillEditor({ content, setContent }: IProps) {
         formData.append('file', file[0]);
       }
 
-      const res = await adminApi.post('/post/upload', formData);
+      const res = await adminApi.post<IImage>('/post/upload', formData);
 
       if (quillRef.current) {
         // 현재 Editor 커서 위치에 서버로부터 전달받은 이미지 불러오는 url을 이용하여 이미지 태그 추가
