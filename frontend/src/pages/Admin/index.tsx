@@ -12,8 +12,11 @@ function Admin() {
         <title>관리페이지 - 토재웅</title>
       </Helmet>
       <S.Container>
-        <S.GoCategory onClick={() => navigate('/admin/category')}>카테고리 수정 하러가기</S.GoCategory>
-        <S.GoPost onClick={() => navigate('/admin/post')}>포스팅 하러가기</S.GoPost>
+        <S.Title>관리자 페이지</S.Title>
+        <S.ButtonBox>
+          <S.LinkButton onClick={() => navigate('/admin/category')}>카테고리</S.LinkButton>
+          <S.LinkButton onClick={() => navigate('/admin/post')}>포스팅</S.LinkButton>
+        </S.ButtonBox>
       </S.Container>
     </>
   );
