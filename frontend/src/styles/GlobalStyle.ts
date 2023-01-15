@@ -110,8 +110,10 @@ ${({ theme }) => css`
   *[hidden] {
     display: none;
   }
+  html,
   body {
-    line-height: 1;
+    height: 100%;
+    background-color: ${theme.palette.bgColor};
   }
   menu,
   ol,
@@ -137,11 +139,6 @@ ${({ theme }) => css`
     box-sizing: border-box;
     text-decoration: none;
   }
-  body {
-    font-family: ${theme.font.text};
-    background-color: ${theme.palette.bgColor};
-    color: ${theme.palette.black};
-  }
   a {
     text-decoration: none;
     color: inherit;
@@ -153,6 +150,13 @@ ${({ theme }) => css`
   }
   textArea {
     font-family: ${theme.font.text};
+  }
+
+  #root {
+    height: 100%;
+    font-family: ${theme.font.text};
+    color: ${theme.palette.black};
+    line-height: 1;
   }
 `}
 `;

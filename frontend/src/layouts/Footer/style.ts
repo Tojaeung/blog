@@ -12,7 +12,6 @@ export const Container = styled.div`
   align-items: center;
   gap: 10px;
   padding: 20px;
-  margin-top: 20px;
   background-color: ${({ theme }) => theme.palette.mainColor};
 `;
 

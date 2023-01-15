@@ -33,11 +33,13 @@ function App() {
     <ThemeProvider theme={lightTheme}>
       <GlobalStyle />
       <BrowserRouter>
-        <Header />
         <Container>
-          <Router />
+          <Header />
+          <Content>
+            <Router />
+          </Content>
+          <Footer />
         </Container>
-        <Footer />
       </BrowserRouter>
     </ThemeProvider>
   );
@@ -45,7 +47,15 @@ function App() {
 
 const Container = styled.div`
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+`;
+
+const Content = styled.div`
+  width: 100%;
   max-width: 1000px;
+  flex: 1;
   margin: 0 auto;
   padding: 0 20px;
 

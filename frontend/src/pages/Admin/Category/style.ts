@@ -3,13 +3,16 @@ import { CommonTitleStyle, CommonButtonStyle, CommonInputStyle, CommonTextStyle 
 
 export const Container = styled.div`
   width: 100%;
+  height: 100%;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
   gap: 30px;
 `;
 
-export const Title = styled(CommonTitleStyle)``;
+export const Title = styled(CommonTitleStyle)`
+  margin: 20px 0;
+`;
 
 export const CreateBox = styled.div`
   display: flex;

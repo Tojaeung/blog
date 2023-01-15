@@ -6,6 +6,7 @@ export const PostBox = styled.ul`
   display: flex;
   flex-direction: column;
   gap: 20px;
+  margin: 20px 0;
 
   @media ${({ theme }) => theme.device.laptop} {
     width: 100%;
