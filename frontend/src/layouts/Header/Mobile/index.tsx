@@ -24,17 +24,17 @@ function Mobile() {
           <S.CloseIcon size='30' onClick={onToggle} />
           <Search />
           <S.MenuBox>
-            <Link to='/notice'>
-              <S.MenuList>Notice</S.MenuList>
-            </Link>
             <Link to='/blog'>
-              <S.MenuList>Blog</S.MenuList>
+              <S.MenuList>블로그</S.MenuList>
             </Link>
             <Link to='/tag'>
-              <S.MenuList>Tags</S.MenuList>
+              <S.MenuList>#태그</S.MenuList>
+            </Link>
+            <Link to='/guestbook'>
+              <S.MenuList>방명록</S.MenuList>
             </Link>
             <a href='https://soundcloud.com/tojaeung' target='_blank' rel='noreferrer'>
-              <S.MenuList>Music</S.MenuList>
+              <S.MenuList>음악</S.MenuList>
             </a>
           </S.MenuBox>
         </S.Nav>

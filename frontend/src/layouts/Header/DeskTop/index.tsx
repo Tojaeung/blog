@@ -10,17 +10,17 @@ function DeskTop() {
       <Search />
 
       <MenuBox>
-        <Link to='/notice'>
-          <MenuList>Notice</MenuList>
-        </Link>
         <Link to='/blog'>
-          <MenuList>Blog</MenuList>
+          <MenuList>블로그</MenuList>
         </Link>
         <Link to='/tag'>
-          <MenuList>Tags</MenuList>
+          <MenuList>#태그</MenuList>
+        </Link>
+        <Link to='/guestbook'>
+          <MenuList>방명록</MenuList>
         </Link>
         <a href='https://soundcloud.com/tojaeung' target='_blank' rel='noreferrer'>
-          <MenuList>Music</MenuList>
+          <MenuList>음악</MenuList>
         </a>
       </MenuBox>
     </Container>
