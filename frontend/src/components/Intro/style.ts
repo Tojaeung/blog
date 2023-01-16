@@ -1,53 +1,52 @@
 import styled from 'styled-components';
-import { CommonButtonStyle, CommonTextStyle } from 'styles/common';
-import { jittery } from 'styles/animation';
+import { CommonTextStyle, CommonTitleStyle } from 'styles/common';
+// import { CommonButtonStyle, CommonTextStyle } from 'styles/common';
+// import { jittery } from 'styles/animation';
 
 export const Container = styled.div`
   width: 100%;
-  margin: 20px auto;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  padding: 10px;
-  color: ${({ theme }) => theme.palette.black};
+  height: 100%;
+  position: relative;
 `;
 
-export const TypographyBox = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 20px;
-`;
-export const IntroMySelf = styled(CommonTextStyle)`
-  font-size: 25px;
-  font-weight: bold;
-  line-height: 50px;
-`;
-export const MyName = styled.span`
-  color: purple;
-  font-weight: bold;
-`;
-export const Slogan = styled(CommonTextStyle)`
-  font-size: 15px;
+export const Banner = styled.img`
+  width: 100%;
+  height: 100%;
+  filter: brightness(40%);
+  z-index: 10;
 `;
 
-export const ImageBox = styled.div`
-  border-radius: 50%;
-  border: 3px solid;
-  transition: all 0.5s;
-  &:hover {
-    transform: skewX(5deg);
-  }
+export const BlogName = styled(CommonTitleStyle)`
+  font-size: 50px;
+  position: absolute;
+  color: ${({ theme }) => theme.palette.white};
+  z-index: 11;
+  top: 50%;
+  left: 50%;
+  white-space: nowrap;
+  transform: translate(-50%, -50%);
 
   @media ${({ theme }) => theme.device.tablet} {
-    display: none;
+    font-size: 46px;
+  }
+  @media ${({ theme }) => theme.device.mobile} {
+    font-size: 30px;
   }
 `;
-export const Profile = styled.img`
-  border-radius: 50%;
-`;
 
-export const GuestbookButton = styled(CommonButtonStyle)`
-  font-weight: bold;
-  /* animation: ${jittery} 3s infinite; */
+export const Content = styled(CommonTextStyle)`
+  position: absolute;
+  color: ${({ theme }) => theme.palette.white};
+  z-index: 11;
+  top: 70%;
+  left: 50%;
+  white-space: nowrap;
+  transform: translate(-50%, -50%);
+
+  @media ${({ theme }) => theme.device.tablet} {
+    top: 80%;
+  }
+  @media ${({ theme }) => theme.device.mobile} {
+    font-size: 12px;
+  }
 `;

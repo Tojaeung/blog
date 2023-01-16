@@ -6,6 +6,7 @@ export const Container = styled.div`
   margin: 0 auto;
   display: flex;
   flex-direction: column;
+  gap: 20px;
 `;
 
 export const Box = styled.div`
