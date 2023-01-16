@@ -18,6 +18,7 @@ function Category() {
   const [pageNum, setPageNum] = useState(1);
   const [blockNum, setBlockNum] = useState(0); // 한 페이지에 보여 줄 페이지네이션의 개수를 block으로 지정하는 state. 초기 값은 0
 
+  // 페이지가 넘어간 상태에서 다른 카테고리 진입시, 페이지넘버 1로 초기화 (페이지네이션 오류 방지)
   useEffect(() => {
     setPageNum(1);
   }, [categoryId]);

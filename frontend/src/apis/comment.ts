@@ -22,6 +22,11 @@ export const getComments = async (postId: number): Promise<IComment[]> => {
   return data;
 };
 
+export const getRecentComments = async (): Promise<IComment[]> => {
+  const { data } = await clientApi.get('/comment/recent');
+  return data;
+};
+
 export const deleteComment = async (commentId: number): Promise<number> => {
   const { data } = await adminApi.delete(`/comment/${commentId}`);
   return data;

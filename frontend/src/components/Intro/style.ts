@@ -49,5 +49,5 @@ export const Profile = styled.img`
 
 export const GuestbookButton = styled(CommonButtonStyle)`
   font-weight: bold;
-  animation: ${jittery} 3s infinite;
+  /* animation: ${jittery} 3s infinite; */
 `;

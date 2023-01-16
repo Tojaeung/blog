@@ -119,6 +119,11 @@ ${({ theme }) => css`
   ol,
   ul {
     list-style: none;
+    margin-block-end: 0;
+    margin-block-start: 0;
+    margin-inline-start: 0;
+    margin-inline-end: 0;
+    padding-inline-start: 0;
   }
   blockquote,
   q {

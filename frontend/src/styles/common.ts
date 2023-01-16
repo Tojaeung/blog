@@ -22,9 +22,10 @@ export const CommonButtonStyle = styled.button`
   border: none;
   border-radius: 5px;
   font-size: 12px;
+  font-weight: bold;
   cursor: pointer;
-  background: ${({ theme }) => theme.palette.gradationColor};
-  color: ${({ theme }) => theme.palette.white};
+  background: ${({ theme }) => theme.palette.badgeColor};
+  color: ${({ theme }) => theme.palette.textColor};
   font-family: ${({ theme }) => theme.font.en};
   box-shadow: ${({ theme }) => theme.palette.boxShdow};
 
@@ -58,7 +59,7 @@ export const CommonBadgeStyle = styled.li`
   padding: 10px 14px;
   list-style: none;
   cursor: pointer;
-  background-color: ${({ theme }) => theme.palette.badgeColor};
+  background-color: ${({ theme }) => theme.palette.white};
   color: ${({ theme }) => theme.palette.black};
   box-shadow: ${({ theme }) => theme.palette.boxShdow};
   transition: all 0.5s;

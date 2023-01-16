@@ -1,9 +1,12 @@
+import { Helmet } from 'react-helmet-async';
+
 import Intro from 'components/Intro';
-import HomePost from 'components/HomePost';
-import HomeCategory from 'components/HomeCategory';
+import HotPosts from 'components/HotPosts';
+import BlogCategory from 'components/BlogCategory';
 
 import * as S from './style';
-import { Helmet } from 'react-helmet-async';
+import RecentComments from 'components/RecentComments';
+import RecentPosts from 'components/RecentPosts';
 
 function Home() {
   return (
@@ -13,10 +16,28 @@ function Home() {
       </Helmet>
       <S.Container>
         <Intro />
-        <S.Title>가장 인기있는 포스팅 Top5</S.Title>
         <S.Box>
-          <HomePost />
-          <HomeCategory />
+          <S.LeftSideBox>
+            <S.HotPostsTitle>가장 인기있는 포스팅</S.HotPostsTitle>
+            <HotPosts />
+          </S.LeftSideBox>
+
+          <S.RightSideBox>
+            <S.ContentBox>
+              <S.Title>카테고리</S.Title>
+              <BlogCategory />
+            </S.ContentBox>
+
+            <S.ContentBox>
+              <S.Title>최근 댓글</S.Title>
+              <RecentComments />
+            </S.ContentBox>
+
+            <S.ContentBox>
+              <S.Title>최근 포스팅</S.Title>
+              <RecentPosts />
+            </S.ContentBox>
+          </S.RightSideBox>
         </S.Box>
       </S.Container>
     </>

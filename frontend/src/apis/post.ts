@@ -11,6 +11,11 @@ export const getTop5 = async (): Promise<IPost[]> => {
   return res.data;
 };
 
+export const getRecentPosts = async (): Promise<IPost[]> => {
+  const res = await clientApi.get('/post/recent');
+  return res.data;
+};
+
 // 페이지네이션이 있다.
 export const getAllPosts = async (pageNum: number): Promise<IPagePost> => {
   const { data } = await clientApi.get(`/post?page=${pageNum}`);

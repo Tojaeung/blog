@@ -20,7 +20,7 @@ export const TagBadge = styled(CommonBadgeStyle)`
   display: flex;
   align-items: center;
   gap: 3px;
-  animation: ${jittery} 5s infinite;
+  /* animation: ${jittery} 5s infinite; */
 `;
 
 export const TagName = styled.span``;

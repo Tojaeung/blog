@@ -2,10 +2,10 @@ import styled from 'styled-components';
 import { CommonBadgeStyle } from 'styles/common';
 
 export const CategoryBox = styled.ul`
-  align-self: flex-start;
-  width: 15%;
+  width: 30%;
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
+  align-self: flex-start;
   gap: 15px;
 
   @media ${({ theme }) => theme.device.laptop} {
