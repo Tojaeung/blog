@@ -39,6 +39,9 @@ export const Detail = styled(CommonTextStyle)``;
 
 export const ThumbnailBox = styled.div`
   position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const UpdateThumbnailBox = styled.div`
@@ -53,7 +56,12 @@ export const ThumbnailInput = styled.input``;
 export const UpdateThumbnailButton = styled(CommonButtonStyle)``;
 
 export const thumbnailImage = styled.img`
-  width: 100%;
+  width: 680px;
+  aspect-ratio: 1.3333333/ 1;
+  object-fit: cover;
+  @media ${({ theme }) => theme.device.tablet} {
+    width: 100%;
+  }
 `;
 
 export const Line = styled.hr`
