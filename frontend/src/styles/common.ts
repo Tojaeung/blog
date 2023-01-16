@@ -59,7 +59,7 @@ export const CommonBadgeStyle = styled.li`
   padding: 10px 14px;
   list-style: none;
   cursor: pointer;
-  background-color: ${({ theme }) => theme.palette.white};
+  background-color: ${({ theme }) => theme.palette.inputColor};
   color: ${({ theme }) => theme.palette.black};
   box-shadow: ${({ theme }) => theme.palette.boxShdow};
   transition: all 0.5s;

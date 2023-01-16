@@ -12,7 +12,7 @@ export const Container = styled.ul`
 `;
 
 export const Badge = styled(CommonBadgeStyle)<{ currentPage: boolean }>`
-  background-color: ${(props) => (props.currentPage ? props.theme.palette.mainColor : props.theme.palette.white)};
+  background-color: ${(props) => (props.currentPage ? props.theme.palette.mainColor : props.theme.palette.inputColor)};
   color: ${(props) => (props.currentPage ? props.theme.palette.white : props.theme.palette.black)};
 
   &:hover {
