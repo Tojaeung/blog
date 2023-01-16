@@ -1,7 +1,5 @@
 import styled from 'styled-components';
 import { CommonTextStyle, CommonTitleStyle } from 'styles/common';
-// import { CommonButtonStyle, CommonTextStyle } from 'styles/common';
-// import { jittery } from 'styles/animation';
 
 export const Container = styled.div`
   width: 100%;

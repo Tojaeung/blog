@@ -40,6 +40,11 @@ export const RightSideBox = styled.div`
   }
 `;
 
+export const TitleBox = styled.div`
+  display: flex;
+  gap: 10px;
+`;
+
 export const ContentBox = styled.div`
   display: flex;
   flex-direction: column;

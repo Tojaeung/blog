@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet-async';
 import Intro from 'components/Intro';
 import HotPosts from 'components/HotPosts';
 import BlogCategory from 'components/BlogCategory';
+import DecoratorBadge from 'components/DecoratorBadge';
 
 import * as S from './style';
 import RecentComments from 'components/RecentComments';
@@ -18,7 +19,7 @@ function Home() {
         <Intro />
         <S.Box>
           <S.LeftSideBox>
-            <S.HotPostsTitle>가장 인기있는 포스팅</S.HotPostsTitle>
+            <S.HotPostsTitle>가장 인기있는 포스팅🔥</S.HotPostsTitle>
             <HotPosts />
           </S.LeftSideBox>
 
@@ -29,12 +30,18 @@ function Home() {
             </S.ContentBox>
 
             <S.ContentBox>
-              <S.Title>최근 댓글</S.Title>
+              <S.TitleBox>
+                <S.Title>최근 댓글</S.Title>
+                <DecoratorBadge text='new' />
+              </S.TitleBox>
               <RecentComments />
             </S.ContentBox>
 
             <S.ContentBox>
-              <S.Title>최근 포스팅</S.Title>
+              <S.TitleBox>
+                <S.Title>최근 포스팅</S.Title>
+                <DecoratorBadge text='new' />
+              </S.TitleBox>
               <RecentPosts />
             </S.ContentBox>
           </S.RightSideBox>

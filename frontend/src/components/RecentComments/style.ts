@@ -33,6 +33,12 @@ export const Comment = styled(CommonTextStyle)`
   -webkit-box-orient: vertical;
   line-height: 20px;
 `;
-export const User = styled(CommonTextStyle)``;
+export const User = styled(CommonTextStyle)`
+  font-weight: bold;
+  color: ${({ theme }) => theme.palette.mainColor};
+`;
 
-export const UserIcon = styled(AiOutlineUser)``;
+export const UserIcon = styled(AiOutlineUser)`
+  font-weight: bold;
+  color: ${({ theme }) => theme.palette.mainColor};
+`;
