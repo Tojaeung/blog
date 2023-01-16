@@ -1,4 +1,5 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
+import { lighten, darken } from 'polished';
 
 export const CommonTitleStyle = styled.h1`
   font-size: 30px;
@@ -24,10 +25,22 @@ export const CommonButtonStyle = styled.button`
   font-size: 12px;
   font-weight: bold;
   cursor: pointer;
-  background: ${({ theme }) => theme.palette.badgeColor};
+  /* background: ${({ theme }) => theme.palette.badgeColor}; */
   color: ${({ theme }) => theme.palette.textColor};
   font-family: ${({ theme }) => theme.font.en};
   box-shadow: ${({ theme }) => theme.palette.boxShdow};
+
+  ${({ theme }) => {
+    return css`
+      background-color: ${theme.palette.badgeColor};
+      &:hover {
+        background-color: ${lighten(0.05, theme.palette.badgeColor)};
+      }
+      &:active {
+        background-color: ${darken(0.05, theme.palette.badgeColor)};
+      }
+    `;
+  }}
 
   @media ${({ theme }) => theme.device.tablet} {
     font-size: 12px;
