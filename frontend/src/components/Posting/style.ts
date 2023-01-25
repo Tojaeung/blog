@@ -55,13 +55,13 @@ export const UpdateThumbnailBox = styled.div`
 export const ThumbnailInput = styled.input``;
 export const UpdateThumbnailButton = styled(CommonButtonStyle)``;
 
-export const thumbnailImage = styled.img`
+export const thumbnailImageBox = styled.div`
   width: 680px;
-  aspect-ratio: 1.3333333/ 1;
-  object-fit: cover;
-  @media ${({ theme }) => theme.device.tablet} {
-    width: 100%;
-  }
+`;
+
+export const thumbnailImage = styled.img`
+  max-width: 100%;
+  height: auto;
 `;
 
 export const Line = styled.hr`

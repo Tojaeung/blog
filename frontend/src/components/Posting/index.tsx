@@ -92,7 +92,9 @@ function Posting() {
               <S.UpdateThumbnailButton onClick={handleUpdateThumbnail}>썸네일변경</S.UpdateThumbnailButton>
             </S.UpdateThumbnailBox>
           )}
-          <S.thumbnailImage src={post?.thumbnail} alt='포스팅 사진' />
+          <S.thumbnailImageBox>
+            <S.thumbnailImage src={post?.thumbnail} alt='포스팅 사진' />
+          </S.thumbnailImageBox>
         </S.ThumbnailBox>
 
         {post?.content && <S.Content className='ql-syntax' dangerouslySetInnerHTML={{ __html: post?.content || '' }} />}
